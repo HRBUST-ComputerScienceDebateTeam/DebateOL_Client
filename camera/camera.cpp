@@ -1,5 +1,6 @@
 #include "camera.h"//摄像头
-#include "./ui_camera.h"//CMakeLists.txt构建后产生文件
+#include "../camera/camera.h" //摄像头
+#include "../ui/ui_camera.h"
 
 Camera::Camera(QWidget *parent)
     : QMainWindow(parent)
