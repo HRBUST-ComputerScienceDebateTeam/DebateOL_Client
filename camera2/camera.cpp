@@ -11,9 +11,9 @@ Camera::Camera(QWidget *parent)
 
     my_camera.reset(new QCamera(QMediaDevices::defaultVideoInput()));//新建并设置摄像头使用默认驱动
     my_captureSession.setCamera(my_camera.data());//捕获摄像头画面
-    my_captureSession.setVideoOutput(ui->viewfinder);//设置捕捉画面显示窗口
-    my_camera->start();//启动摄像头
+    my_captureSession.setVideoOutput(ui->me);//设置捕捉画面显示窗口
 
+    on_openvideo_clicked();
 }
 
 
@@ -32,4 +32,19 @@ Camera::~Camera()
     delete ui;
 }
 
+
+
+void Camera::on_openvideo_clicked()
+{
+      ui->me->show();
+      my_camera->start();//启动摄像头
+}
+
+
+void Camera::on_closevideo_clicked(bool checked)
+{
+      my_camera->stop();
+      //清空显示屏 假装清空
+      ui->me->hide();//隐藏
+}
 

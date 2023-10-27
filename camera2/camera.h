@@ -25,6 +25,11 @@ public:
     Camera(QWidget *parent = nullptr);
     ~Camera();
 
+private slots:
+    void on_openvideo_clicked();
+
+    void on_closevideo_clicked(bool checked);
+
 private:
     Ui::Camera *ui;
     QScopedPointer<QCamera> my_camera;
