@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(camera2 VERSION 0.1 LANGUAGES CXX)
+project(Debate VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -14,47 +14,58 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt6 COMPONENTS Multimedia REQUIRED)
 find_package(Qt6 COMPONENTS MultimediaWidgets REQUIRED)
 
+
+
 set(PROJECT_SOURCES
-        main.cpp
-        camera.cpp
-        camera.h
-        camera.ui
+    main.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(camera2
+    qt_add_executable(Debate
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        #camera
+        camera/camera.cpp camera/camera.h
+        #mainwindow
+        mainwindow/mainwindow.cpp mainwindow/mainwindow.h
+        #ui
+        ui//mainwindow.ui
+        ui/camera.ui
+        web/web.cpp web/web.h
+        #config
+        config.h
+
     )
 # Define target properties for Android with Qt 6 as:
-#    set_property(TARGET camera2 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#    set_property(TARGET Debate APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
-        add_library(camera2 SHARED
+        add_library(Debate SHARED
             ${PROJECT_SOURCES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(camera2
+        add_executable(Debate
             ${PROJECT_SOURCES}
         )
     endif()
 endif()
 
-target_link_libraries(camera2 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-target_link_libraries(camera2 PRIVATE Qt6::Multimedia)
-target_link_libraries(camera2 PRIVATE Qt6::MultimediaWidgets)
+target_link_libraries(Debate PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Debate PRIVATE Qt6::Multimedia)
+target_link_libraries(Debate PRIVATE Qt6::MultimediaWidgets)
+
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.camera2)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Debate)
 endif()
-set_target_properties(camera2 PROPERTIES
+set_target_properties(Debate PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -63,17 +74,12 @@ set_target_properties(camera2 PROPERTIES
 )
 
 include(GNUInstallDirs)
-install(TARGETS camera2
+install(TARGETS Debate
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(camera2)
+    qt_finalize_executable(Debate)
 endif()
-
-
-
-
-
