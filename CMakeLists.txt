@@ -32,8 +32,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ui//mainwindow.ui
         ui/camera.ui
         web/web.cpp web/web.h
+        #pkg
+        pkg/thrift_json/thrift_json_config.h
+        pkg/thrift_json/thrift_json_echo.cpp
         #config
         config.h
+
+
 
     )
 # Define target properties for Android with Qt 6 as:

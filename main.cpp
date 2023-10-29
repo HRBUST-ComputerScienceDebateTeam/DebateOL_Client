@@ -2,6 +2,7 @@
 #include "./camera/camera.h"//摄像头
 #include "./web/web.h"
 #include "./config.h"
+#include "./pkg/thrift_json/thrift_json_config.h"
 
 
 #include <QApplication>
@@ -18,7 +19,9 @@ int main(int argc, char *argv[])
     Ca_w.show();//显示窗口
 
     qDebug()<<NETGET(TEST_GET_URL);
-    qDebug()<<NETPOST(TEST_GET_URL , "你好");
+    qDebug()<<NETPOST(TEST_GET_URL , std::string("你好"));
+    std::string echojson = Echo_SendInfo::Serialization( Echo_SendInfo({1,string("你好 - echo请求")}));
+    qDebug().noquote()<<NETPOST(ECHO_POST_URL , echojson);
 
 
 

@@ -3,4 +3,7 @@
 #include <QVariant>
 
 QString NETGET(QString url);
-QString NETPOST(QString url , QString data);
+QString NETPOST(QString url , std::string data);
+
+
+
