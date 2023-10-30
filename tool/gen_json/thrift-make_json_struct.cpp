@@ -143,16 +143,26 @@ int main(int argc , char ** argv){
         output << "}" <<endl;
 
         //json反序列化生成器
-        // cout << "std::string"<< struct_name <<"::Serialization(const "<<struct_name <<"&pkg""){" <<endl;
-        // cout << "\tstring ret;" <<endl;
-        // cout << "\tret += \"{\";" <<endl;
-        // int cnt = 0;
-        // for(auto it:info){
-        //     if(cnt++)  cout <<"\tret += \",\";";
-        //     cout << "\tret += gen_jsontoken("<<it.id <<","<<it.type<<","<<"pkg."<<it.name<<endl;
-        // }
-        // cout <<"\treturn ret;" <<endl;
-        // cout << "}" <<endl;    
-                    
+        output << struct_name <<" " << struct_name<<"::Deserialization(const std::string& s){" <<endl;
+        output << "\t" << struct_name << " ret;" <<endl;
+        output << "\tstd::vector<int>v;" <<endl;
+        output << "\tv.push_back(0);"<<endl;
+        output << "\tfor(int i = 1;i<s.length()-1;i++){" <<endl;
+        output << "\t\tif(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\\\"'){" << endl;
+        output << "\t\t\tv.push_back(i);"<< endl;
+        output << "\t\t}" <<endl;
+        output << "\t}" <<endl;
+        output << "\tv.push_back(s.length()-1);" <<endl;
+        cnt = 0;
+        for(auto it: info){
+            output << "\tget_tokenval(s , v["<<cnt<<"]+1 , v["<<cnt+1<<"]-1 ,ret."<<it.name<<");" <<endl;
+            cnt++;
+        }
+        output << "\treturn ret;" << endl;
+        output << "}" <<endl;
+
+        
     }
+    input.close();
+    output.close();
 }

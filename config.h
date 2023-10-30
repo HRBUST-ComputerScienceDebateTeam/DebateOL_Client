@@ -3,6 +3,9 @@
 #ifndef GLOBAL_CONFIG
 #define GLOBAL_CONFIG
 #include <QString>
+//重传次数
+const int RETRY_TIMES = 3;
+
 //公网ip
 const QString PUBLIC_IP ="43.138.161.192";
 

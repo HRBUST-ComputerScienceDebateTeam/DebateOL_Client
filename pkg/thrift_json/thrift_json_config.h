@@ -23,6 +23,7 @@ public:
     uint32_t id;
     string info;
 };
+
 class Echo_RecvInfo{
 public:
     static JSON_Base json_base_;
