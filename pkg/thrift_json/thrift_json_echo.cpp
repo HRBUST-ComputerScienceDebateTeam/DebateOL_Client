@@ -1,6 +1,7 @@
 #include "./thrift_json_config.h"
 #include <QString>
 #include <stdlib.h>
+#include <QDebug>
 
 //通过生成代码产生冗余来解决反射问题
 template<typename VAL_TYPE>
@@ -31,6 +32,51 @@ inline std::string gen_jsontoken(int id, std::string type_name , string val){
     return ret;
 }
 
+template<typename VAL_TYPE>
+void get_tokenval(const string &s , int l , int r , VAL_TYPE & typeval ){
+    //"2":{"str":"hi"}
+    int aimpos = 0;
+    for(int i = l;i<=r;i++){
+        if(s[i] == ':' && s[i+1] != '{'){
+            aimpos = i;
+            break;
+        }
+    }
+    string_view ss = s;
+
+    string base =string(ss.substr(aimpos+1 , r - aimpos -1 ));
+    //qDebug().noquote() << aimpos+1 <<" " <<  r <<" " << base;
+    typeval = VAL_TYPE(atoi(string(base).c_str()));
+}
+
+void get_tokenval(const string &s , int l , int r , char & typeval ){
+    //"2":{"str":"hi"}
+    int aimpos = 0;
+    for(int i = l;i<=r;i++){
+        if(s[i] == ':' && s[i+1] != '{'){
+            aimpos = i;
+            break;
+        }
+    }
+    char ch = s[aimpos+2];
+    typeval= char(ch);
+}
+
+void get_tokenval(const string &s , int l , int r , string & typeval ){
+    //"2":{"str":"hi"}
+    int aimpos = 0;
+    for(int i = l;i<=r;i++){
+        if(s[i] == ':' && s[i+1] != '{'){
+            aimpos = i;
+            break;
+        }
+    }
+    string_view ss = s;
+
+    string base =string(ss.substr(aimpos+2 , r - aimpos -3 ));
+    qDebug().noquote() << aimpos+1 <<" " <<  r <<" " << base;
+    typeval= base;
+}
 
 
 JSON_Base Make_Json_Echo_SendInfo(){
@@ -75,10 +121,37 @@ std::string Echo_RecvInfo::Serialization(const Echo_RecvInfo&pkg){
 
 
 
+//{"1":{"i32":1},"2":{"str":"hi"}}
+//"1":{"i32":1}
 // 反序列化
-static Echo_SendInfo Deserialization(const std::string&){
+Echo_SendInfo Echo_SendInfo::Deserialization(const std::string& s){
     Echo_SendInfo ret;
-    //遍历每一个元素
+    std::vector<int>v;
+    v.push_back(0);
+    for(int i = 1;i<s.length()-1;i++){
+        if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+            v.push_back(i);
+        }
+    }
+    v.push_back(s.length()-1);
+    get_tokenval(s , v[0]+1 , v[1]-1 ,ret.id);
+    get_tokenval(s , v[1]+1 , v[2]-1 ,ret.info);
+    return ret;
+}
+Echo_RecvInfo Echo_RecvInfo::Deserialization(const std::string& s){
+    Echo_RecvInfo ret;
+    std::vector<int>v;
+    v.push_back(0);
+    for(int i = 1;i<s.length()-1;i++){
+        if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+            v.push_back(i);
+        }
+    }
+    v.push_back(s.length()-1);
+    get_tokenval(s , v[0]+1 , v[1]-1 ,ret.id);
+    get_tokenval(s , v[1]+1 , v[2]-1 ,ret.info);
+    get_tokenval(s , v[2]+1 , v[3]-1 ,ret.time);
+    return ret;
 }
 
 
