@@ -1,6 +1,7 @@
 #include "camera.h"//摄像头
 #include "../camera/camera.h" //摄像头
 #include "../ui/ui_camera.h"
+#include<QMessageBox>
 
 Camera::Camera(QWidget *parent)
     : QMainWindow(parent)
@@ -30,10 +31,25 @@ bool Camera::checkCameraAvailability()
 //消类
 Camera::~Camera()
 {
+    qDebug()<<__func__;
     delete ui;
 }
 
-
+//关闭事件
+void  Camera::closeEvent(QCloseEvent *event)
+{
+    qDebug()<<__func__;
+    if(QMessageBox::question(this,"提示","是否退出？")
+        == QMessageBox::Yes)
+    {
+        Q_EMIT SIG_close();
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }
+}
 
 void Camera::on_openvideo_clicked()
 {
