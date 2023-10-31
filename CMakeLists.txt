@@ -37,6 +37,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         web/web.cpp web/web.h
         #pkg
         pkg/thrift_json/thrift_json_config.h
+        pkg/thrift_json/thrift_json_config.cpp
         pkg/thrift_json/thrift_json_echo.cpp
         #config
         config.h
@@ -49,6 +50,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         VideoApi/videoapi.pri
         Videoapi/videoread.h Videoapi/videoread.cpp
         Videoapi/common.h
+
 
 
 
