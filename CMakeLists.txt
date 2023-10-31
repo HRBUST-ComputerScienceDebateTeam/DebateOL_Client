@@ -8,12 +8,15 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(OpenCV_DIR F:/opencv/build/x64/vc15/lib)
+
+
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt6 COMPONENTS Multimedia REQUIRED)
 find_package(Qt6 COMPONENTS MultimediaWidgets REQUIRED)
-
+find_package(OpenCV REQUIRED)
 
 
 set(PROJECT_SOURCES
@@ -34,8 +37,22 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         web/web.cpp web/web.h
         #config
         config.h
+        #.pri
+        netapi/netapi.pri
+        ckernel.h ckernel.cpp
+        #bag
+        # bag/bag.h bag/bag.cpp
+        #video
+        VideoApi/videoapi.pri
+        Videoapi/videoread.h Videoapi/videoread.cpp
+        Videoapi/common.h
 
     )
+
+include_directories( ${OpenCV_INCLUDE_DIRS})
+
+
+
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Debate APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
@@ -54,9 +71,12 @@ else()
     endif()
 endif()
 
+
+
 target_link_libraries(Debate PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(Debate PRIVATE Qt6::Multimedia)
 target_link_libraries(Debate PRIVATE Qt6::MultimediaWidgets)
+target_link_libraries(Debate PRIVATE ${OpenCV_LIBS})
 
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

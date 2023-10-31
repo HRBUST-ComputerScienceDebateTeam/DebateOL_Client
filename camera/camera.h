@@ -10,6 +10,7 @@
 #include <QMediaDevices>
 #include <QImageCapture>
 #include <QMediaRecorder>
+#include<QCloseEvent>
 
 
 QT_BEGIN_NAMESPACE
@@ -20,16 +21,20 @@ QT_END_NAMESPACE
 class Camera : public QMainWindow
 {
     Q_OBJECT
-
+signals:
+    void SIG_close();
 public:
     Camera(QWidget *parent = nullptr);
     ~Camera();
 
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void on_openvideo_clicked();
-
     void on_closevideo_clicked(bool checked);
-
+/*signals:
+    void SIG_videoPause();
+    void SIG_videoStart();*/
 private:
     Ui::Camera *ui;
     QScopedPointer<QCamera> my_camera;
