@@ -1,4 +1,6 @@
+#pragma once
 #include <bits/stdc++.h>
+#include <QString>
 
 using namespace std;
 
@@ -13,15 +15,36 @@ public:
 
 //通过生成代码产生冗余来解决反射问题
 template<typename VAL_TYPE>
-inline std::string gen_jsontoken(int id, std::string type_name , VAL_TYPE val);
+std::string gen_jsontoken(int id, std::string type_name , VAL_TYPE val){
+    string ret;
+    ret += "\"" + QString().setNum(id).toStdString() + "\":";
+    ret += "{\"" + type_name +"\":";
+    ret +=  QString().setNum(val).toStdString() ;
+    ret += "}";
+    return ret;
+}
 
-inline std::string gen_jsontoken(int id, std::string type_name , char val);
 
-inline std::string gen_jsontoken(int id, std::string type_name , string val);
+std::string gen_jsontoken(int id, std::string type_name , char val);
+
+std::string gen_jsontoken(int id, std::string type_name , string val);
 
 template<typename VAL_TYPE>
-void get_tokenval(const string &s , int l , int r , VAL_TYPE & typeval );
+void get_tokenval(const string &s , int l , int r , VAL_TYPE & typeval ){
+    //"2":{"str":"hi"}
+    int aimpos = 0;
+    for(int i = l;i<=r;i++){
+        if(s[i] == ':' && s[i+1] != '{'){
+            aimpos = i;
+            break;
+        }
+    }
+    string_view ss = s;
 
+    string base =string(ss.substr(aimpos+1 , r - aimpos -1 ));
+    //qDebug().noquote() << aimpos+1 <<" " <<  r <<" " << base;
+    typeval = VAL_TYPE(atoi(string(base).c_str()));
+}
 void get_tokenval(const string &s , int l , int r , char & typeval );
 
 void get_tokenval(const string &s , int l , int r , string & typeval );

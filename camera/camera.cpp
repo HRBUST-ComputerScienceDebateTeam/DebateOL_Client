@@ -1,5 +1,4 @@
 #include "camera.h"//摄像头
-#include "../camera/camera.h" //摄像头
 #include "../ui/ui_camera.h"
 #include<QMessageBox>
 

@@ -1,5 +1,5 @@
 #include "./web.h"
-#include "../config.h"
+#include "../../config.h"
 
 QString NETGET(QString url){
     QNetworkAccessManager manager;
