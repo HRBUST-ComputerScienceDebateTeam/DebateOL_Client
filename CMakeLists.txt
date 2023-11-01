@@ -8,7 +8,7 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(OpenCV_DIR F:/opencv/build/x64/vc15/lib)
+set(OpenCV_DIR F:/opencv-build)
 
 
 
@@ -18,9 +18,32 @@ find_package(Qt6 COMPONENTS Multimedia REQUIRED)
 find_package(Qt6 COMPONENTS MultimediaWidgets REQUIRED)
 find_package(OpenCV REQUIRED)
 
+#连接静态库
+set(OpenCV_LIB_DIR ${OpenCV_DIR}/lib)
+link_libraries(${OpenCV_DIR}/include)
+link_libraries(${OpenCV_DIR}/opencv2)
+
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_calib3d480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_core480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_dnn480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_features2d480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_flann480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_gapi480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_highgui480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_imgcodecs480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_imgproc480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_ml480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_objdetect480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_photo480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_stitching480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_ts480.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_video480.dll.a)
+LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_videoio480.dll.a)
 
 set(PROJECT_SOURCES
     main.cpp
+    ckernel.h
+    ckernel.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -33,27 +56,31 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         mainwindow/mainwindow.cpp mainwindow/mainwindow.h
         #ui
         ui//mainwindow.ui
-        ui/camera.ui
-        web/web.cpp web/web.h
+        ui/camera.ui       
         #pkg
+        #json_config
         pkg/thrift_json/thrift_json_config.h
         pkg/thrift_json/thrift_json_config.cpp
         pkg/thrift_json/thrift_json_echo.cpp
+
+        #web
+        pkg/web/web.cpp
+        pkg/web/web.h
+
+        #video
+        pkg/Video/videoread.h
+        pkg/Video/videoread.cpp
+        pkg/Video/common.h
+
         #config
         config.h
+
         #.pri
-        netapi/netapi.pri
-        ckernel.h ckernel.cpp
-        #bag
-        # bag/bag.h bag/bag.cpp
-        #video
-        VideoApi/videoapi.pri
-        Videoapi/videoread.h Videoapi/videoread.cpp
-        Videoapi/common.h
+        #pri/video.pri
 
-
-
-
+        #ckernel
+        ckernel.cpp
+        ckernel.h
     )
 
 include_directories( ${OpenCV_INCLUDE_DIRS})
