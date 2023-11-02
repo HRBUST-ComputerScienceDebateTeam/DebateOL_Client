@@ -40,7 +40,44 @@ int main(int argc, char *argv[])
     qDebug() << "返回info ： " << QString().fromStdString(recvinfo.info);
     qDebug() << "返回time ： " << recvinfo.time;
 
+    //上传请求
+    Video_Upload_SendInfo send;
+    send.info = "这是一条视频";
+    send.min = 21;
+    send.sec = 22;
+    send.msec = 523;
+    send.type = 1;
+    send.roomId = 7;
+    send.userId = 3;
+
+    //qDebug().noquote()<< QString().fromStdString(Video_Upload_SendInfo::Serialization(send));
+    QString ULret = NETPOST(VIDEO_UPLOAD_POST_URL , Video_Upload_SendInfo::Serialization(send));
+    Video_Upload_RecvInfo ulreinfo = Video_Upload_RecvInfo::Deserialization(ULret.toStdString());
+    qDebug() << "返回的请求状态 ： " << ulreinfo.status;
+    qDebug() << "返回的房间号 ： " << ulreinfo.roomId;
+    qDebug() << "返回的用户号 ： " << ulreinfo.userId;
+    qDebug() << "返回的时间 ： " << ulreinfo.min << "-" <<ulreinfo.sec << "-" << ulreinfo.sec;
 
 
+
+
+   //下载请求
+    Video_Download_SendInfo sendinfo;
+    sendinfo.min = 21;
+    sendinfo.sec = 22;
+    sendinfo.msec = 525;
+    sendinfo.type = 1;
+    sendinfo.roomId = 7;
+    sendinfo.userId = 3;
+
+    //qDebug().noquote()<< QString().fromStdString(Video_Download_SendInfo::Serialization(sendinfo));
+    //qDebug().noquote()<< GET_VIDEODL_URL(sendinfo);
+    QString DLret = NETGET(GET_VIDEODL_URL(sendinfo));
+    Video_Download_RecvInfo dlreinfo = Video_Download_RecvInfo::Deserialization(DLret.toStdString());
+    qDebug() << "返回的请求状态 ： " << dlreinfo.status;
+    qDebug() << "返回的房间号 ： " << dlreinfo.roomId;
+    qDebug() << "返回的用户号 ： " << dlreinfo.userId;
+    qDebug() << "返回的时间 ： " << dlreinfo.min << "-" <<dlreinfo.sec << "-" << dlreinfo.sec;
+    qDebug()<< "返回的信息" <<QString().fromStdString(dlreinfo.info);
     return a.exec();
 }
