@@ -64,3 +64,18 @@ QString NETPOST(QString url , std::string data){
 
 }
 
+QString GET_VIDEODL_URL(struct Video_Download_SendInfo sendinfo){
+    QString ret = VIDEO_DOWNLOAD_GET_URL;
+    ret += QString().number(sendinfo.type);
+    ret += "-";
+    ret += QString().number(sendinfo.roomId);
+    ret += "-";
+    ret += QString().number(sendinfo.userId);
+    ret += "-";
+    ret += QString().number(sendinfo.min);
+    ret += "-";
+    ret += QString().number(sendinfo.sec);
+    ret += "-";
+    ret += QString().number(sendinfo.msec);
+    return ret;
+}
