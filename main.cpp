@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     Echo_RecvInfo recvinfo = Echo_RecvInfo::Deserialization(srecv.toStdString());
 
     qDebug() << "返回id ： " << recvinfo.id;
-    qDebug() << "返回info ： " << recvinfo.info;
+    qDebug() << "返回info ： " << QString().fromStdString(recvinfo.info);
     qDebug() << "返回time ： " << recvinfo.time;
 
 

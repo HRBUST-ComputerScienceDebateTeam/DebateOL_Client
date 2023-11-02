@@ -39,10 +39,10 @@ public:
 
 std::map<string , string>mp_lx{
     {"bool","bool"},
-    {"i8","uint8_t"},
-    {"i16","uint16_t"},
-    {"i32","uint32_t"},
-    {"i64","uint64_t"},
+    {"i8","int8_t"},
+    {"i16","int16_t"},
+    {"i32","int32_t"},
+    {"i64","int64_t"},
     {"byte","char"},
     {"string","string"}
 };
