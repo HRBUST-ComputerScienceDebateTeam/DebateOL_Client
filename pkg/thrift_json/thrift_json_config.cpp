@@ -72,9 +72,8 @@ void get_tokenval(const string &s , int l , int r , string & typeval ){
         }
     }
     string_view ss = s;
-
-    string base =string(ss.substr(aimpos+2 , r - aimpos -3 ));
-    qDebug().noquote() << aimpos+1 <<" " <<  r <<" " << base;
+    string base =  string(ss.substr(aimpos+2 , r - aimpos -3 ));
+    //qDebug().noquote() << aimpos+1 <<" " <<  r <<" " << base;
     typeval= base;
 }
 

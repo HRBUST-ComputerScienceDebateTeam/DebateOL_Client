@@ -60,7 +60,7 @@ public:
     static std::string Serialization(const Echo_SendInfo &);
     static Echo_SendInfo Deserialization(const std::string&);
 public:
-    uint32_t id;
+    int32_t id;
     string info;
 };
 
@@ -72,9 +72,82 @@ public:
     static std::string Serialization(const Echo_RecvInfo &);
     static Echo_RecvInfo Deserialization(const std::string&);
 public:
-    uint32_t id;
+    int32_t id;
     string info;
     string time;
+};
+
+//video
+class Video_Upload_SendInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Video_Upload_SendInfo &);
+    static Video_Upload_SendInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
+    int32_t min;
+    int32_t sec;
+    int32_t msec;
+    string info;
+};
+class Video_Upload_RecvInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Video_Upload_RecvInfo &);
+    static Video_Upload_RecvInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
+    int32_t min;
+    int32_t sec;
+    int32_t msec;
+    int32_t status;
+};
+class Video_Download_SendInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Video_Download_SendInfo &);
+    static Video_Download_SendInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
+    int32_t min;
+    int32_t sec;
+    int32_t msec;
+};
+class Video_Download_RecvInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Video_Download_RecvInfo &);
+    static Video_Download_RecvInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
+    int32_t min;
+    int32_t sec;
+    int32_t msec;
+    int32_t status;
+    string info;
+};
+class Video_Clean_SendInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Video_Clean_SendInfo &);
+    static Video_Clean_SendInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
 };
 
 

@@ -62,6 +62,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/thrift_json/thrift_json_config.h
         pkg/thrift_json/thrift_json_config.cpp
         pkg/thrift_json/thrift_json_echo.cpp
+        pkg/thrift_json/thrift_json_video.cpp
 
         #web
         pkg/web/web.cpp
