@@ -13,7 +13,7 @@
 #include <QMediaRecorder>
 #include<QCloseEvent>
 #include<Qlabel>
-#include"../Video/videoread.h"
+#include"../pkg/Video/videoread.h"
 #include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
 #include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
 #include<qpainter.h>

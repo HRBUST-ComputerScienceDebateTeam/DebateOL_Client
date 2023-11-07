@@ -1,7 +1,7 @@
 #include "camera.h"//摄像头
 #include "../ui/ui_camera.h"
 #include<QMessageBox>
-#include"../Video/videoread.h"
+#include"../pkg/Video/videoread.h"
 #include"../ckernel.h"
 #include"../pkg/thrift_json/thrift_json_config.h"
 #include"../pkg/web/web.h"

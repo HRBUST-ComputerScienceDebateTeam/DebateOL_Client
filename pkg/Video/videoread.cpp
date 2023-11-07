@@ -1,5 +1,5 @@
 #include "videoread.h"
-#include"../camera/camera.h"
+#include"../../camera/camera.h"
 #include<QMessageBox>
 #include<QDebug>
 

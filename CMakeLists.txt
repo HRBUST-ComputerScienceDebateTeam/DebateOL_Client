@@ -68,9 +68,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/web/web.h
 
         #video
-        Video/videoread.h
-        Video/videoread.cpp
-        Video/common.h
+        pkg/Video/videoread.h
+        pkg/Video/videoread.cpp
+        pkg/Video/common.h
 
         #config
         config.h

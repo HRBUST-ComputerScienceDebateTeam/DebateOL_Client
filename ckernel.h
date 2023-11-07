@@ -4,7 +4,7 @@
 #include <QObject>
 #include"camera/camera.h"
 
-#include"./Video/videoread.h"
+#include"./pkg/Video/videoread.h"
 
 class Ckernel : public QObject
 {
