@@ -5,6 +5,8 @@
 #include"opencv2/imgproc/imgproc.hpp"
 #include"opencv2/core/core.hpp"
 #include"opencv2/imgproc/types_c.h"
+#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
+#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
 
 using namespace cv;
 #define FRAME_RATE (15)

@@ -1,5 +1,6 @@
 #include "./thrift_json_config.h"
 #include <QString>
+#include <bits/stdc++.h>
 #include <stdlib.h>
 #include <QDebug>
 
@@ -25,9 +26,11 @@ std::string gen_jsontoken(int id, std::string type_name , char val){
 
 std::string gen_jsontoken(int id, std::string type_name , string val){
     string ret;
+
     ret += "\"" + QString().setNum(id).toStdString() + "\":";
     ret += "{\"" + type_name +"\":";
-    ret += "\"" + val +"\"";
+    qDebug()<< QString(QByteArray(val.c_str() , val.length()).toBase64()).toStdString();
+    ret += "\"" + QString(QByteArray(val.c_str() , val.length()).toBase64()).toStdString() +"\"";
     ret += "}";
     return ret;
 }
@@ -74,7 +77,8 @@ void get_tokenval(const string &s , int l , int r , string & typeval ){
     string_view ss = s;
     string base =  string(ss.substr(aimpos+2 , r - aimpos -3 ));
     //qDebug().noquote() << aimpos+1 <<" " <<  r <<" " << base;
-    typeval= base;
+    QString tmp = QByteArray::fromBase64(QByteArray::fromStdString(base));
+    typeval= tmp.toStdString();
 }
 
 

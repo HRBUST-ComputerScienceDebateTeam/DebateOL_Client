@@ -8,9 +8,8 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(OpenCV_DIR F:/opencv-build)
-
-
+#set(OpenCV_DIR F:/opencv-build)
+set(OpenCV_DIR F:/opencv4.8.0/bin)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
@@ -56,7 +55,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         mainwindow/mainwindow.cpp mainwindow/mainwindow.h
         #ui
         ui//mainwindow.ui
-        ui/camera.ui       
+        ui/camera.ui
         #pkg
         #json_config
         pkg/thrift_json/thrift_json_config.h
@@ -69,9 +68,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/web/web.h
 
         #video
-        pkg/Video/videoread.h
-        pkg/Video/videoread.cpp
-        pkg/Video/common.h
+        Video/videoread.h
+        Video/videoread.cpp
+        Video/common.h
 
         #config
         config.h
@@ -82,6 +81,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         #ckernel
         ckernel.cpp
         ckernel.h
+
     )
 
 include_directories( ${OpenCV_INCLUDE_DIRS})

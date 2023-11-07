@@ -7,8 +7,9 @@
 #include"common.h"
 
 
+
 //图片的宽高
-#define IMAGE_WIDTH (320)
+#define IMAGE_WIDTH (240)
 #define IMAGE_HEIGHT (240)
 
 class VideoRead : public QObject
@@ -18,7 +19,7 @@ public:
     explicit VideoRead(QObject *parent = nullptr);
     ~VideoRead();
 signals:
-    void SIG_sendVideoFrame(QImage img);
+    void SIG_sendvideoFrame(QImage img);
 public slots:
     void slot_getVideoFrame();
     void slot_openVideo();

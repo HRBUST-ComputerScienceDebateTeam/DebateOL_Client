@@ -5,12 +5,21 @@
 
 #include <QMainWindow>
 #include <QCamera>
+#include <QPixmap>
 #include <QVideoWidget>
 #include <QMediaCaptureSession>
 #include <QMediaDevices>
 #include <QImageCapture>
 #include <QMediaRecorder>
 #include<QCloseEvent>
+#include<Qlabel>
+#include"../Video/videoread.h"
+#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
+#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
+#include<qpainter.h>
+#include<QBuffer>
+#include<QTime>
+
 
 
 QT_BEGIN_NAMESPACE
@@ -28,18 +37,27 @@ public:
     ~Camera();
 
     void closeEvent(QCloseEvent *event);
-
+public slots:
+    void slot_setImage(QImage& img);
+    void paintEvent(QPaintEvent *event);
+    //刷新图片显示
+    void slot_refreshVideo(QImage &img);
 private slots:
     void on_openvideo_clicked();
-    void on_closevideo_clicked(bool checked);
+    void on_closevideo_clicked();
+    void slot_sendvideoFrame(QImage img);
+    //视频帧处理
+    void slot_dealVideoFrameRq(uint sock,char* buf,int len);
 /*signals:
     void SIG_videoPause();
     void SIG_videoStart();*/
 private:
     Ui::Camera *ui;
-    QScopedPointer<QCamera> my_camera;
-    QScopedPointer<QMediaRecorder> my_mediaRecorder;
-    QMediaCaptureSession my_captureSession;
+    //QScopedPointer<QCamera> my_camera;
+    //QScopedPointer<QMediaRecorder> my_mediaRecorder;
+    //QMediaCaptureSession my_captureSession;
+    QImage m_img;
+    VideoRead * m_pVideoRead;
 
     bool checkCameraAvailability(void);
 

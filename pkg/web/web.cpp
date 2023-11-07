@@ -34,9 +34,12 @@ QString NETPOST(QString url , std::string data){
     QNetworkRequest request(q);
     //application/json	作为请求头告诉服务端消息主体是序列化的JSON字符串。除低版本的IE，基本都支持
     request.setHeader(QNetworkRequest::ContentTypeHeader,QVariant("application/json"));
-    QByteArray qByteHttpData =data.c_str();
+
+
     int times = RETRY_TIMES;
     while(times--){
+        QByteArray qByteHttpData(data.c_str(),data.length());
+        //qDebug()<<data;
         QNetworkReply *reply = manager.post(request , qByteHttpData);
 
         QEventLoop loop;
