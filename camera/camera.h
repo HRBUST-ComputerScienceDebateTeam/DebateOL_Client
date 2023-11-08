@@ -41,7 +41,7 @@ public slots:
     void slot_setImage(QImage& img);
     void paintEvent(QPaintEvent *event);
     //刷新图片显示
-    void slot_refreshVideo(QImage &img);
+    //void slot_refreshVideo(QImage &img);
     void slot_dealVideoFrameRq();
 private slots:
     void on_openvideo_clicked();

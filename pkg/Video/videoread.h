@@ -7,7 +7,6 @@
 #include"common.h"
 
 
-
 //图片的宽高
 #define IMAGE_WIDTH (240)
 #define IMAGE_HEIGHT (240)

@@ -64,7 +64,13 @@ void  Camera::closeEvent(QCloseEvent *event)
 
 void Camera::slot_setImage(QImage &img)
 {
-    m_img = img;
+    qDebug()<<__func__;
+    //qDebug()<<m_img;
+    qDebug()<<img;
+    //m_img = img;
+    QPixmap pix = QPixmap :: fromImage(img);
+    //qDebug()<<m_img;
+    ui->second->setPixmap(pix);
     ui->second->update();
 }
 
@@ -89,10 +95,11 @@ void Camera::paintEvent(QPaintEvent *event)
     painter.end();
 }
 
-void Camera::slot_refreshVideo(QImage &img)
+/*void Camera::slot_refreshVideo(QImage &img)
 {
+    //qDebug()<<img;
     this->slot_setImage(img);
-}
+}*/
 
 
 void Camera::on_openvideo_clicked()
@@ -112,12 +119,13 @@ void Camera::slot_sendvideoFrame(QImage img)
 {
       qDebug()<<__func__;
       QPixmap pix = QPixmap :: fromImage(img);
+      //qDebug()<<img;
       ui->me->setPixmap(pix);
       //更新
       ui->me->update();
       //显示图片 todo
       //显示别人图片
-      //slot_refreshVideo(img);
+      //slot_setImage(img);
       //压缩
       //压缩图片从 RGB24 格式压缩到 JPEG 格式, 发送出去
       QByteArray ba;
@@ -176,10 +184,10 @@ void Camera::slot_sendvideoFrame(QImage img)
       //NETPOST(VIDEO_UPLOAD_POST_URL,Video_Upload_SendInfo::Serialization(send));
       QString ULret = NETPOST(VIDEO_UPLOAD_POST_URL , Video_Upload_SendInfo::Serialization(send));
       Video_Upload_RecvInfo ulreinfo = Video_Upload_RecvInfo::Deserialization(ULret.toStdString());
-      qDebug() << "返回的请求状态 ： " << ulreinfo.status;
+      /*qDebug() << "返回的请求状态 ： " << ulreinfo.status;
       qDebug() << "返回的房间号 ： " << ulreinfo.roomId;
       qDebug() << "返回的用户号 ： " << ulreinfo.userId;
-      qDebug() << "返回的时间 ： " << ulreinfo.min << "-" <<ulreinfo.sec << "-" << ulreinfo.sec;
+      qDebug() << "返回的时间 ： " << ulreinfo.min << "-" <<ulreinfo.sec << "-" << ulreinfo.sec;*/
 
 }
 
@@ -215,23 +223,32 @@ void Camera::slot_dealVideoFrameRq()
 
       QString DLret = NETGET(GET_VIDEODL_URL(sendinfo));
       Video_Download_RecvInfo dlreinfo = Video_Download_RecvInfo::Deserialization(DLret.toStdString());
-      qDebug() << "返回的请求状态 ： " << dlreinfo.status;
+      /*qDebug() << "返回的请求状态 ： " << dlreinfo.status;
       qDebug() << "返回的房间号 ： " << dlreinfo.roomId;
       qDebug() << "返回的用户号 ： " << dlreinfo.userId;
       qDebug() << "返回的时间 ： " << dlreinfo.min << "-" <<dlreinfo.sec << "-" << dlreinfo.sec;
-      qDebug()<< "返回的信息" <<QString().fromStdString(dlreinfo.info);
+      qDebug()<< "返回的信息" <<QString().fromStdString(dlreinfo.info);*/
+      /*QByteArray ba;
+      QBuffer qbuf(&ba); // QBuffer 与 QByteArray 字节数组联立联系
+      img.save( &qbuf , "JPEG" , 50 ); //将图片的数据写入 ba*/
 
-      QByteArray bt;
+      QByteArray bt=QByteArray(dlreinfo.info.c_str(),dlreinfo.info.size());
       QImage img;
       img.loadFromData(bt);
 
-      slot_refreshVideo(img);
+      //qDebug()<<bt.size();
+      //qDebug()<<img.size();
+      slot_setImage(img);
       /*int datalen = len - 6*sizeof(int);
       QByteArray bt(tmp,datalen);
       QImage img;
       img.loadFromData(bt);
         */
       //slot_refreshVideo(img);
+      /*QByteArray imageData = QByteArray::fromBase64(data.toLatin1());
+      QImage image;
+      image.loadFromData(imageData);
+      return image;*/
 }
 
 
