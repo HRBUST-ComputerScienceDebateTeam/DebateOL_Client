@@ -40,6 +40,7 @@ void VideoRead::slot_getVideoFrame()
     //发送图片
     //qDebug()<<__func__;
     Q_EMIT SIG_sendvideoFrame(image);
+    Q_EMIT SIG_dealVideoFrameRq();
 }
 
 void VideoRead::slot_openVideo()

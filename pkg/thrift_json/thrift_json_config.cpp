@@ -29,7 +29,7 @@ std::string gen_jsontoken(int id, std::string type_name , string val){
 
     ret += "\"" + QString().setNum(id).toStdString() + "\":";
     ret += "{\"" + type_name +"\":";
-    qDebug()<< QString(QByteArray(val.c_str() , val.length()).toBase64()).toStdString();
+    //qDebug()<< QString(QByteArray(val.c_str() , val.length()).toBase64()).toStdString();
     ret += "\"" + QString(QByteArray(val.c_str() , val.length()).toBase64()).toStdString() +"\"";
     ret += "}";
     return ret;

@@ -42,12 +42,12 @@ public slots:
     void paintEvent(QPaintEvent *event);
     //刷新图片显示
     void slot_refreshVideo(QImage &img);
+    void slot_dealVideoFrameRq();
 private slots:
     void on_openvideo_clicked();
     void on_closevideo_clicked();
     void slot_sendvideoFrame(QImage img);
     //视频帧处理
-    void slot_dealVideoFrameRq(uint sock,char* buf,int len);
 /*signals:
     void SIG_videoPause();
     void SIG_videoStart();*/
@@ -58,6 +58,7 @@ private:
     //QMediaCaptureSession my_captureSession;
     QImage m_img;
     VideoRead * m_pVideoRead;
+    VideoRead * m_popen;
 
     bool checkCameraAvailability(void);
 
