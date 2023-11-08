@@ -22,26 +22,26 @@ int main(int argc, char *argv[])
     //Ca_w.show();//显示窗口
 
     //简单通讯
-    qDebug()<<NETGET(TEST_GET_URL);
-    //qDebug()<<NETPOST(TEST_GET_URL , std::string("你好"));
+
+
+    //qDebug()<<NETGET(TEST_GET_URL);
 
     //序列化
     std::string echojson = Echo_SendInfo::Serialization( Echo_SendInfo({uint32_t(1),string("你好 - echo请求")}));
     //qDebug() << echojson;
 
     //发送
-    QString srecv = NETPOST(ECHO_POST_URL , echojson);
+    //QString srecv = NETPOST(ECHO_POST_URL , echojson);
 
 
     //反序列化
-    Echo_RecvInfo recvinfo = Echo_RecvInfo::Deserialization(srecv.toStdString());
-
-    qDebug() << "返回id ： " << recvinfo.id;
-    qDebug() << "返回info ： " << QString().fromStdString(recvinfo.info);
-    qDebug() << "返回time ： " << recvinfo.time;
+    //Echo_RecvInfo recvinfo = Echo_RecvInfo::Deserialization(srecv.toStdString());
+    //qDebug() << "返回id ： " << recvinfo.id;
+    //qDebug() << "返回info ： " << QString().fromStdString(recvinfo.info);
+    //qDebug() << "返回time ： " << recvinfo.time;
 
     //上传请求
-    Video_Upload_SendInfo send;
+    /*Video_Upload_SendInfo send;
     send.info = "这是一条视频";
     send.min = 21;
     send.sec = 22;
@@ -78,6 +78,6 @@ int main(int argc, char *argv[])
     qDebug() << "返回的房间号 ： " << dlreinfo.roomId;
     qDebug() << "返回的用户号 ： " << dlreinfo.userId;
     qDebug() << "返回的时间 ： " << dlreinfo.min << "-" <<dlreinfo.sec << "-" << dlreinfo.sec;
-    qDebug()<< "返回的信息" <<QString().fromStdString(dlreinfo.info);
+    qDebug()<< "返回的信息" <<QString().fromStdString(dlreinfo.info);*/
     return a.exec();
 }
