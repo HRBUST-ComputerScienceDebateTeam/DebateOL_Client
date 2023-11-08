@@ -1,5 +1,7 @@
 #include "./web.h"
 #include "../../config.h"
+#include <thread>
+using namespace std;
 
 QString NETGET(QString url){
     QNetworkAccessManager manager;
@@ -20,12 +22,12 @@ QString NETGET(QString url){
     }
 
     QByteArray response = reply->readAll();
-    //qDebug() << response;
+//    qDebug() << response.size();
+//    qDebug()<< QString().fromStdString(response.toStdString()).size();
 
     reply->deleteLater();
-    return response;
+    return QString().fromStdString(response.toStdString());
 }
-
 
 
 QString NETPOST(QString url , std::string data){

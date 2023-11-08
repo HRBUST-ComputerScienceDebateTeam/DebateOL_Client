@@ -14,8 +14,10 @@
 #include<QCloseEvent>
 #include<Qlabel>
 #include"../pkg/Video/videoread.h"
-#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
-#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
+//#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
+//#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
+#include"F:/opencv-build/opencv2/cvconfig.h"
+#include"F:/opencv-build/opencv2/opencv_modules.hpp"
 #include<qpainter.h>
 #include<QBuffer>
 #include<QTime>
@@ -53,9 +55,9 @@ private slots:
     void SIG_videoStart();*/
 private:
     Ui::Camera *ui;
-    //QScopedPointer<QCamera> my_camera;
-    //QScopedPointer<QMediaRecorder> my_mediaRecorder;
-    //QMediaCaptureSession my_captureSession;
+    QScopedPointer<QCamera> my_camera;
+    QScopedPointer<QMediaRecorder> my_mediaRecorder;
+    QMediaCaptureSession my_captureSession;
     QImage m_img;
     VideoRead * m_pVideoRead;
     VideoRead * m_popen;

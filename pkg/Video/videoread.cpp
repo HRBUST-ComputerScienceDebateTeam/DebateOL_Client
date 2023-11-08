@@ -3,6 +3,7 @@
 #include<QMessageBox>
 #include<QDebug>
 
+
 VideoRead::VideoRead(QObject *parent)
     : QObject{parent}
 {
@@ -32,7 +33,8 @@ void VideoRead::slot_getVideoFrame()
     }
     //Mat 图像不是显示和传输格式（RGB）
     //格式转换 opencv 采集的格式BGR 显示RGB
-    cvtColor(frame,frame,CV_BGR2RGB);
+    //cvtColor(frame,frame,CV_BGR2RGB);
+    cvtColor(frame,frame,COLOR_BGR2RGB);
     //定义QImage对象，用于发送数据以及图片显示
     QImage image((unsigned const char*)frame.data,frame.cols,frame.rows,QImage::Format_RGB888);
     //转换为大小更小的图片

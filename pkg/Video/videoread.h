@@ -4,7 +4,7 @@
 #include <QObject>
 #include<QImage>
 #include<QTimer>
-#include"common.h"
+#include"./common.h"
 
 
 
