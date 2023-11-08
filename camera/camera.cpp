@@ -21,8 +21,11 @@ Camera::Camera(QWidget *parent)
     //my_captureSession.setCamera(my_camera.data());//捕获摄像头画面
     //my_captureSession.setVideoOutput(ui->me);//设置捕捉画面显示窗口
     m_pVideoRead = new VideoRead();
+    m_popen = new VideoRead();
     connect(m_pVideoRead,SIGNAL(SIG_sendvideoFrame(QImage))
             ,this,SLOT(slot_sendvideoFrame(QImage)));
+    connect(m_popen,SIGNAL(SIG_dealVideoFrameRq())
+            ,this,SLOT(slot_dealVideoFrameRq()));
 
 }
 
@@ -95,6 +98,7 @@ void Camera::slot_refreshVideo(QImage &img)
 void Camera::on_openvideo_clicked()
 {
     m_pVideoRead ->slot_openVideo();
+    m_popen->slot_openVideo();
 }
 
 
@@ -107,10 +111,10 @@ void Camera::on_closevideo_clicked()
 void Camera::slot_sendvideoFrame(QImage img)
 {
       qDebug()<<__func__;
-      /*QPixmap pix = QPixmap :: fromImage(img);
+      QPixmap pix = QPixmap :: fromImage(img);
       ui->me->setPixmap(pix);
       //更新
-      ui->me->update();*/
+      ui->me->update();
       //显示图片 todo
       //显示别人图片
       //slot_refreshVideo(img);
@@ -162,7 +166,7 @@ void Camera::slot_sendvideoFrame(QImage img)
       send.msec = tm.msec();
       send.type = 1;
       send.roomId = 7;
-      send.userId = 3;
+      send.userId = 1;
       //qDebug()<<send.info;
       //qDebug()<<ba.size();
       //qDebug().noquote()<<Video_Upload_SendInfo::Serialization(send);
@@ -179,8 +183,9 @@ void Camera::slot_sendvideoFrame(QImage img)
 
 }
 
-void Camera::slot_dealVideoFrameRq(uint sock, char *buf, int len)
+void Camera::slot_dealVideoFrameRq()
 {
+      qDebug()<<__func__;
       /*char *tmp = buf;
       tmp+=sizeof(int);
       int userId = *(int*)tmp;
@@ -205,7 +210,7 @@ void Camera::slot_dealVideoFrameRq(uint sock, char *buf, int len)
       sendinfo.msec = tm.msec();
       sendinfo.type = 1;
       sendinfo.roomId = 7;
-      sendinfo.userId = 3;
+      sendinfo.userId = 2;
 
 
       QString DLret = NETGET(GET_VIDEODL_URL(sendinfo));
