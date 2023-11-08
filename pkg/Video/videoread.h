@@ -20,6 +20,7 @@ public:
     ~VideoRead();
 signals:
     void SIG_sendvideoFrame(QImage img);
+    void SIG_dealVideoFrameRq();
 public slots:
     void slot_getVideoFrame();
     void slot_openVideo();

@@ -1,4 +1,5 @@
 #include "./thrift_json_config.h"
+#include <QDebug>
 JSON_Base Make_Json_Video_Upload_SendInfo(){
     JSON_Base ret;
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
@@ -176,6 +177,7 @@ Video_Download_RecvInfo Video_Download_RecvInfo::Deserialization(const std::stri
     get_tokenval(s , v[5]+1 , v[6]-1 ,ret.msec);
     get_tokenval(s , v[6]+1 , v[7]-1 ,ret.status);
     get_tokenval(s , v[7]+1 , v[8]-1 ,ret.info);
+    qDebug()<< ret.info.size();
     return ret;
 }
 

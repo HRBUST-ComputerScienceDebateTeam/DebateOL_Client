@@ -22,10 +22,11 @@ QString NETGET(QString url){
     }
 
     QByteArray response = reply->readAll();
-    //qDebug() << response;
+//    qDebug() << response.size();
+//    qDebug()<< QString().fromStdString(response.toStdString()).size();
 
     reply->deleteLater();
-    return response;
+    return QString().fromStdString(response.toStdString());
 }
 
 
