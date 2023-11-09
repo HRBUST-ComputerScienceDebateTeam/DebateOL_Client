@@ -177,7 +177,7 @@ Video_Download_RecvInfo Video_Download_RecvInfo::Deserialization(const std::stri
     get_tokenval(s , v[5]+1 , v[6]-1 ,ret.msec);
     get_tokenval(s , v[6]+1 , v[7]-1 ,ret.status);
     get_tokenval(s , v[7]+1 , v[8]-1 ,ret.info);
-    qDebug()<< ret.info.size();
+    //qDebug()<< ret.info.size();
     return ret;
 }
 

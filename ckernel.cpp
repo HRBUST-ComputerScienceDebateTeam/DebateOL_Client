@@ -10,7 +10,7 @@ Ckernel::Ckernel(QObject *parent)
     m_pCamera =new Camera;
     connect(m_pCamera , SIGNAL(SIG_close())
             ,this,SLOT(slot_destory()));
-    m_pVideoRead = new VideoRead;
+    //m_pVideoRead = new VideoRead;
     /*connect(m_pVideoRead, SIGNAL(SIG_sendVideoFrame(QImage))
             ,this,SLOT(SIG_sendVideoFrame(QImage)));*/
     m_pCamera->show();

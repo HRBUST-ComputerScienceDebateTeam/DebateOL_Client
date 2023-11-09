@@ -1,16 +1,34 @@
 #include "videoread.h"
-#include"../../camera/camera.h"
 #include<QMessageBox>
 #include<QDebug>
+#include<QTime>
 
 
-VideoRead::VideoRead(QObject *parent)
+VideoRead::VideoRead(int id , bool ishost,QObject *parent)
     : QObject{parent}
 {
+
+    myid = id;
+    is_host = ishost;
     m_timer =new QTimer;
     connect( m_timer , SIGNAL(timeout())
             ,this , SLOT(slot_getVideoFrame()));
+
+    if(is_host==false){
+        m_timer_toupdata = new QTimer;
+        connect( m_timer_toupdata , SIGNAL(timeout())
+                ,this , SLOT(slot_torefresh()));
+        m_timer_toupdata->start(1000/Updata_RATE - 10);
+        m_timer_toDownload = new QTimer;
+        connect( m_timer_toDownload , SIGNAL(timeout())
+                ,this , SLOT(slot_Download()));
+        m_timer_toDownload->start(1000/Download_RATE - 10);
+    }
+
+
+
 }
+
 
 VideoRead::~VideoRead()
 {
@@ -42,13 +60,29 @@ void VideoRead::slot_getVideoFrame()
     //发送图片
     //qDebug()<<__func__;
     Q_EMIT SIG_sendvideoFrame(image);
-    Q_EMIT SIG_dealVideoFrameRq();
+    //Q_EMIT SIG_dealVideoFrameRq();
+}
+
+void VideoRead::slot_Download()
+{
+    QTime tm = QTime::currentTime();
+    int timenum = tm.msec() + tm.second()*1000 + tm.minute()*60000;
+    Q_EMIT SIG_dealVideoFrameRq(myid , timenum);
+}
+
+
+void VideoRead::slot_torefresh(){
+    qDebug()<<__func__;
+    QTime tm = QTime::currentTime();
+    int timenum = tm.msec() + tm.second()*1000 + tm.minute()*60000;
+    Q_EMIT SIG_refresh(myid , timenum);
 }
 
 void VideoRead::slot_openVideo()
 {
-    qDebug()<<__func__;
+    qDebug()<<__func__ <<myid;
     m_timer->start(1000/FRAME_RATE - 10);
+
     //打开摄像头
     cap.open(0);//默认设备
 
@@ -70,3 +104,5 @@ void VideoRead::slot_closeVideo()
     }
 
 }
+
+
