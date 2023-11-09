@@ -30,7 +30,8 @@ std::string gen_jsontoken(int id, std::string type_name , string val){
     ret += "\"" + QString().setNum(id).toStdString() + "\":";
     ret += "{\"" + type_name +"\":";
     //qDebug()<< QString(QByteArray(val.c_str() , val.length()).toBase64()).toStdString();
-    ret += "\"" + QString(QByteArray(val.c_str() , val.length()).toBase64()).toStdString() +"\"";
+
+    ret += "\"" + QString::fromLatin1(QByteArray(val.c_str() , val.length()).toBase64()).toLatin1().toStdString() +"\"";
     ret += "}";
     return ret;
 }
@@ -77,8 +78,8 @@ void get_tokenval(const string &s , int l , int r , string & typeval ){
     string_view ss = s;
     string base =  string(ss.substr(aimpos+2 , r - aimpos -3 ));
     //qDebug().noquote() << aimpos+1 <<" " <<  r <<" " << base;
-    QString tmp = QByteArray::fromBase64(QByteArray::fromStdString(base));
-    typeval= tmp.toStdString();
+    QString tmp = QString::fromLatin1(QByteArray::fromBase64(QByteArray::fromStdString(base)));
+    typeval= tmp.toLatin1().toStdString();
 }
 
 

@@ -1,10 +1,11 @@
-#include "camera.h"//摄像头
+#include "./camera.h"//摄像头
 #include "../ui/ui_camera.h"
 #include<QMessageBox>
 #include"../pkg/Video/videoread.h"
 #include"../ckernel.h"
 #include"../pkg/thrift_json/thrift_json_config.h"
 #include"../pkg/web/web.h"
+#include <thread>
 #include"../config.h"
 
 
@@ -12,23 +13,33 @@ Camera::Camera(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Camera)
 {
-    qDebug()<<__func__;
+    //qDebug()<<__func__;
      ui->setupUi(this);
 
     qDebug("Camera Device Check:%d",Camera::checkCameraAvailability());//摄像头驱动检测debug测试
-
-    //my_camera.reset(new QCamera(QMediaDevices::defaultVideoInput()));//新建并设置摄像头使用默认驱动
-    //my_captureSession.setCamera(my_camera.data());//捕获摄像头画面
-    //my_captureSession.setVideoOutput(ui->me);//设置捕捉画面显示窗口
-    m_pVideoRead = new VideoRead();
-    m_popen = new VideoRead();
-    connect(m_pVideoRead,SIGNAL(SIG_sendvideoFrame(QImage))
+    myid = 1;
+    my_camera.reset(new QCamera(QMediaDevices::defaultVideoInput()));//新建并设置摄像头使用默认驱动
+    my_captureSession.setCamera(my_camera.data());//捕获摄像头画面
+    my_captureSession.setVideoOutput(ui->me);//设置捕捉画面显示窗口
+//    m_pVideoRead = new VideoRead();
+//    m_popen = new VideoRead();
+    m_user_label[1] = ui->me;
+    m_user_label[2] = ui->second;
+    for(int i=1;i<9;i++)
+    {
+        m_user_video[i] = new VideoRead(i , myid==i);
+        connect(m_user_video[i],SIGNAL(SIG_refresh(int,int))
+                ,this,SLOT(slot_refresh(int,int)));
+        connect(m_user_video[i],SIGNAL(SIG_dealVideoFrameRq(int ,int))
+                ,this,SLOT(slot_dealVideoFrameRq(int,int)));
+    }
+    connect(this,SIGNAL(SIG_setImage(int,QImage&))
+            ,this,SLOT(slot_setImage(int,QImage&)));
+    connect( m_user_video[myid],SIGNAL(SIG_sendvideoFrame(QImage))
             ,this,SLOT(slot_sendvideoFrame(QImage)));
-    connect(m_popen,SIGNAL(SIG_dealVideoFrameRq())
-            ,this,SLOT(slot_dealVideoFrameRq()));
 
 }
-
+std::map<int,std::string>  Camera::m_map[9];
 
 //检测摄像头驱动能否识别
 bool Camera::checkCameraAvailability()
@@ -43,6 +54,7 @@ bool Camera::checkCameraAvailability()
 Camera::~Camera()
 {
     qDebug()<<__func__;
+
     delete ui;
 }
 
@@ -62,16 +74,14 @@ void  Camera::closeEvent(QCloseEvent *event)
     }
 }
 
-void Camera::slot_setImage(QImage &img)
+void Camera::slot_setImage(int userid,QImage &img)
 {
+
+//  m_img = img;
     qDebug()<<__func__;
-    //qDebug()<<m_img;
-    qDebug()<<img;
-    //m_img = img;
     QPixmap pix = QPixmap :: fromImage(img);
-    //qDebug()<<m_img;
-    ui->second->setPixmap(pix);
-    ui->second->update();
+    m_user_label[userid]->setPixmap(pix);
+    m_user_label[userid]->update();
 }
 
 void Camera::paintEvent(QPaintEvent *event)
@@ -104,14 +114,16 @@ void Camera::paintEvent(QPaintEvent *event)
 
 void Camera::on_openvideo_clicked()
 {
-    m_pVideoRead ->slot_openVideo();
-    m_popen->slot_openVideo();
+    m_user_video[myid] ->slot_openVideo();
 }
 
+QString QByteArray_TO_QString(QByteArray BYTE){
+    return QString::fromLatin1(BYTE.toHex());
+}
 
 void Camera::on_closevideo_clicked()
 {
-      m_pVideoRead ->slot_closeVideo();
+    m_user_video[myid] ->slot_closeVideo();
 }
 
 
@@ -131,6 +143,34 @@ void Camera::slot_sendvideoFrame(QImage img)
       QByteArray ba;
       QBuffer qbuf(&ba); // QBuffer 与 QByteArray 字节数组联立联系
       img.save( &qbuf , "JPEG" , 50 ); //将图片的数据写入 ba
+
+//      QByteArray bt(ba.toStdString().c_str() ,ba.toStdString().size()) ;
+//      qDebug() << bt.size();//正确大小
+//      QString tsend = bt.toBase64();
+//     qDebug() << tsend.toStdString().size();//发出去的大小
+//      //切换回QByteArray的大小
+//      std::string base = tsend.toStdString();
+//      QString ttmp = QString::fromStdString(base);
+//      qDebug() << ttmp.size();
+//      QByteArray tmp = QByteArray::fromBase64(bt.toBase64().data());
+//      QString tmp1 = QString::fromLatin1(tmp);
+//      //QString tmp =QByteArray_TO_QString(QByteArray::fromBase64(bt.toBase64()));
+//      qDebug() << tmp1.size() ; // 回来的大小
+//      qDebug() << tmp1.toLatin1().toStdString().size() ; // 回来的 string 大小
+
+//      QImage iimg;
+//      iimg.loadFromData(QByteArray(tmp1.toLatin1().toStdString().c_str() , tmp1.toLatin1().toStdString().size()));
+//      qDebug() << iimg.size();
+
+
+//      QByteArray bz(bt.toStdString().c_str() ,bt.toStdString().size()) ;
+//      qDebug() << bz.size();
+//      QImage iiimg;
+//      iiimg.loadFromData(bz);
+//      qDebug() << iiimg.size();
+
+
+
 
       //写视频帧 发送
 
@@ -182,35 +222,67 @@ void Camera::slot_sendvideoFrame(QImage img)
       //qDebug()<<Video_Upload_SendInfo::Serialization(send).size();
       //qDebug()<<send.info.size();
       //NETPOST(VIDEO_UPLOAD_POST_URL,Video_Upload_SendInfo::Serialization(send));
-      QString ULret = NETPOST(VIDEO_UPLOAD_POST_URL , Video_Upload_SendInfo::Serialization(send));
-      Video_Upload_RecvInfo ulreinfo = Video_Upload_RecvInfo::Deserialization(ULret.toStdString());
-      /*qDebug() << "返回的请求状态 ： " << ulreinfo.status;
-      qDebug() << "返回的房间号 ： " << ulreinfo.roomId;
-      qDebug() << "返回的用户号 ： " << ulreinfo.userId;
-      qDebug() << "返回的时间 ： " << ulreinfo.min << "-" <<ulreinfo.sec << "-" << ulreinfo.sec;*/
+      std::thread tmpthread(NETPOST , VIDEO_UPLOAD_POST_URL , Video_Upload_SendInfo::Serialization(send));
+      tmpthread.detach();
+//      QString ULret = NETPOST(VIDEO_UPLOAD_POST_URL , Video_Upload_SendInfo::Serialization(send));
+//      Video_Upload_RecvInfo ulreinfo = Video_Upload_RecvInfo::Deserialization(ULret.toStdString());
+//      qDebug() << "返回的请求状态 ： " << ulreinfo.status;
+//      qDebug() << "返回的房间号 ： " << ulreinfo.roomId;
+//      qDebug() << "返回的用户号 ： " << ulreinfo.userId;
+//      qDebug() << "返回的时间 ： " << ulreinfo.min << "-" <<ulreinfo.sec << "-" << ulreinfo.msec;
 
 }
 
-void Camera::slot_dealVideoFrameRq()
+void Camera::slot_refresh(int userid,int tim)
 {
-      qDebug()<<__func__;
-      /*char *tmp = buf;
-      tmp+=sizeof(int);
-      int userId = *(int*)tmp;
-      tmp+=sizeof(int);
-      int roomId = *(int*)tmp;
-      tmp+=sizeof(int);
+      if(m_map[userid].size()==0)
+      {
+        return;
+      }
+      auto it =m_map[userid].lower_bound(tim);
+      if(it==m_map[userid].end())
+      {
+        it = m_map[userid].begin();
+      }
+      QByteArray bt((it->second).c_str() ,(it->second).size()) ;
 
-      tmp+=sizeof(int);
-      tmp+=sizeof(int);
-      tmp+=sizeof(int);
-
-      int datalen = len - 6*sizeof(int);
-      QByteArray bt(tmp,datalen);
       QImage img;
       img.loadFromData(bt);
+      Q_EMIT SIG_setImage(userid,img);
+}
 
-      slot_refreshVideo(img);*/
+void Camera::slot_dealVideoFrameRq(int userid , int tim)
+{
+      std::thread thr(deal_Net_work , userid , tim );
+      thr.detach();
+//      qDebug()<<__func__;
+
+
+//      QTime tm = QTime::currentTime();
+//      Video_Download_SendInfo sendinfo;
+//      sendinfo.min = tm.minute();
+//      sendinfo.sec = tm.second();
+//      sendinfo.msec = tm.msec();
+//      sendinfo.type = 1;
+//      sendinfo.roomId = 7;
+//      sendinfo.userId = 2;
+
+
+//      QString DLret = NETGET(GET_VIDEODL_URL(sendinfo));
+//      Video_Download_RecvInfo dlreinfo = Video_Download_RecvInfo::Deserialization(DLret.toStdString());
+//      qDebug()<<dlreinfo.info.size();
+
+//      QByteArray bt(dlreinfo.info.c_str() ,dlreinfo.info.size()) ;
+
+//      QImage img;
+//      img.loadFromData(bt);
+
+//      m_map[userid][tim] = QString::fromLatin1(bt).toLatin1().toStdString();
+}
+
+
+void Camera::deal_Net_work(int userid , int tim ){
+      qDebug()<<__func__;
       QTime tm = QTime::currentTime();
       Video_Download_SendInfo sendinfo;
       sendinfo.min = tm.minute();
@@ -220,36 +292,15 @@ void Camera::slot_dealVideoFrameRq()
       sendinfo.roomId = 7;
       sendinfo.userId = 2;
 
-
       QString DLret = NETGET(GET_VIDEODL_URL(sendinfo));
+      //qDebug()<<DLret.toStdString().size();
+
       Video_Download_RecvInfo dlreinfo = Video_Download_RecvInfo::Deserialization(DLret.toStdString());
-      /*qDebug() << "返回的请求状态 ： " << dlreinfo.status;
-      qDebug() << "返回的房间号 ： " << dlreinfo.roomId;
-      qDebug() << "返回的用户号 ： " << dlreinfo.userId;
-      qDebug() << "返回的时间 ： " << dlreinfo.min << "-" <<dlreinfo.sec << "-" << dlreinfo.sec;
-      qDebug()<< "返回的信息" <<QString().fromStdString(dlreinfo.info);*/
-      /*QByteArray ba;
-      QBuffer qbuf(&ba); // QBuffer 与 QByteArray 字节数组联立联系
-      img.save( &qbuf , "JPEG" , 50 ); //将图片的数据写入 ba*/
+      if(dlreinfo.status != 200) return;
+      QByteArray bt(dlreinfo.info.c_str() ,dlreinfo.info.size()) ;
 
-      QByteArray bt=QByteArray(dlreinfo.info.c_str(),dlreinfo.info.size());
       QImage img;
       img.loadFromData(bt);
-
-      //qDebug()<<bt.size();
-      //qDebug()<<img.size();
-      slot_setImage(img);
-      /*int datalen = len - 6*sizeof(int);
-      QByteArray bt(tmp,datalen);
-      QImage img;
-      img.loadFromData(bt);
-        */
-      //slot_refreshVideo(img);
-      /*QByteArray imageData = QByteArray::fromBase64(data.toLatin1());
-      QImage image;
-      image.loadFromData(imageData);
-      return image;*/
+      return;
+      Camera::m_map[userid][tim] = QString::fromLatin1(bt).toLatin1().toStdString();
 }
-
-
-

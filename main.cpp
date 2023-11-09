@@ -22,8 +22,9 @@ int main(int argc, char *argv[])
     //Ca_w.show();//显示窗口
 
     //简单通讯
+
+
     //qDebug()<<NETGET(TEST_GET_URL);
-    //qDebug()<<NETPOST(TEST_GET_URL , std::string("你好"));
 
     //序列化
     std::string echojson = Echo_SendInfo::Serialization( Echo_SendInfo({uint32_t(1),string("你好 - echo请求")}));
