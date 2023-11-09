@@ -19,6 +19,7 @@ QString NETGET(QString url){
         QVariant statusCodeV = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
         qDebug( "request protobufHttp found error ....code: %d %d\n", statusCodeV.toInt(), (int)reply->error());
         qDebug(qPrintable(reply->errorString()));
+        return "";
     }
 
     QByteArray response = reply->readAll();

@@ -65,6 +65,7 @@ void VideoRead::slot_getVideoFrame()
 
 void VideoRead::slot_Download()
 {
+    qDebug()<<__func__<<myid;
     QTime tm = QTime::currentTime();
     int timenum = tm.msec() + tm.second()*1000 + tm.minute()*60000;
     Q_EMIT SIG_dealVideoFrameRq(myid , timenum);
@@ -72,7 +73,7 @@ void VideoRead::slot_Download()
 
 
 void VideoRead::slot_torefresh(){
-    qDebug()<<__func__;
+    qDebug()<<__func__<<myid;
     QTime tm = QTime::currentTime();
     int timenum = tm.msec() + tm.second()*1000 + tm.minute()*60000;
     Q_EMIT SIG_refresh(myid , timenum);

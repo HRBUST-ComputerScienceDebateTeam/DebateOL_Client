@@ -7,7 +7,8 @@
 const int RETRY_TIMES = 3;
 
 //公网ip
-const QString PUBLIC_IP ="43.138.161.192";
+//const QString PUBLIC_IP ="43.138.161.192";
+const QString PUBLIC_IP ="110.42.98.27";
 
 //各个服务端口
 const QString TSET_GET_PORT  = "7100";

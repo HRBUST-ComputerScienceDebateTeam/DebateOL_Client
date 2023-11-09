@@ -25,7 +25,7 @@ Camera::Camera(QWidget *parent)
 //    m_popen = new VideoRead();
     m_user_label[1] = ui->me;
     m_user_label[2] = ui->second;
-    for(int i=1;i<9;i++)
+    for(int i=1;i<3;i++)
     {
         m_user_video[i] = new VideoRead(i , myid==i);
         connect(m_user_video[i],SIGNAL(SIG_refresh(int,int))
@@ -79,7 +79,10 @@ void Camera::slot_setImage(int userid,QImage &img)
 
 //  m_img = img;
     qDebug()<<__func__;
+    qDebug()<<img.size();
+    if(img.size() == QSize(0,0)) return;
     QPixmap pix = QPixmap :: fromImage(img);
+
     m_user_label[userid]->setPixmap(pix);
     m_user_label[userid]->update();
 }
@@ -240,10 +243,12 @@ void Camera::slot_refresh(int userid,int tim)
         return;
       }
       auto it =m_map[userid].lower_bound(tim);
-      if(it==m_map[userid].end())
+      if(it==m_map[userid].begin())
       {
-        it = m_map[userid].begin();
+        it = m_map[userid].end();
       }
+      --it;
+      qDebug()<<it->first;
       QByteArray bt((it->second).c_str() ,(it->second).size()) ;
 
       QImage img;
@@ -290,17 +295,20 @@ void Camera::deal_Net_work(int userid , int tim ){
       sendinfo.msec = tm.msec();
       sendinfo.type = 1;
       sendinfo.roomId = 7;
-      sendinfo.userId = 2;
+      sendinfo.userId = 1;
 
       QString DLret = NETGET(GET_VIDEODL_URL(sendinfo));
+      if(DLret == "") return;
       //qDebug()<<DLret.toStdString().size();
 
       Video_Download_RecvInfo dlreinfo = Video_Download_RecvInfo::Deserialization(DLret.toStdString());
       if(dlreinfo.status != 200) return;
       QByteArray bt(dlreinfo.info.c_str() ,dlreinfo.info.size()) ;
 
-      QImage img;
-      img.loadFromData(bt);
-      return;
+      //Camera::m_map[userid][1] = "1";
+      qDebug()<<userid;
+      qDebug()<<tim;
+      qDebug() << QString::fromLatin1(bt).toLatin1().toStdString().size();
+      qDebug() << m_map[userid].size();
       Camera::m_map[userid][tim] = QString::fromLatin1(bt).toLatin1().toStdString();
 }
