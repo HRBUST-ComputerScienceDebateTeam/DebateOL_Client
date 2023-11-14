@@ -50,12 +50,22 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         #camera
-        camera/camera.cpp camera/camera.h
+        #camera/camera.cpp
+        #camera/camera.h
+
         #mainwindow
-        mainwindow/mainwindow.cpp mainwindow/mainwindow.h
+        mainwindow/mainwindow.cpp
+        mainwindow/mainwindow.h
+
+        #room_main
+        Room_main/room_main.h
+        Room_main/room_main.cpp
+
         #ui
         ui//mainwindow.ui
         ui/camera.ui
+        ui/room_main.ui
+
         #pkg
         #json_config
         pkg/thrift_json/thrift_json_config.h
@@ -68,9 +78,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/web/web.h
 
         #video
-        pkg/Video/videoread.h
-        pkg/Video/videoread.cpp
-        pkg/Video/common.h
+        pkg/Video/videodeal.h
+        pkg/Video/videodeal.cpp
+        pkg/Video/video_config.h
+
+
+        #camera
+        pkg/Camera/camera.h
+        pkg/Camera/camera.cpp
 
         #config
         config.h
@@ -81,6 +96,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         #ckernel
         ckernel.cpp
         ckernel.h
+
+
+
 
     )
 

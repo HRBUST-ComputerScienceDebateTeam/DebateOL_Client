@@ -45,9 +45,12 @@ QString NETPOST(QString url , std::string data){
         //qDebug()<<data;
         QNetworkReply *reply = manager.post(request , qByteHttpData);
 
+
+
         QEventLoop loop;
         QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
         loop.exec();
+        return "";
 
         //错误处理
         if (reply->error() != QNetworkReply::NoError){

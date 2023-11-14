@@ -1,5 +1,5 @@
 #include "./mainwindow/mainwindow.h"
-#include "./camera/camera.h"//摄像头
+#include "./Room_main/room_main.h"
 
 #include "./config.h"
 #include "./ckernel.h"
