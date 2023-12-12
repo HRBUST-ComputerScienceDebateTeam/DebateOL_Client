@@ -27,8 +27,7 @@ using namespace cv;
 //图片的宽高
 #define IMAGE_WIDTH (240)
 #define IMAGE_HEIGHT (240)
-
-#define UPLOAD_RATE (10)
+#define UPLOAD_RATE (30)
 
 
 class Camera : public QObject

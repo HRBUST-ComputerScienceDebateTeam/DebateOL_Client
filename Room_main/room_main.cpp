@@ -80,6 +80,7 @@ void  Room_main::closeEvent(QCloseEvent *event)
     }
 }
 
+//对某个相框设置相片
 void Room_main::slot_setImage(int userid,QImage &img)
 {
     qDebug()<<__func__;
@@ -104,7 +105,7 @@ void Room_main::on_closevideo_clicked()
     m_camera->slot_closeCamera();
 }
 
-
+//上传
 void Room_main::slot_UploadFrame(QImage img)
 {
     qDebug()<<__func__;
@@ -117,6 +118,7 @@ void Room_main::slot_UploadFrame(QImage img)
     tmpthread.detach();
 }
 
+//刷新
 void Room_main::slot_RefreshFrame(int userid,int tim)
 {
     if(m_map[userid].size()==0)
@@ -137,6 +139,7 @@ void Room_main::slot_RefreshFrame(int userid,int tim)
     Q_EMIT SIG_setImage(userid,img);
 }
 
+//下载
 void Room_main::slot_DownloadFrame(int userid , int tim)
 {
     std::thread thr(deal_Net_work_Download , userid , tim );
@@ -160,7 +163,7 @@ void Room_main::deal_Net_work_Upload(QImage img ){
     send.msec = tm.msec();
     send.type = 1;
     send.roomId = 7;
-    send.userId = 1;
+    send.userId = 2;
     NETPOST(VIDEO_UPLOAD_POST_URL , Video_Upload_SendInfo::Serialization(send));
 }
 
@@ -175,7 +178,7 @@ void Room_main::deal_Net_work_Download(int userid , int tim ){
     sendinfo.msec = tm.msec();
     sendinfo.type = 1;
     sendinfo.roomId = 7;
-    sendinfo.userId = 1;
+    sendinfo.userId = 2;
 
     QString DLret = NETGET(GET_VIDEODL_URL(sendinfo));
     if(DLret == "") return;

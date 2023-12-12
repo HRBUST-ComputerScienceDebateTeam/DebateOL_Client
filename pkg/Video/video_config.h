@@ -11,9 +11,9 @@
 #include<QImage>
 #include<QTimer>
 using namespace cv;
-#define FRAME_RATE (10)
-#define Updata_RATE (30)
+#define FRAME_RATE (60)
 #define Download_RATE (15)
+#define UPLOAD_RATE (30)
 
 
 #endif // VIDEO_CONFIG_H
