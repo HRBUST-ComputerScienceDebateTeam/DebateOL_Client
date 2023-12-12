@@ -17,6 +17,7 @@ Room_main::Room_main(QWidget *parent)
 
     myid = 1;
     m_camera = new Camera;
+    m_audio = new Audio;
     m_user_label[1] = ui->me;
     m_user_label[2] = ui->second;
     for(int i=1;i<3;i++)
@@ -104,10 +105,23 @@ void Room_main::on_closevideo_clicked()
     m_camera->slot_closeCamera();
 }
 
+void Room_main::on_openaudio_clicked()
+{
+    qDebug()<<__func__;
+    m_audio->slot_openAudio();
+}
+
+void Room_main::on_closeaudio_clicked()
+{
+    m_audio->slot_closeAudio();
+}
+
+
+
 
 void Room_main::slot_UploadFrame(QImage img)
 {
-    qDebug()<<__func__;
+    //qDebug()<<__func__;
     QPixmap pix = QPixmap :: fromImage(img);
     //更新本地
     m_user_label[myid]->setPixmap(pix);
@@ -145,7 +159,7 @@ void Room_main::slot_DownloadFrame(int userid , int tim)
 
 
 void Room_main::deal_Net_work_Upload(QImage img ){
-    qDebug()<<__func__;
+    //qDebug()<<__func__;
     QByteArray ba;
     QBuffer qbuf(&ba); // QBuffer 与 QByteArray 字节数组联立联系
     img.save( &qbuf , "JPEG" , 50 ); //将图片的数据写入 ba
@@ -167,7 +181,7 @@ void Room_main::deal_Net_work_Upload(QImage img ){
 
 
 void Room_main::deal_Net_work_Download(int userid , int tim ){
-    qDebug()<<__func__;
+    //qDebug()<<__func__;
     QTime tm = QTime::currentTime();
     Video_Download_SendInfo sendinfo;
     sendinfo.min = tm.minute();
@@ -192,3 +206,4 @@ void Room_main::deal_Net_work_Download(int userid , int tim ){
     qDebug() << m_map[userid].size();
     Room_main::m_map[userid][tim] = QString::fromLatin1(bt).toLatin1().toStdString();
 }
+

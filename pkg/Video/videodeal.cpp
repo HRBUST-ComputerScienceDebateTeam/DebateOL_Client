@@ -44,7 +44,7 @@ VideoDeal::~VideoDeal()
 
 void VideoDeal::slot_DownloadFrame()
 {
-    qDebug()<<__func__<<myid;
+    //qDebug()<<__func__<<myid;
     QTime tm = QTime::currentTime();
     int timenum = tm.msec() + tm.second()*1000 + tm.minute()*60000;
     Q_EMIT SIG_DownloadFrame(myid , timenum);
@@ -52,7 +52,7 @@ void VideoDeal::slot_DownloadFrame()
 
 
 void VideoDeal::slot_RefreshFrame(){
-    qDebug()<<__func__<<myid;
+    //qDebug()<<__func__<<myid;
     QTime tm = QTime::currentTime();
     int timenum = tm.msec() + tm.second()*1000 + tm.minute()*60000;
     Q_EMIT SIG_RefreshFrame(myid , timenum);

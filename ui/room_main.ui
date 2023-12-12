@@ -85,6 +85,32 @@
      <string>开启摄像头</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="openaudio">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>350</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>打开声音</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="closeaudio">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>350</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>关闭声音</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
