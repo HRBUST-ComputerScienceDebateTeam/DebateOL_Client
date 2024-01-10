@@ -14,9 +14,16 @@
 #include"../pkg/Video/videodeal.h"
 #include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
 #include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
+<<<<<<< HEAD
 //#include"F:/opencv-build/opencv2/cvconfig.h"
 #include"../pkg/Camera/camera.h"
 #include"../pkg/Audio/Audio.h"
+=======
+#include"../pkg/audioread/audioread.h"
+#include"../pkg/audiowrite/audiowrite.h"
+//#include"F:/opencv-build/opencv2/cvconfig.h"
+#include"../pkg/Camera/camera.h"
+>>>>>>> 148c178 ([音频实现])
 //#include"F:/opencv-build/opencv2/opencv_modules.hpp"
 #include<qpainter.h>
 #include<QBuffer>
@@ -55,6 +62,8 @@ private slots:
     void on_openvideo_clicked();
     void on_closevideo_clicked();
 
+    void on_pb_start_clicked();
+    void on_pb_pause_clicked();
 
     void on_openaudio_clicked();
 
@@ -81,6 +90,9 @@ private:
     Audio * m_audio;
     QLabel * m_user_label[9];
     VideoDeal * m_user_video[9];
+
+    AudioRead *m_pAudioRead;
+    AudioWrite *m_pAudioWrite;
 };
 
 #endif // ROOM_MAIN_H

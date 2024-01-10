@@ -5,6 +5,8 @@
 #include"../pkg/thrift_json/thrift_json_config.h"
 #include"../pkg/web/web.h"
 #include <thread>
+#include"../pkg/audioread/audioread.h"
+#include"../pkg/audiowrite/audiowrite.h"
 
 #include"../config.h"
 
@@ -14,6 +16,15 @@ Room_main::Room_main(QWidget *parent)
     , ui(new Ui::Room_main)
 {
     ui->setupUi(this);
+    //音频
+
+    m_pAudioRead = new AudioRead;
+
+    m_pAudioWrite = new AudioWrite;
+
+    connect(m_pAudioRead,SIGNAL(SIG_audioFrame(QByteArray))
+            ,m_pAudioWrite,SLOT(slot_playAudio(QByteArray)));
+
 
     myid = 1;
     m_camera = new Camera;
@@ -207,3 +218,17 @@ void Room_main::deal_Net_work_Download(int userid , int tim ){
     Room_main::m_map[userid][tim] = QString::fromLatin1(bt).toLatin1().toStdString();
 }
 
+<<<<<<< HEAD
+=======
+void Room_main::on_pb_start_clicked()
+{
+    m_pAudioRead->start();
+}
+
+
+void Room_main::on_pb_pause_clicked()
+{
+    m_pAudioRead->pause();
+}
+
+>>>>>>> 148c178 ([音频实现])

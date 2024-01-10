@@ -101,7 +101,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ckernel.cpp
         ckernel.h
 
+        #Audio
+        pkg/audioread/audioread.h
+        pkg/audioread/audioread.cpp
+        pkg/audiowrite/audiowrite.h
+        pkg/audiowrite/audiowrite.cpp
 
+        #world
+        world.h
 
 
     )
