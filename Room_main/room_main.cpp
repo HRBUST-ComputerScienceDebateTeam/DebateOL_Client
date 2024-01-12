@@ -5,8 +5,28 @@
 #include"../pkg/thrift_json/thrift_json_config.h"
 #include"../pkg/web/web.h"
 #include <thread>
+#include <mutex>
 
 #include"../config.h"
+
+int now_threadnum = 0;
+std::mutex Lock;
+void Add_threadnum(){
+    Lock.lock();
+    now_threadnum++;
+    Lock.unlock();
+}
+void Sub_threadnum(){
+    Lock.lock();
+    now_threadnum--;
+    Lock.unlock();
+}
+int Get_threadnum(){
+    Lock.lock();
+    int val = now_threadnum;
+    Lock.unlock();
+    return val;
+}
 
 
 Room_main::Room_main(QWidget *parent)
@@ -17,6 +37,7 @@ Room_main::Room_main(QWidget *parent)
 
     myid = 1;
     m_camera = new Camera;
+    m_audio = new Audio;
     m_user_label[1] = ui->me;
     m_user_label[2] = ui->second;
     for(int i=1;i<3;i++)
@@ -59,15 +80,12 @@ void Room_main::paintEvent(QPaintEvent *event)
 //消类
 Room_main::~Room_main()
 {
-    qDebug()<<__func__;
-
     delete ui;
 }
 
 //关闭事件
 void  Room_main::closeEvent(QCloseEvent *event)
 {
-    qDebug()<<__func__;
     if(QMessageBox::question(this,"提示","是否退出？")
         == QMessageBox::Yes)
     {
@@ -83,13 +101,12 @@ void  Room_main::closeEvent(QCloseEvent *event)
 //对某个相框设置相片
 void Room_main::slot_setImage(int userid,QImage &img)
 {
-    qDebug()<<__func__;
-    qDebug()<<img.size();
     if(img.size() == QSize(0,0)) return;
     QPixmap pix = QPixmap :: fromImage(img);
 
     m_user_label[userid]->setPixmap(pix);
     m_user_label[userid]->update();
+    qDebug() << "现在的线程数量：" << Get_threadnum();
 }
 
 
@@ -105,17 +122,33 @@ void Room_main::on_closevideo_clicked()
     m_camera->slot_closeCamera();
 }
 
+
+//声音采集开启
+void Room_main::on_openaudio_clicked()
+{
+    qDebug()<<__func__;
+    m_audio->slot_openAudio();
+}
+
+//声音采集关闭
+void Room_main::on_closeaudio_clicked()
+{
+    m_audio->slot_closeAudio();
+}
+
 //上传
 void Room_main::slot_UploadFrame(QImage img)
 {
-    qDebug()<<__func__;
+
+    //qDebug()<<__func__;
     QPixmap pix = QPixmap :: fromImage(img);
     //更新本地
     m_user_label[myid]->setPixmap(pix);
     m_user_label[myid]->update();
-
+    if(Get_threadnum() >= 13) return;
     std::thread tmpthread(deal_Net_work_Upload , img);
     tmpthread.detach();
+    Add_threadnum();
 }
 
 //刷新
@@ -142,13 +175,15 @@ void Room_main::slot_RefreshFrame(int userid,int tim)
 //下载
 void Room_main::slot_DownloadFrame(int userid , int tim)
 {
+    if(Get_threadnum() >= 13) return;
     std::thread thr(deal_Net_work_Download , userid , tim );
     thr.detach();
+    Add_threadnum();
 }
 
 
 void Room_main::deal_Net_work_Upload(QImage img ){
-    qDebug()<<__func__;
+    //qDebug()<<__func__;
     QByteArray ba;
     QBuffer qbuf(&ba); // QBuffer 与 QByteArray 字节数组联立联系
     img.save( &qbuf , "JPEG" , 50 ); //将图片的数据写入 ba
@@ -165,12 +200,13 @@ void Room_main::deal_Net_work_Upload(QImage img ){
     send.roomId = 7;
     send.userId = 2;
     NETPOST(VIDEO_UPLOAD_POST_URL , Video_Upload_SendInfo::Serialization(send));
+    Sub_threadnum();
 }
 
 
 
 void Room_main::deal_Net_work_Download(int userid , int tim ){
-    qDebug()<<__func__;
+    //qDebug()<<__func__;
     QTime tm = QTime::currentTime();
     Video_Download_SendInfo sendinfo;
     sendinfo.min = tm.minute();
@@ -181,17 +217,25 @@ void Room_main::deal_Net_work_Download(int userid , int tim ){
     sendinfo.userId = 2;
 
     QString DLret = NETGET(GET_VIDEODL_URL(sendinfo));
-    if(DLret == "") return;
+    if(DLret == "") {
+        Sub_threadnum();
+        return;
+    }
     //qDebug()<<DLret.toStdString().size();
 
     Video_Download_RecvInfo dlreinfo = Video_Download_RecvInfo::Deserialization(DLret.toStdString());
-    if(dlreinfo.status != 200) return;
+    if(dlreinfo.status != 200) {
+        Sub_threadnum();
+        return;
+    }
     QByteArray bt(dlreinfo.info.c_str() ,dlreinfo.info.size()) ;
 
     //Room_main::m_map[userid][1] = "1";
-    qDebug()<<userid;
-    qDebug()<<tim;
-    qDebug() << QString::fromLatin1(bt).toLatin1().toStdString().size();
-    qDebug() << m_map[userid].size();
+//    qDebug()<<userid;
+//    qDebug()<<tim;
+//    qDebug() << QString::fromLatin1(bt).toLatin1().toStdString().size();
+//    qDebug() << m_map[userid].size();
     Room_main::m_map[userid][tim] = QString::fromLatin1(bt).toLatin1().toStdString();
+    Sub_threadnum();
 }
+
