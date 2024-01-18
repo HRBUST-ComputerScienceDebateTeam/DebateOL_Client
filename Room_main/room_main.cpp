@@ -5,8 +5,9 @@
 #include"../pkg/thrift_json/thrift_json_config.h"
 #include"../pkg/web/web.h"
 #include <thread>
+#include"../pkg/audioread/audioread.h"
+#include"../pkg/audiowrite/audiowrite.h"
 #include <mutex>
-
 #include"../config.h"
 
 
@@ -17,10 +18,18 @@ Room_main::Room_main(QWidget *parent)
     , ui(new Ui::Room_main)
 {
     ui->setupUi(this);
+    //音频
+
+    m_pAudioRead = new AudioRead;
+
+    m_pAudioWrite = new AudioWrite;
+
+    connect(m_pAudioRead,SIGNAL(SIG_audioFrame(QByteArray))
+            ,m_pAudioWrite,SLOT(slot_playAudio(QByteArray)));
+
 
     myid = 1;
     m_camera = new Camera;
-    m_audio = new Audio;
     m_user_label[1] = ui->me;
     m_user_label[2] = ui->second;
     for(int i=1;i<3;i++)
@@ -108,19 +117,6 @@ void Room_main::on_closevideo_clicked()
 }
 
 
-//声音采集开启
-void Room_main::on_openaudio_clicked()
-{
-    qDebug()<<__func__;
-    m_audio->slot_openAudio();
-}
-
-//声音采集关闭
-void Room_main::on_closeaudio_clicked()
-{
-    m_audio->slot_closeAudio();
-}
-
 //上传
 void Room_main::slot_UploadFrame(QImage img)
 {
@@ -193,6 +189,17 @@ void Room_main::slot_DownloadFrame(int userid , int tim)
     MYNET * np = MYNET::getinstance();
 
     np->NETGET(np->GET_VIDEODL_URL(sendinfo) , sendinfo.sendtime ,  &Room_main::SIGDEAL_DownloadFrame);
+}
+
+void Room_main::on_pb_start_clicked()
+{
+    m_pAudioRead->start();
+}
+
+
+void Room_main::on_pb_pause_clicked()
+{
+    m_pAudioRead->pause();
 }
 
 
