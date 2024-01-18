@@ -12,13 +12,13 @@
 #include<QCloseEvent>
 #include<Qlabel>
 #include"../pkg/Video/videodeal.h"
-#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
-#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
+//#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
+//#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
 #include"../pkg/audioread/audioread.h"
 #include"../pkg/audiowrite/audiowrite.h"
-//#include"F:/opencv-build/opencv2/cvconfig.h"
+#include"F:/opencv-build/opencv2/cvconfig.h"
+#include"F:/opencv-build/opencv2/opencv_modules.hpp"
 #include"../pkg/Camera/camera.h"
-//#include"F:/opencv-build/opencv2/opencv_modules.hpp"
 #include<qpainter.h>
 #include<QBuffer>
 #include<QTime>
@@ -70,6 +70,8 @@ public:
     int myid;
     //本地更新队列
     static std::map<int,std::string>  m_map[9];
+    static int pos_id[9];
+    static int id_pos[9];
 
 private:
     Ui::Room_main *ui;
