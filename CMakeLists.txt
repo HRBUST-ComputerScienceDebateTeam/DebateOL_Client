@@ -102,6 +102,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         #ckernel
         ckernel.cpp
         ckernel.h
+        pkg/thrift_json/thrift_json_audio.cpp
 
         #Audio
         pkg/audioread/audioread.h

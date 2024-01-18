@@ -60,10 +60,9 @@ private slots:
     void on_pb_pause_clicked();
 
 
-public:
-    //线程服务函数
-    static void deal_Net_work_Download(int userid , int tim);
-    static void deal_Net_work_Upload(QImage img );
+public slots:
+    void* SIGDEAL_DownloadFrame(void *);
+    void* SIGDEAL_UploadFrame(void *);
 
 
 public:

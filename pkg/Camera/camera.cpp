@@ -1,5 +1,5 @@
 #include "./camera.h"
-
+#include "../Video/video_config.h"
 Camera::Camera(QObject *parent)
     : QObject{parent}
 {
@@ -35,7 +35,7 @@ bool Camera::checkCameraAvailability()
 //采集摄像头
 void Camera::slot_getCameraFrame()
 {
-    qDebug()<<__func__;
+    //qDebug()<<__func__;
     Mat frame;
     if(!cap.read(frame))
     {
@@ -56,7 +56,7 @@ void Camera::slot_getCameraFrame()
 //打开摄像头
 void Camera::slot_openCamera()
 {
-    qDebug()<<__func__ ;
+    //qDebug()<<__func__ ;
     m_timer_upload->start(1000/UPLOAD_RATE - 10);
 
     //打开摄像头

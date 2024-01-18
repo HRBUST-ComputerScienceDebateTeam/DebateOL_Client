@@ -28,8 +28,6 @@ using namespace cv;
 #define IMAGE_WIDTH (240)
 #define IMAGE_HEIGHT (240)
 
-#define UPLOAD_RATE (10)
-
 
 class Camera : public QObject
 {

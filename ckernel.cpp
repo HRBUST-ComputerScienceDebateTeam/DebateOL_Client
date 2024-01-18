@@ -25,4 +25,3 @@ void Ckernel::slot_destory()
         m_room = NULL;
     }
 }
-

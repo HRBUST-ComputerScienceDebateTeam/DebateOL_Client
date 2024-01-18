@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Camera</class>
@@ -139,3 +140,5 @@
  <resources/>
  <connections/>
 </ui>
+=======
+>>>>>>> 3f3518217e08e0a3fbab33e7b339bef717cc1d94

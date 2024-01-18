@@ -29,4 +29,22 @@ const QString ECHO_POST_URL =   "http://" + PUBLIC_IP + ":" + ECHO_POST_PORT +  
 const QString VIDEO_UPLOAD_POST_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST_PORT +  VIDEO_UPLOAD_POST_PATH;
 const QString VIDEO_CLEAN_POST_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST_PORT +  VIDEO_CLEAN_POST_PATH;
 const QString VIDEO_DOWNLOAD_GET_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST_PORT +  VIDEO_DOWNLOAD_GET_PATH;
+
+//net 事件注册表大小
+const int MAX_EVENTNUM = 3600000 + 10;
+
+
+//typeid
+
+const int Video_Upload_SendInfo_TypeId = 101;
+const int Video_Upload_RecvInfo_TypeId = 102;
+const int Video_Download_SendInfo_TypeId = 103;
+const int Video_Download_RecvInfo_TypeId = 104;
+const int Video_Clean_SendInfo_TypeId = 105;
+
+const int Audio_Upload_SendInfo_TypeId = 201;
+const int Audio_Upload_RecvInfo_TypeId = 202;
+const int Audio_Download_SendInfo_TypeId = 203;
+const int Audio_Download_RecvInfo_TypeId = 204;
+const int Audio_Clean_SendInfo_TypeId = 205;
 #endif
