@@ -12,6 +12,10 @@
 
 
 
+std::map<int,std::string>  Room_main::m_map[9];
+int Room_main::pos_id[9] = {0 , 1 , 3};
+int Room_main::id_pos[9] = {0 , 1 , 2};
+
 
 Room_main::Room_main(QWidget *parent)
     : QMainWindow(parent)
@@ -28,7 +32,7 @@ Room_main::Room_main(QWidget *parent)
             ,m_pAudioWrite,SLOT(slot_playAudio(QByteArray)));
 
 
-    myid = 1;
+    myid = 2;
     m_camera = new Camera;
     m_user_label[1] = ui->me;
     m_user_label[2] = ui->second;
@@ -45,8 +49,8 @@ Room_main::Room_main(QWidget *parent)
     connect( m_camera,SIGNAL(SIG_UploadFrame(QImage))
             ,this,SLOT(slot_UploadFrame(QImage)));
 
+
 }
-std::map<int,std::string>  Room_main::m_map[9];
 
 void Room_main::paintEvent(QPaintEvent *event)
 {
@@ -95,7 +99,6 @@ void Room_main::slot_setImage(int userid,QImage &img)
 {
     if(img.size() == QSize(0,0)) return;
     QPixmap pix = QPixmap :: fromImage(img);
-
     m_user_label[userid]->setPixmap(pix);
     m_user_label[userid]->update();
 
@@ -138,8 +141,8 @@ void Room_main::slot_UploadFrame(QImage img)
     send.sec = tm.second();
     send.msec = tm.msec();
     send.type = Video_Upload_SendInfo_TypeId;
-    send.roomId = 7;
-    send.userId = 2;
+    send.roomId = 10;
+    send.userId = pos_id[myid];
     send.sendtime = send.min*60000 + send.sec * 10000 + send.msec;
     MYNET * np = MYNET::getinstance();
     np->Init(this);
@@ -181,8 +184,8 @@ void Room_main::slot_DownloadFrame(int userid , int tim)
     sendinfo.sec = tm.second();
     sendinfo.msec = tm.msec();
     sendinfo.type = Video_Download_SendInfo_TypeId;
-    sendinfo.roomId = 7;
-    sendinfo.userId = 2;
+    sendinfo.roomId = 10;
+    sendinfo.userId = pos_id[userid];
     sendinfo.sendtime = sendinfo.min*60000 + sendinfo.sec*1000 + sendinfo.msec;
 
     MYNET::Init(this);
@@ -214,7 +217,7 @@ void* Room_main::SIGDEAL_DownloadFrame(void * arg){
     }
     QByteArray bt(dlreinfo->info.c_str() ,dlreinfo->info.size()) ;
     //cout << QString::fromLatin1(bt).toLatin1().toStdString().length() <<endl;
-    Room_main::m_map[dlreinfo->userId][dlreinfo->min*60000 + dlreinfo->sec*1000 + dlreinfo->msec] = QString::fromLatin1(bt).toLatin1().toStdString();
+    Room_main::m_map[id_pos[dlreinfo->userId]][dlreinfo->min*60000 + dlreinfo->sec*1000 + dlreinfo->msec] = QString::fromLatin1(bt).toLatin1().toStdString();
     qDebug() <<QDateTime::currentDateTime().toString("hh:mm:ss.zzz ") << "插入了" << QString("%1:%2:%3").arg(dlreinfo->min).arg(dlreinfo->sec).arg(dlreinfo->msec) << "的照片";
     delete dlreinfo;
     qDebug() <<QDateTime::currentDateTime().toString("hh:mm:ss.zzz ") << "下载成功";
