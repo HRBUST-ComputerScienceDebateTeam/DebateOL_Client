@@ -3,6 +3,7 @@
 
 #include<QObject>
 #include"../../world.h"
+//#include"../../tttmp.cpp"
 
 class AudioRead: public QObject
 {

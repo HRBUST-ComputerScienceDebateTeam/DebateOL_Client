@@ -28,7 +28,6 @@ Room_main::Room_main(QWidget *parent)
 
     myid = 1;
     m_camera = new Camera;
-    m_audio = new Audio;
     m_user_label[1] = ui->me;
     m_user_label[2] = ui->second;
     for(int i=1;i<3;i++)
@@ -116,16 +115,6 @@ void Room_main::on_closevideo_clicked()
     m_camera->slot_closeCamera();
 }
 
-void Room_main::on_openaudio_clicked()
-{
-    qDebug()<<__func__;
-    m_audio->slot_openAudio();
-}
-
-void Room_main::on_closeaudio_clicked()
-{
-    m_audio->slot_closeAudio();
-}
 
 
 
@@ -218,8 +207,6 @@ void Room_main::deal_Net_work_Download(int userid , int tim ){
     Room_main::m_map[userid][tim] = QString::fromLatin1(bt).toLatin1().toStdString();
 }
 
-<<<<<<< HEAD
-=======
 void Room_main::on_pb_start_clicked()
 {
     m_pAudioRead->start();
@@ -231,4 +218,3 @@ void Room_main::on_pb_pause_clicked()
     m_pAudioRead->pause();
 }
 
->>>>>>> 148c178 ([音频实现])

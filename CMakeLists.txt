@@ -43,6 +43,7 @@ set(PROJECT_SOURCES
     main.cpp
     ckernel.h
     ckernel.cpp
+    tttmp.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -65,6 +66,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ui//mainwindow.ui
         ui/camera.ui
         ui/room_main.ui
+
 
         #pkg
         #json_config
@@ -109,7 +111,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         #world
         world.h
-
 
     )
 

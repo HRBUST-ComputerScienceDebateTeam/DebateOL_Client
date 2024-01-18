@@ -2,7 +2,6 @@
 
 
 
-
 AudioRead::AudioRead(QObject *parent) : QObject(parent)
 {
     //speex 初始化
@@ -52,8 +51,8 @@ void AudioRead::ReadMore()
         return;
     }
     qint64 l = m_buffer_in->read(m_buffer.data(), 640);
-    QByteArray frame;
 
+    QByteArray frame;
     frame.append(m_buffer.data(),640);
     Q_EMIT SIG_audioFrame( frame );
 

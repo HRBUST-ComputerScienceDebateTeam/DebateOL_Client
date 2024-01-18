@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <vcruntime_string.h>
+//#include <vcruntime_string.h>
 
 #define         SIGN_BIT        (0x80)      /* Sign bit for a A-law byte. */
 #define         QUANT_MASK      (0xf)       /* Quantization field mask. */

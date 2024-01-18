@@ -85,34 +85,16 @@
      <string>开启摄像头</string>
     </property>
    </widget>
-<<<<<<< HEAD
-   <widget class="QPushButton" name="openaudio">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>350</y>
-=======
    <widget class="QPushButton" name="pb_start">
     <property name="geometry">
      <rect>
       <x>290</x>
       <y>20</y>
->>>>>>> 148c178 ([音频实现])
       <width>80</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-<<<<<<< HEAD
-     <string>打开声音</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="closeaudio">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>350</y>
-=======
      <string>开启麦克风</string>
     </property>
    </widget>
@@ -121,17 +103,12 @@
      <rect>
       <x>380</x>
       <y>20</y>
->>>>>>> 148c178 ([音频实现])
       <width>80</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-<<<<<<< HEAD
-     <string>关闭声音</string>
-=======
      <string>关闭麦克风</string>
->>>>>>> 148c178 ([音频实现])
     </property>
    </widget>
   </widget>
