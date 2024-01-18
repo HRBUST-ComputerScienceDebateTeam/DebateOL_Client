@@ -13,8 +13,8 @@
 
 
 std::map<int,std::string>  Room_main::m_map[9];
-int Room_main::pos_id[9] = {0 , 1 , 3};
-int Room_main::id_pos[9] = {0 , 1 , 2};
+int Room_main::pos_id[9] = {/*0*/0 , /*1*/1 , /*2*/3 , /*3*/0 , /*4*/0 , /*5*/0 , /*6*/0 , /*7*/0 , /*8*/0  };
+int Room_main::id_pos[9] = {/*0*/0 , /*1*/1 , /*2*/0 , /*3*/2 , /*4*/0 , /*5*/0 , /*6*/0 , /*7*/0 , /*8*/0 };
 
 
 Room_main::Room_main(QWidget *parent)
@@ -32,13 +32,14 @@ Room_main::Room_main(QWidget *parent)
             ,m_pAudioWrite,SLOT(slot_playAudio(QByteArray)));
 
 
-    myid = 2;
+    mypos = 2;
+    myroomid = 10;
     m_camera = new Camera;
     m_user_label[1] = ui->me;
     m_user_label[2] = ui->second;
     for(int i=1;i<3;i++)
     {
-        m_user_video[i] = new VideoDeal(i , myid==i);
+        m_user_video[i] = new VideoDeal(i , mypos==i);
         connect(m_user_video[i],SIGNAL(SIG_RefreshFrame(int,int))
                 ,this,SLOT(slot_RefreshFrame(int,int)));
         connect(m_user_video[i],SIGNAL(SIG_DownloadFrame(int ,int))
@@ -95,12 +96,12 @@ void  Room_main::closeEvent(QCloseEvent *event)
 }
 
 //对某个相框设置相片
-void Room_main::slot_setImage(int userid,QImage &img)
+void Room_main::slot_setImage(int userpos,QImage &img)
 {
     if(img.size() == QSize(0,0)) return;
     QPixmap pix = QPixmap :: fromImage(img);
-    m_user_label[userid]->setPixmap(pix);
-    m_user_label[userid]->update();
+    m_user_label[userpos]->setPixmap(pix);
+    m_user_label[userpos]->update();
 
     qDebug() <<QDateTime::currentDateTime().toString("hh:mm:ss.zzz ") << "更新成功";
 
@@ -126,8 +127,8 @@ void Room_main::slot_UploadFrame(QImage img)
     //qDebug()<<__func__;
     QPixmap pix = QPixmap :: fromImage(img);
     //更新本地
-    m_user_label[myid]->setPixmap(pix);
-    m_user_label[myid]->update();
+    m_user_label[mypos]->setPixmap(pix);
+    m_user_label[mypos]->update();
     QByteArray ba;
     QBuffer qbuf(&ba); // QBuffer 与 QByteArray 字节数组联立联系
     img.save( &qbuf , "JPEG" , 50 ); //将图片的数据写入 ba
@@ -141,8 +142,8 @@ void Room_main::slot_UploadFrame(QImage img)
     send.sec = tm.second();
     send.msec = tm.msec();
     send.type = Video_Upload_SendInfo_TypeId;
-    send.roomId = 10;
-    send.userId = pos_id[myid];
+    send.roomId = myroomid;
+    send.userId = pos_id[mypos];
     send.sendtime = send.min*60000 + send.sec * 10000 + send.msec;
     MYNET * np = MYNET::getinstance();
     np->Init(this);
@@ -152,16 +153,16 @@ void Room_main::slot_UploadFrame(QImage img)
 }
 
 //刷新
-void Room_main::slot_RefreshFrame(int userid,int tim)
+void Room_main::slot_RefreshFrame(int userpos,int tim)
 {
-    if(m_map[userid].size()==0)
+    if(m_map[pos_id[userpos]].size()==0)
     {
         return;
     }
-    auto it =m_map[userid].lower_bound(tim);
-    if(it==m_map[userid].begin())
+    auto it =m_map[pos_id[userpos]].lower_bound(tim);
+    if(it==m_map[pos_id[userpos]].begin())
     {
-        it = m_map[userid].end();
+        it = m_map[pos_id[userpos]].end();
     }
     --it;
 
@@ -169,13 +170,13 @@ void Room_main::slot_RefreshFrame(int userid,int tim)
     QImage img;
     img.loadFromData(bt);
     //更新本地照片
-    Q_EMIT SIG_setImage(userid,img);
+    Q_EMIT SIG_setImage(userpos,img);
 }
 
 //下载
-void Room_main::slot_DownloadFrame(int userid , int tim)
+void Room_main::slot_DownloadFrame(int userpos , int tim)
 {
-//    std::thread thr(deal_Net_work_Download , userid , tim );
+//    std::thread thr(deal_Net_work_Download , userpos , tim );
 //    thr.detach();
     //qDebug()<<__func__;
     QTime tm = QTime::currentTime();
@@ -184,8 +185,8 @@ void Room_main::slot_DownloadFrame(int userid , int tim)
     sendinfo.sec = tm.second();
     sendinfo.msec = tm.msec();
     sendinfo.type = Video_Download_SendInfo_TypeId;
-    sendinfo.roomId = 10;
-    sendinfo.userId = pos_id[userid];
+    sendinfo.roomId = myroomid;
+    sendinfo.userId = pos_id[userpos];
     sendinfo.sendtime = sendinfo.min*60000 + sendinfo.sec*1000 + sendinfo.msec;
 
     MYNET::Init(this);
@@ -217,7 +218,7 @@ void* Room_main::SIGDEAL_DownloadFrame(void * arg){
     }
     QByteArray bt(dlreinfo->info.c_str() ,dlreinfo->info.size()) ;
     //cout << QString::fromLatin1(bt).toLatin1().toStdString().length() <<endl;
-    Room_main::m_map[id_pos[dlreinfo->userId]][dlreinfo->min*60000 + dlreinfo->sec*1000 + dlreinfo->msec] = QString::fromLatin1(bt).toLatin1().toStdString();
+    Room_main::m_map[dlreinfo->userId][dlreinfo->min*60000 + dlreinfo->sec*1000 + dlreinfo->msec] = QString::fromLatin1(bt).toLatin1().toStdString();
     qDebug() <<QDateTime::currentDateTime().toString("hh:mm:ss.zzz ") << "插入了" << QString("%1:%2:%3").arg(dlreinfo->min).arg(dlreinfo->sec).arg(dlreinfo->msec) << "的照片";
     delete dlreinfo;
     qDebug() <<QDateTime::currentDateTime().toString("hh:mm:ss.zzz ") << "下载成功";

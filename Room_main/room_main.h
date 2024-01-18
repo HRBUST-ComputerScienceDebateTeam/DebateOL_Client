@@ -34,7 +34,7 @@ class Room_main : public QMainWindow
 
 signals:
     void SIG_close();
-    void SIG_setImage(int userid,QImage& img);
+    void SIG_setImage(int userpos,QImage& img);
 
 public:
     explicit Room_main(QWidget *parent = nullptr);
@@ -43,13 +43,13 @@ public:
 
 public slots:
     //绘图相关
-    void slot_setImage(int userid,QImage& img);
+    void slot_setImage(int userpos,QImage& img);
     void paintEvent(QPaintEvent *event);
 
     //照片 上传下载更新相关
     void slot_UploadFrame(QImage img);
-    void slot_DownloadFrame(int userid ,int tim);
-    void slot_RefreshFrame(int userid,int tim);
+    void slot_DownloadFrame(int userpos ,int tim);
+    void slot_RefreshFrame(int userpos,int tim);
 
 private slots:
     //控制相关
@@ -67,7 +67,12 @@ public slots:
 
 public:
     //使用者辩位
-    int myid;
+    int mypos;
+
+    //房间号
+    int myroomid;
+
+
     //本地更新队列
     static std::map<int,std::string>  m_map[9];
     static int pos_id[9];

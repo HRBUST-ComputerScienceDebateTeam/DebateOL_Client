@@ -18,15 +18,15 @@ public:
     ~VideoDeal();
 
 signals:
-    void SIG_DownloadFrame(int userid ,int tim);
-    void SIG_RefreshFrame(int userid,int tim);
+    void SIG_DownloadFrame(int userpos ,int tim);
+    void SIG_RefreshFrame(int userpos,int tim);
 
 public slots:
     void slot_RefreshFrame();
     void slot_DownloadFrame();
 
 private:
-    int myid;
+    int mypos;
     bool is_host;
 
     QTimer *m_timer_toRefresh;

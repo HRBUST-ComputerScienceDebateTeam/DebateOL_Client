@@ -4,11 +4,11 @@
 #include<QTime>
 
 
-VideoDeal::VideoDeal(int id , bool ishost,QObject *parent)
+VideoDeal::VideoDeal(int pos , bool ishost,QObject *parent)
     : QObject{parent}
 {
 
-    myid = id;
+    mypos = pos;
     is_host = ishost;
 
     if(is_host==false){
@@ -44,18 +44,18 @@ VideoDeal::~VideoDeal()
 
 void VideoDeal::slot_DownloadFrame()
 {
-    //qDebug()<<__func__<<myid;
+    //qDebug()<<__func__<<mypos;
     QTime tm = QTime::currentTime();
     int timenum = tm.msec() + tm.second()*1000 + tm.minute()*60000;
-    Q_EMIT SIG_DownloadFrame(myid , timenum);
+    Q_EMIT SIG_DownloadFrame(mypos , timenum);
 }
 
 
 void VideoDeal::slot_RefreshFrame(){
-    //qDebug()<<__func__<<myid;
+    //qDebug()<<__func__<<mypos;
     QTime tm = QTime::currentTime();
     int timenum = tm.msec() + tm.second()*1000 + tm.minute()*60000;
-    Q_EMIT SIG_RefreshFrame(myid , timenum);
+    Q_EMIT SIG_RefreshFrame(mypos , timenum);
 }
 
 
