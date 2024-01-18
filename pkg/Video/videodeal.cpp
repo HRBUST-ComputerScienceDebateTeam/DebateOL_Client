@@ -15,7 +15,7 @@ VideoDeal::VideoDeal(int id , bool ishost,QObject *parent)
         m_timer_toRefresh = new QTimer;
         connect( m_timer_toRefresh , SIGNAL(timeout())
                 ,this , SLOT(slot_RefreshFrame()));
-        m_timer_toRefresh->start(1000/Updata_RATE - 10);
+        m_timer_toRefresh->start(1000/FRAME_RATE - 10);
 
         m_timer_toDownload = new QTimer;
         connect( m_timer_toDownload , SIGNAL(timeout())

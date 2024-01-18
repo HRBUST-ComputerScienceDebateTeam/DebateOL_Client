@@ -82,4 +82,17 @@ void get_tokenval(const string &s , int l , int r , string & typeval ){
     typeval= tmp.toLatin1().toStdString();
 }
 
-
+int get_typeid(const string & s){
+    int32_t _ret;
+    std::vector<int>v;
+    v.push_back(0);
+    for(int i = 1;i<s.length()-1;i++){
+        if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+            v.push_back(i);
+            break;
+        }
+    }
+    get_tokenval(s , v[0]+1 , v[1]-1,_ret);
+   //转为int 返回
+    return _ret;
+}

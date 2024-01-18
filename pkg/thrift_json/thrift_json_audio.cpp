@@ -1,6 +1,11 @@
+#include <vector>
 #include "./thrift_json_config.h"
+#include <QString>
+#include <stdlib.h>
 #include <QDebug>
-JSON_Base Make_Json_Video_Upload_SendInfo(){
+
+
+JSON_Base Make_Json_Audio_Upload_SendInfo(){
     JSON_Base ret;
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["userId"] = 2;ret.mp2[2] = "userId";ret.mp3[2] = "i32";
@@ -12,8 +17,8 @@ JSON_Base Make_Json_Video_Upload_SendInfo(){
     ret.mp1["sendtime"] = 8;ret.mp2[8] = "sendtime";ret.mp3[8] = "i32";
     return ret;
 };
-JSON_Base Video_Upload_SendInfo::json_base_ = Make_Json_Video_Upload_SendInfo();
-std::string Video_Upload_SendInfo::Serialization(const Video_Upload_SendInfo&pkg){
+JSON_Base Audio_Upload_SendInfo::json_base_ = Make_Json_Audio_Upload_SendInfo();
+std::string Audio_Upload_SendInfo::Serialization(const Audio_Upload_SendInfo&pkg){
     std::string ret;
     ret += "{";
     ret += gen_jsontoken(1,"i32",pkg.type);
@@ -27,8 +32,8 @@ std::string Video_Upload_SendInfo::Serialization(const Video_Upload_SendInfo&pkg
     ret += "}";
     return ret;
 }
-Video_Upload_SendInfo Video_Upload_SendInfo::Deserialization(const std::string& s){
-    Video_Upload_SendInfo ret;
+Audio_Upload_SendInfo Audio_Upload_SendInfo::Deserialization(const std::string& s){
+    Audio_Upload_SendInfo ret;
     std::vector<int>v;
     v.push_back(0);
     for(int i = 1;i<s.length()-1;i++){
@@ -47,7 +52,8 @@ Video_Upload_SendInfo Video_Upload_SendInfo::Deserialization(const std::string& 
     get_tokenval(s , v[7]+1 , v[8]-1 ,ret.sendtime);
     return ret;
 }
-JSON_Base Make_Json_Video_Upload_RecvInfo(){
+
+JSON_Base Make_Json_Audio_Upload_RecvInfo(){
     JSON_Base ret;
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["userId"] = 2;ret.mp2[2] = "userId";ret.mp3[2] = "i32";
@@ -59,8 +65,8 @@ JSON_Base Make_Json_Video_Upload_RecvInfo(){
     ret.mp1["sendtime"] = 8;ret.mp2[8] = "sendtime";ret.mp3[8] = "i32";
     return ret;
 };
-JSON_Base Video_Upload_RecvInfo::json_base_ = Make_Json_Video_Upload_RecvInfo();
-std::string Video_Upload_RecvInfo::Serialization(const Video_Upload_RecvInfo&pkg){
+JSON_Base Audio_Upload_RecvInfo::json_base_ = Make_Json_Audio_Upload_RecvInfo();
+std::string Audio_Upload_RecvInfo::Serialization(const Audio_Upload_RecvInfo&pkg){
     std::string ret;
     ret += "{";
     ret += gen_jsontoken(1,"i32",pkg.type);
@@ -74,8 +80,8 @@ std::string Video_Upload_RecvInfo::Serialization(const Video_Upload_RecvInfo&pkg
     ret += "}";
     return ret;
 }
-Video_Upload_RecvInfo Video_Upload_RecvInfo::Deserialization(const std::string& s){
-    Video_Upload_RecvInfo ret;
+Audio_Upload_RecvInfo Audio_Upload_RecvInfo::Deserialization(const std::string& s){
+    Audio_Upload_RecvInfo ret;
     std::vector<int>v;
     v.push_back(0);
     for(int i = 1;i<s.length()-1;i++){
@@ -94,7 +100,8 @@ Video_Upload_RecvInfo Video_Upload_RecvInfo::Deserialization(const std::string& 
     get_tokenval(s , v[7]+1 , v[8]-1 ,ret.sendtime);
     return ret;
 }
-JSON_Base Make_Json_Video_Download_SendInfo(){
+
+JSON_Base Make_Json_Audio_Download_SendInfo(){
     JSON_Base ret;
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["userId"] = 2;ret.mp2[2] = "userId";ret.mp3[2] = "i32";
@@ -105,8 +112,8 @@ JSON_Base Make_Json_Video_Download_SendInfo(){
     ret.mp1["sendtime"] = 7;ret.mp2[7] = "sendtime";ret.mp3[7] = "i32";
     return ret;
 };
-JSON_Base Video_Download_SendInfo::json_base_ = Make_Json_Video_Download_SendInfo();
-std::string Video_Download_SendInfo::Serialization(const Video_Download_SendInfo&pkg){
+JSON_Base Audio_Download_SendInfo::json_base_ = Make_Json_Audio_Download_SendInfo();
+std::string Audio_Download_SendInfo::Serialization(const Audio_Download_SendInfo&pkg){
     std::string ret;
     ret += "{";
     ret += gen_jsontoken(1,"i32",pkg.type);
@@ -119,8 +126,8 @@ std::string Video_Download_SendInfo::Serialization(const Video_Download_SendInfo
     ret += "}";
     return ret;
 }
-Video_Download_SendInfo Video_Download_SendInfo::Deserialization(const std::string& s){
-    Video_Download_SendInfo ret;
+Audio_Download_SendInfo Audio_Download_SendInfo::Deserialization(const std::string& s){
+    Audio_Download_SendInfo ret;
     std::vector<int>v;
     v.push_back(0);
     for(int i = 1;i<s.length()-1;i++){
@@ -138,7 +145,8 @@ Video_Download_SendInfo Video_Download_SendInfo::Deserialization(const std::stri
     get_tokenval(s , v[6]+1 , v[7]-1 ,ret.sendtime);
     return ret;
 }
-JSON_Base Make_Json_Video_Download_RecvInfo(){
+
+JSON_Base Make_Json_Audio_Download_RecvInfo(){
     JSON_Base ret;
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["userId"] = 2;ret.mp2[2] = "userId";ret.mp3[2] = "i32";
@@ -151,8 +159,8 @@ JSON_Base Make_Json_Video_Download_RecvInfo(){
     ret.mp1["sendtime"] = 9;ret.mp2[9] = "sendtime";ret.mp3[9] = "i32";
     return ret;
 };
-JSON_Base Video_Download_RecvInfo::json_base_ = Make_Json_Video_Download_RecvInfo();
-std::string Video_Download_RecvInfo::Serialization(const Video_Download_RecvInfo&pkg){
+JSON_Base Audio_Download_RecvInfo::json_base_ = Make_Json_Audio_Download_RecvInfo();
+std::string Audio_Download_RecvInfo::Serialization(const Audio_Download_RecvInfo&pkg){
     std::string ret;
     ret += "{";
     ret += gen_jsontoken(1,"i32",pkg.type);
@@ -167,8 +175,8 @@ std::string Video_Download_RecvInfo::Serialization(const Video_Download_RecvInfo
     ret += "}";
     return ret;
 }
-Video_Download_RecvInfo Video_Download_RecvInfo::Deserialization(const std::string& s){
-    Video_Download_RecvInfo ret;
+Audio_Download_RecvInfo Audio_Download_RecvInfo::Deserialization(const std::string& s){
+    Audio_Download_RecvInfo ret;
     std::vector<int>v;
     v.push_back(0);
     for(int i = 1;i<s.length()-1;i++){
@@ -188,8 +196,17 @@ Video_Download_RecvInfo Video_Download_RecvInfo::Deserialization(const std::stri
     get_tokenval(s , v[8]+1 , v[9]-1 ,ret.sendtime);
     return ret;
 }
-JSON_Base Video_Clean_SendInfo::json_base_ = Make_Json_Video_Upload_SendInfo();
-std::string Video_Clean_SendInfo::Serialization(const Video_Clean_SendInfo&pkg){
+
+JSON_Base Make_Json_Audio_Clean_SendInfo(){
+    JSON_Base ret;
+    ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+    ret.mp1["userId"] = 2;ret.mp2[2] = "userId";ret.mp3[2] = "i32";
+    ret.mp1["roomId"] = 3;ret.mp2[3] = "roomId";ret.mp3[3] = "i32";
+    ret.mp1["sendtime"] = 4;ret.mp2[4] = "sendtime";ret.mp3[4] = "i32";
+    return ret;
+};
+JSON_Base Audio_Clean_SendInfo::json_base_ = Make_Json_Audio_Clean_SendInfo();
+std::string Audio_Clean_SendInfo::Serialization(const Audio_Clean_SendInfo&pkg){
     std::string ret;
     ret += "{";
     ret += gen_jsontoken(1,"i32",pkg.type);
@@ -199,8 +216,8 @@ std::string Video_Clean_SendInfo::Serialization(const Video_Clean_SendInfo&pkg){
     ret += "}";
     return ret;
 }
-Video_Clean_SendInfo Video_Clean_SendInfo::Deserialization(const std::string& s){
-    Video_Clean_SendInfo ret;
+Audio_Clean_SendInfo Audio_Clean_SendInfo::Deserialization(const std::string& s){
+    Audio_Clean_SendInfo ret;
     std::vector<int>v;
     v.push_back(0);
     for(int i = 1;i<s.length()-1;i++){
