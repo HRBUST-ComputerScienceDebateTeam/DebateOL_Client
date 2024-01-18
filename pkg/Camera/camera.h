@@ -9,13 +9,13 @@
 #include <QImageCapture>
 #include <QMessageBox>
 #include <QMediaRecorder>
-//#include"F:/opencv-build/opencv2/cvconfig.h"
-//#include"F:/opencv-build/opencv2/opencv_modules.hpp"
+#include"F:/opencv-build/opencv2/cvconfig.h"
+#include"F:/opencv-build/opencv2/opencv_modules.hpp"
 #include"opencv2/highgui/highgui.hpp"
 #include"opencv2/imgproc/imgproc.hpp"
 #include"opencv2/core/core.hpp"
-#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
-#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
+//#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
+//#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
 #include<QTime>
 #include<QTimer>
 #include <QObject>
@@ -27,7 +27,6 @@ using namespace cv;
 //图片的宽高
 #define IMAGE_WIDTH (240)
 #define IMAGE_HEIGHT (240)
-#define UPLOAD_RATE (30)
 
 
 class Camera : public QObject

@@ -16,6 +16,10 @@ int main(int argc, char *argv[])
     mainw.show();
     Ckernel::GetInstance();
 
+    //MYNET::initNET();
+
+
+    /* 测试 */
     //QApplication::addLibraryPath(R"(C:\qt\6.6.0\mingw_64\plugins)");
     //Camera Ca_w;//创建窗口类
     //Ca_w.setWindowTitle("Camera");//设置窗口标题
@@ -27,7 +31,7 @@ int main(int argc, char *argv[])
     //qDebug()<<NETGET(TEST_GET_URL);
 
     //序列化
-    std::string echojson = Echo_SendInfo::Serialization( Echo_SendInfo({uint32_t(1),string("你好 - echo请求")}));
+    //std::string echojson = Echo_SendInfo::Serialization( Echo_SendInfo({uint32_t(1),string("你好 - echo请求"),uint32_t(0)}));
     //qDebug() << echojson;
 
     //发送
@@ -79,5 +83,7 @@ int main(int argc, char *argv[])
     qDebug() << "返回的用户号 ： " << dlreinfo.userId;
     qDebug() << "返回的时间 ： " << dlreinfo.min << "-" <<dlreinfo.sec << "-" << dlreinfo.sec;
     qDebug()<< "返回的信息" <<QString().fromStdString(dlreinfo.info);*/
+    //MYNET::closeNET();
+
     return a.exec();
 }

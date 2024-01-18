@@ -9,24 +9,7 @@
 
 #include"../config.h"
 
-int now_threadnum = 0;
-std::mutex Lock;
-void Add_threadnum(){
-    Lock.lock();
-    now_threadnum++;
-    Lock.unlock();
-}
-void Sub_threadnum(){
-    Lock.lock();
-    now_threadnum--;
-    Lock.unlock();
-}
-int Get_threadnum(){
-    Lock.lock();
-    int val = now_threadnum;
-    Lock.unlock();
-    return val;
-}
+
 
 
 Room_main::Room_main(QWidget *parent)
@@ -106,7 +89,9 @@ void Room_main::slot_setImage(int userid,QImage &img)
 
     m_user_label[userid]->setPixmap(pix);
     m_user_label[userid]->update();
-    qDebug() << "现在的线程数量：" << Get_threadnum();
+
+    qDebug() <<QDateTime::currentDateTime().toString("hh:mm:ss.zzz ") << "更新成功";
+
 }
 
 
@@ -139,16 +124,32 @@ void Room_main::on_closeaudio_clicked()
 //上传
 void Room_main::slot_UploadFrame(QImage img)
 {
-
     //qDebug()<<__func__;
     QPixmap pix = QPixmap :: fromImage(img);
     //更新本地
     m_user_label[myid]->setPixmap(pix);
     m_user_label[myid]->update();
-    if(Get_threadnum() >= 13) return;
-    std::thread tmpthread(deal_Net_work_Upload , img);
-    tmpthread.detach();
-    Add_threadnum();
+    QByteArray ba;
+    QBuffer qbuf(&ba); // QBuffer 与 QByteArray 字节数组联立联系
+    img.save( &qbuf , "JPEG" , 50 ); //将图片的数据写入 ba
+
+    //m_pClient->sendData(0,buf,nPackSize);
+    QTime tm = QTime::currentTime();
+    Video_Upload_SendInfo send;
+    //QString str =QString(ba);
+    send.info = ba.toStdString();
+    send.min = tm.minute();
+    send.sec = tm.second();
+    send.msec = tm.msec();
+    send.type = Video_Upload_SendInfo_TypeId;
+    send.roomId = 7;
+    send.userId = 2;
+    send.sendtime = send.min*60000 + send.sec * 10000 + send.msec;
+    MYNET * np = MYNET::getinstance();
+    np->Init(this);
+    std::string s =  Video_Upload_SendInfo::Serialization(send);
+    np->NETPOST(VIDEO_UPLOAD_POST_URL , s ,send.sendtime, &Room_main::SIGDEAL_UploadFrame);
+
 }
 
 //刷新
@@ -175,67 +176,47 @@ void Room_main::slot_RefreshFrame(int userid,int tim)
 //下载
 void Room_main::slot_DownloadFrame(int userid , int tim)
 {
-    if(Get_threadnum() >= 13) return;
-    std::thread thr(deal_Net_work_Download , userid , tim );
-    thr.detach();
-    Add_threadnum();
-}
-
-
-void Room_main::deal_Net_work_Upload(QImage img ){
-    //qDebug()<<__func__;
-    QByteArray ba;
-    QBuffer qbuf(&ba); // QBuffer 与 QByteArray 字节数组联立联系
-    img.save( &qbuf , "JPEG" , 50 ); //将图片的数据写入 ba
-
-    //m_pClient->sendData(0,buf,nPackSize);
-    QTime tm = QTime::currentTime();
-    Video_Upload_SendInfo send;
-    //QString str =QString(ba);
-    send.info = ba.toStdString();
-    send.min = tm.minute();
-    send.sec = tm.second();
-    send.msec = tm.msec();
-    send.type = 1;
-    send.roomId = 7;
-    send.userId = 2;
-    NETPOST(VIDEO_UPLOAD_POST_URL , Video_Upload_SendInfo::Serialization(send));
-    Sub_threadnum();
-}
-
-
-
-void Room_main::deal_Net_work_Download(int userid , int tim ){
+//    std::thread thr(deal_Net_work_Download , userid , tim );
+//    thr.detach();
     //qDebug()<<__func__;
     QTime tm = QTime::currentTime();
     Video_Download_SendInfo sendinfo;
     sendinfo.min = tm.minute();
     sendinfo.sec = tm.second();
     sendinfo.msec = tm.msec();
-    sendinfo.type = 1;
+    sendinfo.type = Video_Download_SendInfo_TypeId;
     sendinfo.roomId = 7;
     sendinfo.userId = 2;
+    sendinfo.sendtime = sendinfo.min*60000 + sendinfo.sec*1000 + sendinfo.msec;
 
-    QString DLret = NETGET(GET_VIDEODL_URL(sendinfo));
-    if(DLret == "") {
-        Sub_threadnum();
-        return;
-    }
-    //qDebug()<<DLret.toStdString().size();
+    MYNET::Init(this);
+    MYNET * np = MYNET::getinstance();
 
-    Video_Download_RecvInfo dlreinfo = Video_Download_RecvInfo::Deserialization(DLret.toStdString());
-    if(dlreinfo.status != 200) {
-        Sub_threadnum();
-        return;
-    }
-    QByteArray bt(dlreinfo.info.c_str() ,dlreinfo.info.size()) ;
-
-    //Room_main::m_map[userid][1] = "1";
-//    qDebug()<<userid;
-//    qDebug()<<tim;
-//    qDebug() << QString::fromLatin1(bt).toLatin1().toStdString().size();
-//    qDebug() << m_map[userid].size();
-    Room_main::m_map[userid][tim] = QString::fromLatin1(bt).toLatin1().toStdString();
-    Sub_threadnum();
+    np->NETGET(np->GET_VIDEODL_URL(sendinfo) , sendinfo.sendtime ,  &Room_main::SIGDEAL_DownloadFrame);
 }
 
+
+//接受的是反序列化后的答案
+void* Room_main::SIGDEAL_DownloadFrame(void * arg){
+    //cout << __func__<<endl;
+    Video_Download_RecvInfo * dlreinfo = (Video_Download_RecvInfo *)arg;
+
+    if(dlreinfo->status != 200) {
+        delete dlreinfo;
+        return nullptr;
+    }
+    QByteArray bt(dlreinfo->info.c_str() ,dlreinfo->info.size()) ;
+    //cout << QString::fromLatin1(bt).toLatin1().toStdString().length() <<endl;
+    Room_main::m_map[dlreinfo->userId][dlreinfo->min*60000 + dlreinfo->sec*1000 + dlreinfo->msec] = QString::fromLatin1(bt).toLatin1().toStdString();
+    qDebug() <<QDateTime::currentDateTime().toString("hh:mm:ss.zzz ") << "插入了" << QString("%1:%2:%3").arg(dlreinfo->min).arg(dlreinfo->sec).arg(dlreinfo->msec) << "的照片";
+    delete dlreinfo;
+    qDebug() <<QDateTime::currentDateTime().toString("hh:mm:ss.zzz ") << "下载成功";
+}
+
+void* Room_main::SIGDEAL_UploadFrame(void * arg){
+    //cout << __func__<<endl;
+    Video_Download_RecvInfo * dlreinfo = (Video_Download_RecvInfo *)arg;
+    qDebug() <<QDateTime::currentDateTime().toString("hh:mm:ss.zzz ") <<"上传成功";
+    qDebug() <<QDateTime::currentDateTime().toString("hh:mm:ss.zzz ") <<"上传了"<< QString("%1:%2:%3").arg(dlreinfo->min).arg(dlreinfo->sec).arg(dlreinfo->msec) << "的照片";
+    return nullptr;
+}

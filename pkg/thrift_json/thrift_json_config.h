@@ -49,6 +49,9 @@ void get_tokenval(const string &s , int l , int r , char & typeval );
 
 void get_tokenval(const string &s , int l , int r , string & typeval );
 
+int get_typeid(const string & s);
+
+//在下方操作
 
 
 
@@ -62,8 +65,8 @@ public:
 public:
     int32_t id;
     string info;
+    int32_t sendtime;
 };
-
 
 class Echo_RecvInfo{
 public:
@@ -75,7 +78,9 @@ public:
     int32_t id;
     string info;
     string time;
+    int32_t sendtime;
 };
+
 
 //video
 class Video_Upload_SendInfo{
@@ -92,6 +97,7 @@ public:
     int32_t sec;
     int32_t msec;
     string info;
+    int32_t sendtime;
 };
 class Video_Upload_RecvInfo{
 public:
@@ -107,6 +113,7 @@ public:
     int32_t sec;
     int32_t msec;
     int32_t status;
+    int32_t sendtime;
 };
 class Video_Download_SendInfo{
 public:
@@ -121,6 +128,7 @@ public:
     int32_t min;
     int32_t sec;
     int32_t msec;
+    int32_t sendtime;
 };
 class Video_Download_RecvInfo{
 public:
@@ -137,6 +145,7 @@ public:
     int32_t msec;
     int32_t status;
     string info;
+    int32_t sendtime;
 };
 class Video_Clean_SendInfo{
 public:
@@ -148,6 +157,84 @@ public:
     int32_t type;
     int32_t userId;
     int32_t roomId;
+    int32_t sendtime;
 };
 
 
+//audio
+class Audio_Clean_SendInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Audio_Clean_SendInfo &);
+    static Audio_Clean_SendInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
+    int32_t sendtime;
+};
+class Audio_Download_RecvInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Audio_Download_RecvInfo &);
+    static Audio_Download_RecvInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
+    int32_t min;
+    int32_t sec;
+    int32_t msec;
+    int32_t status;
+    string info;
+    int32_t sendtime;
+};
+class Audio_Download_SendInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Audio_Download_SendInfo &);
+    static Audio_Download_SendInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
+    int32_t min;
+    int32_t sec;
+    int32_t msec;
+    int32_t sendtime;
+};
+class Audio_Upload_RecvInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Audio_Upload_RecvInfo &);
+    static Audio_Upload_RecvInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
+    int32_t min;
+    int32_t sec;
+    int32_t msec;
+    int32_t status;
+    int32_t sendtime;
+};
+class Audio_Upload_SendInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Audio_Upload_SendInfo &);
+    static Audio_Upload_SendInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
+    int32_t min;
+    int32_t sec;
+    int32_t msec;
+    string info;
+    int32_t sendtime;
+};

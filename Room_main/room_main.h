@@ -12,12 +12,13 @@
 #include<QCloseEvent>
 #include<Qlabel>
 #include"../pkg/Video/videodeal.h"
-#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
-#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
-//#include"F:/opencv-build/opencv2/cvconfig.h"
+//#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
+//#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
+#include"F:/opencv-build/opencv2/cvconfig.h"
+#include"F:/opencv-build/opencv2/opencv_modules.hpp"
 #include"../pkg/Camera/camera.h"
 #include"../pkg/Audio/Audio.h"
-//#include"F:/opencv-build/opencv2/opencv_modules.hpp"
+
 #include<qpainter.h>
 #include<QBuffer>
 #include<QTime>
@@ -55,15 +56,13 @@ private slots:
     void on_openvideo_clicked();
     void on_closevideo_clicked();
 
-
     void on_openaudio_clicked();
 
     void on_closeaudio_clicked();
 
-public:
-    //线程服务函数
-    static void deal_Net_work_Download(int userid , int tim);
-    static void deal_Net_work_Upload(QImage img );
+public slots:
+    void* SIGDEAL_DownloadFrame(void *);
+    void* SIGDEAL_UploadFrame(void *);
 
 
 public:
