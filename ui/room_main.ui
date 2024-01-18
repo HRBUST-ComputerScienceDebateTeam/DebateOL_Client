@@ -85,30 +85,30 @@
      <string>开启摄像头</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="openaudio">
+   <widget class="QPushButton" name="pb_start">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>350</y>
+      <x>290</x>
+      <y>20</y>
       <width>80</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>打开声音</string>
+     <string>开启麦克风</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="closeaudio">
+   <widget class="QPushButton" name="pb_pause">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>350</y>
+      <x>380</x>
+      <y>20</y>
       <width>80</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>关闭声音</string>
+     <string>关闭麦克风</string>
     </property>
    </widget>
   </widget>

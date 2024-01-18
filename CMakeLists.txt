@@ -8,8 +8,8 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(OpenCV_DIR F:/opencv-build)
-#set(OpenCV_DIR F:/opencv4.8.0/bin)
+#set(OpenCV_DIR F:/opencv-build)
+set(OpenCV_DIR F:/opencv4.8.0/bin)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
@@ -43,6 +43,7 @@ set(PROJECT_SOURCES
     main.cpp
     ckernel.h
     ckernel.cpp
+    tttmp.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -65,6 +66,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ui//mainwindow.ui
         ui/camera.ui
         ui/room_main.ui
+
 
         #pkg
         #json_config
@@ -102,8 +104,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ckernel.h
         pkg/thrift_json/thrift_json_audio.cpp
 
+        #Audio
+        pkg/audioread/audioread.h
+        pkg/audioread/audioread.cpp
+        pkg/audiowrite/audiowrite.h
+        pkg/audiowrite/audiowrite.cpp
 
-
+        #world
+        world.h
 
     )
 
