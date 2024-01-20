@@ -21,8 +21,6 @@ Ckernel::Ckernel(QObject *parent)
 //    connect(We_Chat , SIGNAL(SIG_closechat())
 //            ,this,SLOT(slot_destorychat()));
     //m_pVideoRead = new VideoRead;
-    /*connect(m_pVideoRead, SIGNAL(SIG_sendVideoFrame(QImage))
-            ,this,SLOT(SIG_sendVideoFrame(QImage)));*/
     m_pLoginDlg->show();
     //m_room->show();
     //We_Chat->show();
