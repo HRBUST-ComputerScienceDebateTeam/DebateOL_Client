@@ -1,7 +1,8 @@
-#include "ckernel.h"
+﻿#include "ckernel.h"
 #include "./config.h"
 #include "./pkg/JsonChange/jsonchange.h"
 #include "./pkg/JWT/jwt.h"
+#include "./pkg/web/web.h"
 #include "./pkg/Openssl/openssl.h"
 #include"qDebug"
 
@@ -24,7 +25,14 @@ Ckernel::Ckernel(QObject *parent)
     m_pLoginDlg->show();
     //m_room->show();
     //We_Chat->show();
+
 }
+//个人信息
+int    Ckernel::myuid                    =-1;
+string Ckernel::my_jwt_token             ="";
+string Ckernel::my_refresh_jwt_token     ="";
+
+
 //回收
 void Ckernel::slot_destory()
 {
@@ -51,41 +59,52 @@ void Ckernel::slot_loginCommit(QString tel, QString pass)
     std::string strTel = tel.toStdString();
     std::string strPass = pass.toStdString();
     //下面是封装发送
+    User_login_Tel_SendInfo login_req;
 
-//    User_login_Tel_SendInfo login_req;
-//    time_t timenow;
-//    time(&timenow); // 64int
-//    login_req.sendtime = timenow;
-//    login_req.passwd = sha256(Base64Encode(strPass));
-//    login_req.tel = strTel;
-//    login_req.type = User_LoginTel_SendInfo_TypeId;
+    //这个tid是 分钟*60000 + 秒*1000+ 毫秒的
+    QTime tm = QTime::currentTime();
+    int timid = tm.minute()*60000 + tm.second() * 1000 + tm.msec();
 
-//    string sendreq = User_login_Tel_SendInfo::Serialization(login_req);
-//    //网络请求
-//    MyNet_kernel::init();
-//    MyNet_kernel * netptr = //获取单例
+    login_req.sendtime = timid;
+    login_req.passwd = sha256(Base64Encode(strPass));
+    login_req.tel = strTel;
+    login_req.type = User_LoginTel_SendInfo_TypeId;
+    string sendreq = User_login_Tel_SendInfo::Serialization(login_req);
+    //网络请求
+    MYNET_KERNEL::Init(this);
+    MYNET_KERNEL * netptr = MYNET_KERNEL::getinstance();//获取单例
 
-//    netptr->post(url , timenow , sendreq , 回调函数 );
+
+
+    netptr->NETPOST(USER_LOGIN_URL ,sendreq , timid  ,  &Ckernel::SIGDEAL_login );
 }
 
-//void * 回调函数 (void * arg){
-//强转
-//    User_login_RecvInfo * recvinfo = (User_login_RecvInfo *) arg;
-//    if(recvinfo->status != 200 ){
-//        switch(recvinfo->status){
-//            case 300:
-//                return;
-//                break;
-//            //
-//            default:
-//                cout << " not find status";
-
-//            }
-//    }
-//    //存到本地
-//    save = recvinfo->jwt_token ; //save是类内成员
-//    save = recvinfo->refresh_jwt_token;
-//    saveid = stoi((JWT_token::jwt_decode(recvinfo->jwt_token).getpayloadmap())["aud"]);
-
-//}
+void * Ckernel::SIGDEAL_login (void * arg){
+    //强转
+    User_login_RecvInfo * recvinfo = (User_login_RecvInfo *) arg;
+    if(recvinfo->status != 200 ){
+        switch(recvinfo->status){
+            case USER_ERR_REQINFO://请求体有误
+                return nullptr;
+                break;
+            case USER_LOGIN_ERRINFO://登陆失败 - 账号密码不对应
+                //调用提醒函数
+                qDebug()<<"err login info";
+                return nullptr;
+            default:
+                cout << " not find status" <<endl;
+                break;
+            }
+    }
+    //存到本地
+    //个人信息
+    Ckernel::myuid                    = stoi(((JWT_token::jwt_decode(recvinfo->jwt_token)).getpayloadmap())["aud"]) ;
+    Ckernel::my_jwt_token             = recvinfo->jwt_token;
+    Ckernel::my_refresh_jwt_token     = recvinfo->refresh_jwt_token;
+    cout << "SIGDEAL_login" << " OK" <<endl;
+    //测试
+//    cout << "Ckernel::myuid                   " <<     Ckernel::myuid                    <<endl;
+//    cout << "Ckernel::my_jwt_token            " <<     Ckernel::my_jwt_token             <<endl;
+//    cout << "Ckernel::my_refresh_jwt_token    " <<     Ckernel::my_refresh_jwt_token     <<endl;
+}
 
