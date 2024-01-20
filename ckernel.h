@@ -25,6 +25,7 @@ public slots:
     void slot_destorychat();
     //发送登录请求
     void slot_loginCommit(QString tel,QString pass);
+    void slot_registerCommit(QString tel,QString pass,QString name);
     //void slot_refreshUser( int id,QImage &img);
 private:
     Room_main * m_room;

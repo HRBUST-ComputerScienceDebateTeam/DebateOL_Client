@@ -32,7 +32,7 @@ void LoginDialog::on_commit_clicked()
         return;
     }
     //手机号
-    QRegularExpression reg("^1[3-8][0-9]\{6,9\}$");
+    //QRegularExpression reg("^1[3-8][0-9]\{6,9\}$");
     //reg.match(temTel);
     //密码
     Q_EMIT SIG_loginCommit(strTel,strPassword);
@@ -50,12 +50,32 @@ void LoginDialog::on_clear_3_clicked()
 //提交注册信息
 void LoginDialog::on_commit_3_clicked()
 {
+    QString strTel = ui->le_tel_register->text();
+    QString strPassword =ui->le_password_register->text();
+    QString strConfirm = ui->le_password_cofirm->text();
+    QString strName =ui->le_noname->text();
 
+    QString temTel =strTel;
+    QString temPass =strPassword;
+    QString temName =strName;
+    if(temTel.remove(" ").isEmpty()||temPass.remove(" ").isEmpty()||
+        temName.remove(" ").isEmpty())
+    {
+        QMessageBox::about(this,"提示","手机号,密码,账号不能为空格");
+        return;
+    }
+    if(strPassword != strConfirm)
+    {
+        QMessageBox::about(this,"提示","密码不一致!");
+        return;
+    }
+    Q_EMIT SIG_registerCommit(strTel,strPassword,strName);
 }
 
 //清空登录信息
 void LoginDialog::on_clear_clicked()
 {
-
+    ui->le_password->setText("");
+    ui->le_tel->setText("");
 }
 

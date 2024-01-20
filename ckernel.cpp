@@ -16,6 +16,8 @@ Ckernel::Ckernel(QObject *parent)
     m_pLoginDlg =new LoginDialog;
     connect(m_pLoginDlg,SIGNAL(SIG_loginCommit(QString,QString))
             ,this,SLOT(slot_loginCommit(QString,QString)));
+    connect(m_pLoginDlg,SIGNAL(SIG_registerCommit(QString,QString))
+            ,this,SLOT(slot_registerCommit(QString,QString)));
 //    connect(m_room , SIGNAL(SIG_close())
 //            ,this,SLOT(slot_destory()));
 //    connect(We_Chat , SIGNAL(SIG_closechat())
@@ -45,6 +47,16 @@ void Ckernel::slot_destorychat()
         We_Chat = NULL;
     }
 }
+
+//发送注册
+void Ckernel::slot_registerCommit(QString tel, QString pass, QString name)
+{
+    std::string strTel = tel.toStdString();
+    std::string strPass = pass.toStdString();
+    std::string strName = name.toStdString();
+}
+
+
 //发送登录
 void Ckernel::slot_loginCommit(QString tel, QString pass)
 {
@@ -65,8 +77,9 @@ void Ckernel::slot_loginCommit(QString tel, QString pass)
 //    MyNet_kernel::init();
 //    MyNet_kernel * netptr = //获取单例
 
-//    netptr->post(url , timenow , sendreq , 回调函数 );
+    //    netptr->post(url , timenow , sendreq , 回调函数 );
 }
+
 
 //void * 回调函数 (void * arg){
 //强转
