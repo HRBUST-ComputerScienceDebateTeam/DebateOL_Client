@@ -8,8 +8,9 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-#set(OpenCV_DIR F:/opencv-build)
-set(OpenCV_DIR F:/opencv4.8.0/bin)
+set(OpenCV_DIR F:/opencv-build)
+set(Openssl_DIR F:/openssl)
+#set(OpenCV_DIR F:/opencv4.8.0/bin)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
@@ -39,6 +40,18 @@ LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_ts480.a)
 LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_video480.dll.a)
 LINK_LIBRARIES(${OpenCV_LIB_DIR}/libopencv_videoio480.dll.a)
 
+
+include_directories(C:/Qt/Tools/mingw1120_64/opt/include)
+##动态
+#include_directories(${Openssl_DIR})
+#include_directories(${Openssl_DIR}/include/internal)
+#include_directories(${Openssl_DIR}/include/openssl)
+#include_directories(${Openssl_DIR}/include/crypto)
+
+#LINK_LIBRARIES(${Openssl_DIR}/libopencv_videoio480.dll.a)
+#LINK_LIBRARIES(${Openssl_DIR}/libopencv_videoio480.dll.a)
+
+
 set(PROJECT_SOURCES
     main.cpp
     ckernel.h
@@ -62,6 +75,17 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Room_main/room_main.h
         Room_main/room_main.cpp
 
+
+        #LoginDialog
+        LoginDialog/logindialog.h
+        LoginDialog/logindialog.cpp
+        LoginDialog/logindialog.ui
+
+        #WeChatDialog
+        WeChatDialog/wechatdialog.h
+        WeChatDialog/wechatdialog.cpp
+        WeChatDialog/wechatdialog.ui
+
         #ui
         ui//mainwindow.ui
         ui/camera.ui
@@ -76,6 +100,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/thrift_json/thrift_json_config.cpp
         pkg/thrift_json/thrift_json_echo.cpp
         pkg/thrift_json/thrift_json_video.cpp
+        pkg/thrift_json/thrift_json_user.cpp
+        pkg/thrift_json/thrift_json_room.cpp
 
         #web
         pkg/web/web.cpp
@@ -104,7 +130,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         #ckernel
         ckernel.cpp
         ckernel.h
-        pkg/thrift_json/thrift_json_audio.cpp
 
         #Audio
         pkg/audioread/audioread.h
@@ -112,20 +137,18 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/audiowrite/audiowrite.h
         pkg/audiowrite/audiowrite.cpp
 
+        #pkg
+        pkg/JsonChange/jsonchange.cpp
+        pkg/JWT/jwt.cpp
+        pkg/JsonChange/jsonchange.h
+        pkg/JWT/jwt.h
+        pkg/Openssl/openssl.h
+        pkg/Openssl/openssl.cpp
+
 
 
         #world
         world.h
-        resource.qrc
-        #WechatDialog
-        pkg/WeChatDialog/wechatdialog.h
-        pkg/WeChatDialog/wechatdialog.cpp
-        pkg/WeChatDialog/wechatdialog.ui
-        pkg/LoginDialog/logindialog.h pkg/LoginDialog/logindialog.cpp pkg/LoginDialog/logindialog.ui
-
-
-
-
 
     )
 

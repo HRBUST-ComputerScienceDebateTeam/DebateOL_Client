@@ -12,8 +12,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow mainw;
-    mainw.show();
+//    MainWindow mainw;
+//    mainw.show();
     Ckernel::GetInstance();
 
     //MYNET::initNET();

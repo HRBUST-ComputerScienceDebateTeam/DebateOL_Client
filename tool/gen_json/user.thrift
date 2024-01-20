@@ -150,7 +150,11 @@ struct User_refresh_jwt2_RecvInfo {
 struct User_friend_SendInfo {
   1:i32 type,
   2:string jwt_token,
+<<<<<<< HEAD
+  3:i32 sendtime
+=======
   3:i32 sendtime,
+>>>>>>> a31417d9d1788581acbb5cd3e5fe124223bd6429
 }
 struct User_friend_RecvInfo {
   1:i32 type,
@@ -162,7 +166,11 @@ struct User_friend_RecvInfo {
 struct User_follow_SendInfo {
   1:i32 type,
   2:string jwt_token,
+<<<<<<< HEAD
+  3:i32 sendtime
+=======
   3:i32 sendtime,
+>>>>>>> a31417d9d1788581acbb5cd3e5fe124223bd6429
 }
 struct User_follow_RecvInfo {
   1:i32 type,
@@ -174,7 +182,11 @@ struct User_follow_RecvInfo {
 struct User_followed_SendInfo {
   1:i32 type,
   2:string jwt_token,
+<<<<<<< HEAD
+  3:i32 sendtime
+=======
   3:i32 sendtime,
+>>>>>>> a31417d9d1788581acbb5cd3e5fe124223bd6429
 }
 struct User_followed_RecvInfo {
   1:i32 type,

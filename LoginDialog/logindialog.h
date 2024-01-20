@@ -2,7 +2,7 @@
 #define LOGINDIALOG_H
 
 #include <QDialog>
-
+#include "../pkg/thrift_json/thrift_json_config.h"
 namespace Ui {
 class LoginDialog;
 }

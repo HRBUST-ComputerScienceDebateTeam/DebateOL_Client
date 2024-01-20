@@ -19,8 +19,11 @@
 //移交管理员权限 - 暂时不支持
 
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> a31417d9d1788581acbb5cd3e5fe124223bd6429
 //房间信息获取请求 - 基本信息
 struct Room_GetBaseInfo_SendInfo {
   1:i32 type,

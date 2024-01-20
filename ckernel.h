@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include "Room_main/room_main.h"
-#include"./pkg/WeChatDialog/wechatdialog.h"
-#include"./pkg/LoginDialog/logindialog.h"
+#include"./WeChatDialog/wechatdialog.h"
+#include"./LoginDialog/logindialog.h"
 
 
 class Ckernel : public QObject
