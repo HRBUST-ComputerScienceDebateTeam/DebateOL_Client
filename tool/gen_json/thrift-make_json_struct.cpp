@@ -62,6 +62,7 @@ int main(int argc , char ** argv){
     string struct_name;
     while(input>>unused){
         if(unused == "service") break;
+		if(unused != "struct") continue;//处理备注 备注只能单行位于结构体上面
         //处理第一行
         input >> struct_name;
         input >> unused;

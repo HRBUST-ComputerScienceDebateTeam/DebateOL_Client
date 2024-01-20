@@ -74,6 +74,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/thrift_json/thrift_json_config.cpp
         pkg/thrift_json/thrift_json_echo.cpp
         pkg/thrift_json/thrift_json_video.cpp
+        pkg/thrift_json/thrift_json_user.cpp
+        pkg/thrift_json/thrift_json_room.cpp
 
         #web
         pkg/web/web.cpp
@@ -112,6 +114,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         #world
         world.h
+        pkg/thrift_json/thrift_json_audio
 
     )
 
