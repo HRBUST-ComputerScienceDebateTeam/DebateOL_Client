@@ -8,8 +8,8 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(OpenCV_DIR F:/opencv-build)
-#set(OpenCV_DIR F:/opencv4.8.0/bin)
+#set(OpenCV_DIR F:/opencv-build)
+set(OpenCV_DIR F:/opencv4.8.0/bin)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
@@ -68,6 +68,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ui/room_main.ui
 
 
+
+
         #pkg
         #json_config
         pkg/thrift_json/thrift_json_config.h
@@ -110,8 +112,20 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/audiowrite/audiowrite.h
         pkg/audiowrite/audiowrite.cpp
 
+
+
         #world
         world.h
+        resource.qrc
+        #WechatDialog
+        pkg/WeChatDialog/wechatdialog.h
+        pkg/WeChatDialog/wechatdialog.cpp
+        pkg/WeChatDialog/wechatdialog.ui
+        pkg/LoginDialog/logindialog.h pkg/LoginDialog/logindialog.cpp pkg/LoginDialog/logindialog.ui
+
+
+
+
 
     )
 

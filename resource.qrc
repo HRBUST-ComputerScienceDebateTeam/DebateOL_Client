@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>tx/12.png</file>
+        <file>tx/13.png</file>
+        <file>tx/14.png</file>
+        <file>bq/000.png</file>
+        <file>bq/0.png</file>
+        <file>bq/12.png</file>
+        <file>images/hat.png</file>
+        <file>images/qq151217-02.png</file>
+        <file>images/register.png</file>
+        <file>images/commit.png</file>
+        <file>images/rgh.png</file>
+    </qresource>
+</RCC>
