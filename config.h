@@ -15,12 +15,14 @@ const QString TSET_GET_PORT  = "7100";
 const QString TEST_POST_PORT = "7100";
 const QString ECHO_POST_PORT = "7100";
 const QString VIDEO_POST_PORT = "7100";
+const QString PUBLIC_PORT = "7100";
 
 //各个地址
 const QString ECHO_POST_PATH = "/echo";
 const QString VIDEO_UPLOAD_POST_PATH = "/videoupload";
 const QString VIDEO_CLEAN_POST_PATH = "/videoclean";
 const QString VIDEO_DOWNLOAD_GET_PATH = "/videodownload/";
+const QString USER_LOGIN_PATH = "/usertellogin";
 
 //URL
 const QString TEST_GET_URL  =   "http://" + PUBLIC_IP + ":" + TSET_GET_PORT;
@@ -30,6 +32,7 @@ const QString VIDEO_UPLOAD_POST_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST
 const QString VIDEO_CLEAN_POST_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST_PORT +  VIDEO_CLEAN_POST_PATH;
 const QString VIDEO_DOWNLOAD_GET_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST_PORT +  VIDEO_DOWNLOAD_GET_PATH;
 
+const QString USER_LOGIN_URL =   "http://" + PUBLIC_IP + ":" + PUBLIC_PORT +  USER_LOGIN_PATH;
 //net 事件注册表大小
 const int MAX_EVENTNUM = 3600000 + 10;
 

@@ -31,6 +31,15 @@ private:
     LoginDialog *m_pLoginDlg;
     WeChatDialog * We_Chat;
     //std::map<int> m_mapIDToUserShow;
+public:
+    //个人信息
+    static int myuid;
+    static string my_jwt_token;
+    static string my_refresh_jwt_token;
+private:
+    //回调函数
+    void* SIGDEAL_login(void * arg);
+
 };
 
 #endif // CKERNEL_H

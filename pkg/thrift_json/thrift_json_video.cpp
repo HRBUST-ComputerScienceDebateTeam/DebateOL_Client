@@ -22,7 +22,7 @@ std::string Video_Upload_SendInfo::Serialization(const Video_Upload_SendInfo&pkg
     ret += ",";	ret += gen_jsontoken(4,"i32",pkg.min);
     ret += ",";	ret += gen_jsontoken(5,"i32",pkg.sec);
     ret += ",";	ret += gen_jsontoken(6,"i32",pkg.msec);
-    ret += ",";	ret += gen_jsontoken(7,"string",pkg.info);
+    ret += ",";	ret += gen_jsontokenWithBase64(7,"string",pkg.info);
     ret += ",";	ret += gen_jsontoken(8,"i32",pkg.sendtime);
     ret += "}";
     return ret;
@@ -43,7 +43,7 @@ Video_Upload_SendInfo Video_Upload_SendInfo::Deserialization(const std::string& 
     get_tokenval(s , v[3]+1 , v[4]-1 ,ret.min);
     get_tokenval(s , v[4]+1 , v[5]-1 ,ret.sec);
     get_tokenval(s , v[5]+1 , v[6]-1 ,ret.msec);
-    get_tokenval(s , v[6]+1 , v[7]-1 ,ret.info);
+    get_tokenvalWithBase64(s , v[6]+1 , v[7]-1 ,ret.info);
     get_tokenval(s , v[7]+1 , v[8]-1 ,ret.sendtime);
     return ret;
 }
@@ -162,7 +162,7 @@ std::string Video_Download_RecvInfo::Serialization(const Video_Download_RecvInfo
     ret += ",";	ret += gen_jsontoken(5,"i32",pkg.sec);
     ret += ",";	ret += gen_jsontoken(6,"i32",pkg.msec);
     ret += ",";	ret += gen_jsontoken(7,"i32",pkg.status);
-    ret += ",";	ret += gen_jsontoken(8,"string",pkg.info);
+    ret += ",";	ret += gen_jsontokenWithBase64(8,"string",pkg.info);
     ret += ",";	ret += gen_jsontoken(9,"i32",pkg.sendtime);
     ret += "}";
     return ret;
@@ -184,7 +184,7 @@ Video_Download_RecvInfo Video_Download_RecvInfo::Deserialization(const std::stri
     get_tokenval(s , v[4]+1 , v[5]-1 ,ret.sec);
     get_tokenval(s , v[5]+1 , v[6]-1 ,ret.msec);
     get_tokenval(s , v[6]+1 , v[7]-1 ,ret.status);
-    get_tokenval(s , v[7]+1 , v[8]-1 ,ret.info);
+    get_tokenvalWithBase64(s , v[7]+1 , v[8]-1 ,ret.info);
     get_tokenval(s , v[8]+1 , v[9]-1 ,ret.sendtime);
     return ret;
 }
