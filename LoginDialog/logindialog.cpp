@@ -56,7 +56,6 @@ void LoginDialog::on_commit_3_clicked()
 //清空登录信息
 void LoginDialog::on_clear_clicked()
 {
-    ui->le_tel->setText("");
-    ui->le_password->setText("");
+
 }
 

@@ -145,11 +145,13 @@ void Room_main::slot_UploadFrame(QImage img)
     send.roomId = myroomid;
     send.userId = pos_id[mypos];
     send.sendtime = send.min*60000 + send.sec * 10000 + send.msec;
-    MYNET * np = MYNET::getinstance();
-    np->Init(this);
     std::string s =  Video_Upload_SendInfo::Serialization(send);
-    np->NETPOST(VIDEO_UPLOAD_POST_URL , s ,send.sendtime, &Room_main::SIGDEAL_UploadFrame);
+    //获得单例指针
+    MYNET::Init(this);//安全
+    MYNET * np = MYNET::getinstance();
 
+    //url , 序列化信息 回调函数
+    np->NETPOST(VIDEO_UPLOAD_POST_URL , s ,send.sendtime, &Room_main::SIGDEAL_UploadFrame);
 }
 
 //刷新
@@ -208,6 +210,7 @@ void Room_main::on_pb_pause_clicked()
 
 
 //接受的是反序列化后的答案
+//不要求是槽函数 静态
 void* Room_main::SIGDEAL_DownloadFrame(void * arg){
     //cout << __func__<<endl;
     Video_Download_RecvInfo * dlreinfo = (Video_Download_RecvInfo *)arg;
