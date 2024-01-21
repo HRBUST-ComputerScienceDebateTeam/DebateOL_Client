@@ -88,7 +88,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         #ui
         ui//mainwindow.ui
-        ui/camera.ui
+        #ui/camera.ui
         ui/room_main.ui
 
 
@@ -150,6 +150,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         #world
         world.h
         resource.qrc
+
     )
 
 include_directories( ${OpenCV_INCLUDE_DIRS})

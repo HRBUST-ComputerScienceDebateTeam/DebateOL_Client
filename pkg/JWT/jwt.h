@@ -16,20 +16,20 @@ using namespace std;
 
 //定义类型
 typedef class JWT_token{
-    
+
 private:
     //header 存放类型以及加密方法
     std::map<std::string , std::string>header;
-    
+
     //payload
     std::map<std::string , std::string>payload;
-    
+
     //Signature
     std::string signature;
 
 private:
-    //iss（JWT的签发者）, iat(issued at，签发时间) , exp（expires,到期时间）,aud（JWT接收者） 
-    //可以有更多的 
+    //iss（JWT的签发者）, iat(issued at，签发时间) , exp（expires,到期时间）,aud（JWT接收者）
+    //可以有更多的
     JWT_token(const JWT_token &){};
     JWT_token(const JWT_token &&) noexcept{};
     JWT_token(JWT_token &&)noexcept{};
@@ -41,6 +41,8 @@ public:
     //无需密码
     // getmap 返回payload
     map<string , string> getpayloadmap();
+    map<string , string> getheadermap();
+
 
     //反序列化
     //xxxx.yyyy.zzz -> JWT_token
@@ -58,7 +60,7 @@ public:
 
     //整个串变成jwt要求的字符串
     //xxxx.yyyy.zzz -> JWT_token
-    static std::string jwt_encode(const string secret,JWT_token ret );
+    static std::string jwt_encode(const string secret,JWT_token& ret );
 
     //检查标签合法化 指第三部分
     static bool jwt_check_hash(const string secret,string s);
@@ -69,7 +71,7 @@ public:
 
 //用户鉴权
 //三部分 ： 头部 负载 签名
-//签名 ： sha(头部 base64 + '.' + 负载 base64 + '.' + 密钥); 
+//签名 ： sha(头部 base64 + '.' + 负载 base64 + '.' + 密钥);
 //jwt 头部base64 + '.' + 负载 base64 (时间) + 签名
 
 

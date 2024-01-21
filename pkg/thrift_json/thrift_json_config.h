@@ -29,6 +29,8 @@ std::string gen_jsontoken(int id, std::string type_name , char val);
 
 std::string gen_jsontoken(int id, std::string type_name , string val);
 
+std::string gen_jsontokenWithBase64(int id, std::string type_name , string val);
+
 template<typename VAL_TYPE>
 void get_tokenval(const string &s , int l , int r , VAL_TYPE & typeval ){
     //"2":{"str":"hi"}
@@ -48,7 +50,7 @@ void get_tokenval(const string &s , int l , int r , VAL_TYPE & typeval ){
 void get_tokenval(const string &s , int l , int r , char & typeval );
 
 void get_tokenval(const string &s , int l , int r , string & typeval );
-
+void get_tokenvalWithBase64(const string &s , int l , int r , string & typeval );
 int get_typeid(const string & s);
 
 //在下方操作
