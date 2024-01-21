@@ -149,6 +149,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         #world
         world.h
+        resource.qrc
 
     )
 

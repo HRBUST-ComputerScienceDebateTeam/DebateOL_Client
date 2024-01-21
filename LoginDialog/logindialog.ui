@@ -266,7 +266,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="../../resource.qrc">:/images/rgh.png</pixmap>
+    <pixmap resource="../resource.qrc">:/images/rgh.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -274,7 +274,6 @@
   </widget>
  </widget>
  <tabstops>
-  <tabstop>le_tel_2</tabstop>
   <tabstop>le_tel_register</tabstop>
   <tabstop>le_noname</tabstop>
   <tabstop>le_password_register</tabstop>
@@ -286,12 +285,9 @@
   <tabstop>le_password</tabstop>
   <tabstop>commit</tabstop>
   <tabstop>clear</tabstop>
-  <tabstop>commit_2</tabstop>
-  <tabstop>le_password_2</tabstop>
-  <tabstop>clear_2</tabstop>
  </tabstops>
  <resources>
-  <include location="../../resource.qrc"/>
+  <include location="../resource.qrc"/>
  </resources>
  <connections/>
 </ui>

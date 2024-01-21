@@ -49,10 +49,10 @@ const int MAX_EVENTNUM = 3600000 + 10;
 #define USER_WRONG_DOWNLOAD_TYPE 400
 #define USER_LOWACLevel          403
 #define USER_TIMEOUT_JWT         405
-#define USER_ERR_REQINFO         406
-#define USER_LOGIN_ERRINFO       408
-#define User_Reg_Havethisnum     409
-#define User_Reg_Havethistel     410
+#define USER_ERR_REQINFO         406 //
+#define USER_LOGIN_ERRINFO       408 //
+#define User_Reg_Havethisnum     409 //
+#define User_Reg_Havethistel     410 //
 #define User_Logoff_notonline    415
 #define User_JWT_NOTOUTTIME      420
 #define User_REJWT_NOTOUTTIME    421

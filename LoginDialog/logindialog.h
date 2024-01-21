@@ -12,6 +12,7 @@ class LoginDialog : public QDialog
     Q_OBJECT
 signals:
     void SIG_loginCommit(QString tel , QString password);
+    void SIG_registerCommit(QString tel , QString password,QString name);
 public:
     explicit LoginDialog(QWidget *parent = nullptr);
     ~LoginDialog();

@@ -2,18 +2,239 @@
 <ui version="4.0">
  <class>WeChatDialog</class>
  <widget class="QDialog" name="WeChatDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>573</width>
-    <height>411</height>
-   </rect>
+  <property name="minimumSize">
+   <size>
+    <width>450</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>450</width>
+    <height>600</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QPushButton" name="pb_icon">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>60</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/tx/14.png</normaloff>:/tx/14.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>60</width>
+     <height>60</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lb_name">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>20</y>
+     <width>200</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>向日葵</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lb_style">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>50</y>
+     <width>200</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>我是一只向日葵</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pb_set">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>30</y>
+     <width>50</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>设置</string>
+   </property>
+  </widget>
+  <widget class="QScrollArea" name="scrollArea">
+   <property name="geometry">
+    <rect>
+     <x>-1</x>
+     <y>179</y>
+     <width>451</width>
+     <height>421</height>
+    </rect>
+   </property>
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <widget class="QWidget" name="scrollAreaWidgetContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>449</width>
+      <height>419</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>109</y>
+     <width>451</width>
+     <height>72</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QToolButton" name="pb_join">
+      <property name="minimumSize">
+       <size>
+        <width>60</width>
+        <height>70</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>60</width>
+        <height>70</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>加入会议</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../resource.qrc">
+        <normaloff>:/images/ok.png</normaloff>:/images/ok.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+      <property name="autoRaise">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QToolButton" name="pb_create">
+      <property name="minimumSize">
+       <size>
+        <width>60</width>
+        <height>70</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>60</width>
+        <height>70</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>创建会议</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../resource.qrc">
+        <normaloff>:/images/color.png</normaloff>:/images/color.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+      <property name="autoRaise">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QToolButton" name="pb_tool3">
+      <property name="minimumSize">
+       <size>
+        <width>60</width>
+        <height>70</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>60</width>
+        <height>70</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>功能开发中</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../resource.qrc">
+        <normaloff>:/images/clear.png</normaloff>:/images/clear.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+      <property name="autoRaise">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
