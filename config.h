@@ -26,8 +26,38 @@ const QString VIDEO_DOWNLOAD_GET_PATH = "/videodownload/";
 const QString AUDIO_UPLOAD_POST_PATH = "/audioupload";
 const QString AUDIO_CLEAN_POST_PATH = "/audioclean";
 const QString AUDIO_DOWNLOAD_GET_PATH = "/audiodownload/";
+
 const QString USER_LOGINTEL_PATH = "/usertellogin";
 const QString USER_REG_PATH = "/userreg";
+const QString USER_LOGINNUM_PATH= "/usernumlogin";
+const QString User_GetBaseInfo_PATH= "/usergetbaseinfo";
+const QString User_GetSocialInfo_PATH= "/usergetsocialinfo";
+const QString User_GetExInfo_PATH= "/usergetexinfo";
+const QString User_logoff_PATH= "/userlogoff";
+const QString User_refresh_jwt1_PATH= "/userrefreshjwt1";
+const QString User_refresh_jwt2_PATH= "/userrefreshjwt2";
+const QString User_ModifyBaseInfo_PATH= "/usermodifybaseinfo";
+const QString User_ModifySocialInfo_PATH= "/usermodifysocialinfo";
+const QString User_ModifyExInfo_PATH= "/usermodifyexinfo";
+const QString User_follow_PATH= "/userfollow";
+const QString User_followed_PATH= "/userfollowed";
+const QString User_friend_PATH= "/userfriend";
+
+const QString Room_ChangeDebatePos_PATH ="/roomchangedebatepos";
+const QString Room_ChangeExtraInfo_PATH ="/roomchangeextrainfo";
+const QString Room_ChangePasswd_PATH ="/roomchangepasswd";
+const QString Room_Exitroom_PATH ="/exitroom";
+const QString Room_Joinroom_PATH ="/joinroom";
+const QString Room_Create_PATH ="/creatroom";
+const QString Room_GetURrelation_PATH ="/roomgeturrelation";
+const QString Room_GetExInfo_PATH ="/roomgetexinfo";
+const QString Room_GetBaseInfo_PATH ="/roomgetbaseinfo";
+
+
+
+
+
+
 
 //URL
 const QString TEST_GET_URL  =   "http://" + PUBLIC_IP + ":" + TSET_GET_PORT;
@@ -43,6 +73,32 @@ const QString AUDIO_DOWNLOAD_GET_URL =   "http://" + PUBLIC_IP + ":" + AUDIO_POS
 
 const QString USER_LOGINTEL_URL =   "http://" + PUBLIC_IP + ":" + PUBLIC_PORT +  USER_LOGINTEL_PATH;
 const QString USER_REG_URL =   "http://" + PUBLIC_IP + ":" + PUBLIC_PORT +  USER_REG_PATH;
+
+const QString USER_LOGINNUM_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  USER_LOGINNUM_PATH;
+const QString User_GetBaseInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_GetBaseInfo_PATH;
+const QString User_GetSocialInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_GetSocialInfo_PATH;
+const QString User_GetExInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_GetExInfo_PATH;
+const QString User_logoff_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_logoff_PATH;
+const QString User_refresh_jwt1_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_refresh_jwt1_PATH;
+const QString User_refresh_jwt2_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_refresh_jwt2_PATH;
+const QString User_ModifyBaseInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_ModifyBaseInfo_PATH;
+const QString User_ModifySocialInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_ModifySocialInfo_PATH;
+const QString User_ModifyExInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_ModifyExInfo_PATH;
+const QString User_follow_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_follow_PATH;
+const QString User_followed_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_followed_PATH;
+const QString User_friend_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_friend_PATH;
+
+const QString Room_ChangeDebatePos_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_ChangeDebatePos_PATH ;
+const QString Room_ChangeExtraInfo_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_ChangeExtraInfo_PATH ;
+const QString Room_ChangePasswd_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_ChangePasswd_PATH ;
+const QString Room_Exitroom_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_Exitroom_PATH ;
+const QString Room_Joinroom_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_Joinroom_PATH ;
+const QString Room_Create_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_Create_PATH ;
+const QString Room_GetURrelation_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_GetURrelation_PATH ;
+const QString Room_GetExInfo_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_GetExInfo_PATH ;
+const QString Room_GetBaseInfo_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_GetBaseInfo_PATH ;
+
+
 //net 事件注册表大小
 const int MAX_EVENTNUM = 3600000 + 10;
 
@@ -174,3 +230,19 @@ const std::string STR_DEFAULT = "";
 
 
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
