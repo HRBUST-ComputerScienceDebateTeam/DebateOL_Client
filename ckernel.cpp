@@ -5,6 +5,7 @@
 #include "./pkg/web/web.h"
 #include "./pkg/Openssl/openssl.h"
 #include"qDebug"
+#include<QInputDialog>
 
 #define NetPackMap(a) m_netPackMap[a - DEF_PACK_BASE]
 
@@ -90,12 +91,24 @@ void Ckernel::slot_registerCommit(QString tel, QString pass, QString name)
 //创建房间
 void Ckernel::slot_createRoom()
 {
+    if(room_id != 0)
+    {
+        QMessageBox::about(We_Chat,"提示","在房间内，无法创建，先退出");
+        return;
+    }
+    //发命令 创建房间
 
 }
 //加入房间
 void Ckernel::slot_joinRoom()
-{
-
+{   //判断是否在房间内 m_roomid
+    if(room_id != 0)
+    {
+        QMessageBox::about(We_Chat,"提示","在房间内，无法加入，先退出");
+        return;
+    }
+    QString strRoom = QInputDialog::getText( We_Chat , "加入房间" ,"输入房间号");
+    //发命令 加入房间
 }
 
 

@@ -39,6 +39,7 @@ public:
     static int myuid;
     static string my_jwt_token;
     static string my_refresh_jwt_token;
+    int room_id;
 private:
     //回调函数
     void* SIGDEAL_login(void * arg);
