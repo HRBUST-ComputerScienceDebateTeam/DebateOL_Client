@@ -7,6 +7,11 @@ audiodeal::audiodeal(int pos , bool ishost,QObject *parent)\
     mypos = pos;
 }
 
+audiodeal::~audiodeal()
+{
+
+}
+
 void audiodeal::slot_AudioDownloadFrame()
 {
     //qDebug()<<__func__<<mypos;

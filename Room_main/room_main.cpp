@@ -216,7 +216,7 @@ void Room_main::slot_DownloadaudioFrame(int userpos, int tim)
     MYNET_ROOM::Init(this);
     MYNET_ROOM * np = MYNET_ROOM::getinstance();
 
-    np->NETGET(np->GET_VIDEODL_URL(sendinfo) , sendinfo.sendtime ,  &Room_main::SIGDEAL_DownloadAudioFrame);
+    np->NETGET(AUDIO_DOWNLOAD_GET_URL , sendinfo.sendtime ,  &Room_main::SIGDEAL_DownloadAudioFrame);
 }
 
 //下载
@@ -287,7 +287,7 @@ void* Room_main::SIGDEAL_UploadAudioFrame(void * arg)
         return nullptr;
 }
 
-void *Room_main::SIGDEAL_DownloadAudioFrame(void *)
+void *Room_main::SIGDEAL_DownloadAudioFrame(void *arg)
 {
         //cout << __func__<<endl;
         Audio_Download_RecvInfo * dlreinfo = (Audio_Download_RecvInfo *)arg;
@@ -303,3 +303,5 @@ void *Room_main::SIGDEAL_DownloadAudioFrame(void *)
             delete dlreinfo;
         qDebug() <<QDateTime::currentDateTime().toString("hh:mm:ss.zzz ") << "下载成功";
 }
+
+
