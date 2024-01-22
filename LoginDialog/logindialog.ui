@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page_login">
     <attribute name="title">
@@ -90,6 +90,9 @@
        <height>30</height>
       </rect>
      </property>
+     <property name="text">
+      <string>13022223333</string>
+     </property>
     </widget>
     <widget class="QLineEdit" name="le_password">
      <property name="geometry">
@@ -101,7 +104,7 @@
       </rect>
      </property>
      <property name="text">
-      <string/>
+      <string>123456789</string>
      </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>
@@ -123,6 +126,9 @@
        <width>171</width>
        <height>30</height>
       </rect>
+     </property>
+     <property name="text">
+      <string>123456789</string>
      </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>
@@ -155,6 +161,9 @@
      </property>
      <property name="toolTip">
       <string>输入11位手机号</string>
+     </property>
+     <property name="text">
+      <string>13022223333</string>
      </property>
     </widget>
     <widget class="QLabel" name="lb_password_register">
@@ -219,7 +228,7 @@
       </rect>
      </property>
      <property name="text">
-      <string/>
+      <string>123456789</string>
      </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>
@@ -238,7 +247,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>昵称</string>
+      <string>Num</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="le_noname">
@@ -249,6 +258,9 @@
        <width>171</width>
        <height>30</height>
       </rect>
+     </property>
+     <property name="text">
+      <string>00111100</string>
      </property>
     </widget>
    </widget>

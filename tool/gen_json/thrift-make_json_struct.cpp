@@ -53,8 +53,9 @@ int main(int argc , char ** argv){
     }
     fstream input;
     input.open(argv[1] , ios::out | ios::in );
-    fstream output;
-    output.open("./gen-code.txt" , ios::out | ios::in |ios::trunc );
+    fstream output1 , output2;
+    output1.open("./gen-code1.txt" , ios::out | ios::in |ios::trunc);
+    output2.open("./gen-code2.txt" , ios::out | ios::in |ios::trunc );
 
 
     string unused;
@@ -95,17 +96,17 @@ int main(int argc , char ** argv){
             info.push_back({s_name , s_type , id});
         }
         //生成类 idl -> struct
-        output << "class "<<struct_name << "{" <<endl;
-        output << "public:"<<endl;
-        output << "\tstatic JSON_Base json_base_;"<<endl;
-        output << "public:"<<endl;
-        output << "\tstatic std::string Serialization(const "<<struct_name << " &);"<<endl;
-        output << "\tstatic "<<struct_name << " Deserialization(const std::string&);"<<endl;
-        output << "public:"<<endl;
+        output1 << "class "<<struct_name << "{" <<endl;
+        output1 << "public:"<<endl;
+        output1 << "\tstatic JSON_Base json_base_;"<<endl;
+        output1 << "public:"<<endl;
+        output1 << "\tstatic std::string Serialization(const "<<struct_name << " &);"<<endl;
+        output1 << "\tstatic "<<struct_name << " Deserialization(const std::string&);"<<endl;
+        output1 << "public:"<<endl;
             for(auto it :info ){
-            output << "\t" << mp_lx[it.type] << " " << it.name <<";" << endl;
+            output1 << "\t" << mp_lx[it.type] << " " << it.name <<";" << endl;
         }
-        output << "};" <<endl;
+        output1 << "};" <<endl;
 
 // 上面的放入到 .h 
         // //生成解析结构体
@@ -116,54 +117,55 @@ int main(int argc , char ** argv){
         // output << "};"<<endl;
 
         //填充解析结构体 函数
-        output << "JSON_Base" <<" " << "Make_Json_" << struct_name << "(){" <<endl;
-        output << "\t" << "JSON_Base" << " ret;" << endl;
+        output2 << "JSON_Base" <<" " << "Make_Json_" << struct_name << "(){" <<endl;
+        output2 << "\t" << "JSON_Base" << " ret;" << endl;
         for(auto it:info){
-            output << "\tret.mp1[\"" << it.name << "\"] = "<< it.id <<\
+            output2 << "\tret.mp1[\"" << it.name << "\"] = "<< it.id <<\
                     ";ret.mp2[" << it.id << "] = \"" << it.name << \
                     "\";ret.mp3[" << it.id <<"] = \"" <<it.type << "\";"<<endl; 
         }
-        output << "\treturn ret;" <<endl;
-        output << "};" <<endl;
+        output2 << "\treturn ret;" <<endl;
+        output2 << "};" <<endl;
 
         //定义初始化
-        output << "JSON_Base "<<struct_name << "::json_base_ = Make_Json_"<< struct_name<<"();" <<endl;
+        output2 << "JSON_Base "<<struct_name << "::json_base_ = Make_Json_"<< struct_name<<"();" <<endl;
         
 
         //json序列化生成器
-        output << "std::string "<< struct_name <<"::Serialization(const "<<struct_name <<"&pkg""){" <<endl;
-        output << "\tstd::string ret;" <<endl;
-        output << "\tret += \"{\";" <<endl;
+        output2 << "std::string "<< struct_name <<"::Serialization(const "<<struct_name <<"&pkg""){" <<endl;
+        output2 << "\tstd::string ret;" <<endl;
+        output2 << "\tret += \"{\";" <<endl;
         int cnt = 0;
         for(auto it:info){
-            if(cnt++)  output <<"\tret += \",\";";
-            output << "\tret += gen_jsontoken("<<it.id <<",\""<<it.type<<"\","<<"pkg."<<it.name<<");"<<endl;
+            if(cnt++)  output2 <<"\tret += \",\";";
+            output2 << "\tret += gen_jsontoken("<<it.id <<",\""<<it.type<<"\","<<"pkg."<<it.name<<");"<<endl;
         }
-        output << "\tret += \"}\";" <<endl;
-        output <<"\treturn ret;" <<endl;
-        output << "}" <<endl;
+        output2 << "\tret += \"}\";" <<endl;
+        output2 <<"\treturn ret;" <<endl;
+        output2 << "}" <<endl;
 
         //json反序列化生成器
-        output << struct_name <<" " << struct_name<<"::Deserialization(const std::string& s){" <<endl;
-        output << "\t" << struct_name << " ret;" <<endl;
-        output << "\tstd::vector<int>v;" <<endl;
-        output << "\tv.push_back(0);"<<endl;
-        output << "\tfor(int i = 1;i<s.length()-1;i++){" <<endl;
-        output << "\t\tif(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\\\"'){" << endl;
-        output << "\t\t\tv.push_back(i);"<< endl;
-        output << "\t\t}" <<endl;
-        output << "\t}" <<endl;
-        output << "\tv.push_back(s.length()-1);" <<endl;
+        output2 << struct_name <<" " << struct_name<<"::Deserialization(const std::string& s){" <<endl;
+        output2 << "\t" << struct_name << " ret;" <<endl;
+        output2 << "\tstd::vector<int>v;" <<endl;
+        output2 << "\tv.push_back(0);"<<endl;
+        output2 << "\tfor(int i = 1;i<s.length()-1;i++){" <<endl;
+        output2 << "\t\tif(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\\\"'){" << endl;
+        output2 << "\t\t\tv.push_back(i);"<< endl;
+        output2 << "\t\t}" <<endl;
+        output2 << "\t}" <<endl;
+        output2 << "\tv.push_back(s.length()-1);" <<endl;
         cnt = 0;
         for(auto it: info){
-            output << "\tget_tokenval(s , v["<<cnt<<"]+1 , v["<<cnt+1<<"]-1 ,ret."<<it.name<<");" <<endl;
+            output2 << "\tget_tokenval(s , v["<<cnt<<"]+1 , v["<<cnt+1<<"]-1 ,ret."<<it.name<<");" <<endl;
             cnt++;
         }
-        output << "\treturn ret;" << endl;
-        output << "}" <<endl;
+        output2 << "\treturn ret;" << endl;
+        output2 << "}" <<endl;
 
         
     }
     input.close();
-    output.close();
+    output1.close();
+    output2.close();
 }

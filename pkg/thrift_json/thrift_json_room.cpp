@@ -1,6 +1,5 @@
-#include "./thrift_json_config.h"
+﻿#include "./thrift_json_config.h"
 #include <QDebug>
-
 JSON_Base Make_Json_Room_GetBaseInfo_SendInfo(){
     JSON_Base ret;
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
@@ -228,7 +227,7 @@ JSON_Base Make_Json_Room_Create_SendInfo(){
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
     ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
-    ret.mp1["Roomnum"] = 4;ret.mp2[4] = "Roomnum";ret.mp3[4] = "i32";
+    ret.mp1["Roomnum"] = 4;ret.mp2[4] = "Roomnum";ret.mp3[4] = "string";
     ret.mp1["Islocking"] = 5;ret.mp2[5] = "Islocking";ret.mp3[5] = "i32";
     ret.mp1["Roomname"] = 6;ret.mp2[6] = "Roomname";ret.mp3[6] = "string";
     ret.mp1["passwd"] = 7;ret.mp2[7] = "passwd";ret.mp3[7] = "string";
@@ -242,7 +241,7 @@ std::string Room_Create_SendInfo::Serialization(const Room_Create_SendInfo&pkg){
     ret += gen_jsontoken(1,"i32",pkg.type);
     ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
     ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
-    ret += ",";	ret += gen_jsontoken(4,"i32",pkg.Roomnum);
+    ret += ",";	ret += gen_jsontoken(4,"string",pkg.Roomnum);
     ret += ",";	ret += gen_jsontoken(5,"i32",pkg.Islocking);
     ret += ",";	ret += gen_jsontoken(6,"string",pkg.Roomname);
     ret += ",";	ret += gen_jsontoken(7,"string",pkg.passwd);
@@ -309,6 +308,7 @@ JSON_Base Make_Json_Room_Joinroom_SendInfo(){
     ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
     ret.mp1["roomnum"] = 4;ret.mp2[4] = "roomnum";ret.mp3[4] = "string";
     ret.mp1["Debate_pos"] = 5;ret.mp2[5] = "Debate_pos";ret.mp3[5] = "i32";
+    ret.mp1["passwd"] = 6;ret.mp2[6] = "passwd";ret.mp3[6] = "string";
     return ret;
 };
 JSON_Base Room_Joinroom_SendInfo::json_base_ = Make_Json_Room_Joinroom_SendInfo();
@@ -320,6 +320,7 @@ std::string Room_Joinroom_SendInfo::Serialization(const Room_Joinroom_SendInfo&p
     ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
     ret += ",";	ret += gen_jsontoken(4,"string",pkg.roomnum);
     ret += ",";	ret += gen_jsontoken(5,"i32",pkg.Debate_pos);
+    ret += ",";	ret += gen_jsontoken(6,"string",pkg.passwd);
     ret += "}";
     return ret;
 }
@@ -338,6 +339,7 @@ Room_Joinroom_SendInfo Room_Joinroom_SendInfo::Deserialization(const std::string
     get_tokenval(s , v[2]+1 , v[3]-1 ,ret.sendtime);
     get_tokenval(s , v[3]+1 , v[4]-1 ,ret.roomnum);
     get_tokenval(s , v[4]+1 , v[5]-1 ,ret.Debate_pos);
+    get_tokenval(s , v[5]+1 , v[6]-1 ,ret.passwd);
     return ret;
 }
 JSON_Base Make_Json_Room_Joinroom_RecvInfo(){
@@ -444,8 +446,9 @@ JSON_Base Make_Json_Room_ChangePasswd_SendInfo(){
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
     ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
-    ret.mp1["Opasswd"] = 4;ret.mp2[4] = "Opasswd";ret.mp3[4] = "string";
-    ret.mp1["Npasswd"] = 5;ret.mp2[5] = "Npasswd";ret.mp3[5] = "string";
+    ret.mp1["roomnum"] = 4;ret.mp2[4] = "roomnum";ret.mp3[4] = "string";
+    ret.mp1["Opasswd"] = 5;ret.mp2[5] = "Opasswd";ret.mp3[5] = "string";
+    ret.mp1["Npasswd"] = 6;ret.mp2[6] = "Npasswd";ret.mp3[6] = "string";
     return ret;
 };
 JSON_Base Room_ChangePasswd_SendInfo::json_base_ = Make_Json_Room_ChangePasswd_SendInfo();
@@ -455,8 +458,9 @@ std::string Room_ChangePasswd_SendInfo::Serialization(const Room_ChangePasswd_Se
     ret += gen_jsontoken(1,"i32",pkg.type);
     ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
     ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
-    ret += ",";	ret += gen_jsontoken(4,"string",pkg.Opasswd);
-    ret += ",";	ret += gen_jsontoken(5,"string",pkg.Npasswd);
+    ret += ",";	ret += gen_jsontoken(4,"string",pkg.roomnum);
+    ret += ",";	ret += gen_jsontoken(5,"string",pkg.Opasswd);
+    ret += ",";	ret += gen_jsontoken(6,"string",pkg.Npasswd);
     ret += "}";
     return ret;
 }
@@ -473,8 +477,9 @@ Room_ChangePasswd_SendInfo Room_ChangePasswd_SendInfo::Deserialization(const std
     get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
     get_tokenval(s , v[1]+1 , v[2]-1 ,ret.jwt_token);
     get_tokenval(s , v[2]+1 , v[3]-1 ,ret.sendtime);
-    get_tokenval(s , v[3]+1 , v[4]-1 ,ret.Opasswd);
-    get_tokenval(s , v[4]+1 , v[5]-1 ,ret.Npasswd);
+    get_tokenval(s , v[3]+1 , v[4]-1 ,ret.roomnum);
+    get_tokenval(s , v[4]+1 , v[5]-1 ,ret.Opasswd);
+    get_tokenval(s , v[5]+1 , v[6]-1 ,ret.Npasswd);
     return ret;
 }
 JSON_Base Make_Json_Room_ChangePasswd_RecvInfo(){
@@ -514,7 +519,7 @@ JSON_Base Make_Json_Room_ChangeExtraInfo_SendInfo(){
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
     ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
-    ret.mp1["roomnum"] = 4;ret.mp2[4] = "roomnum";ret.mp3[4] = "i32";
+    ret.mp1["roomnum"] = 4;ret.mp2[4] = "roomnum";ret.mp3[4] = "string";
     ret.mp1["info"] = 5;ret.mp2[5] = "info";ret.mp3[5] = "string";
     return ret;
 };
@@ -525,7 +530,7 @@ std::string Room_ChangeExtraInfo_SendInfo::Serialization(const Room_ChangeExtraI
     ret += gen_jsontoken(1,"i32",pkg.type);
     ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
     ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
-    ret += ",";	ret += gen_jsontoken(4,"i32",pkg.roomnum);
+    ret += ",";	ret += gen_jsontoken(4,"string",pkg.roomnum);
     ret += ",";	ret += gen_jsontoken(5,"string",pkg.info);
     ret += "}";
     return ret;
@@ -614,7 +619,6 @@ Room_ChangeDebatePos_SendInfo Room_ChangeDebatePos_SendInfo::Deserialization(con
     get_tokenval(s , v[3]+1 , v[4]-1 ,ret.Debate_pos);
     return ret;
 }
-
 JSON_Base Make_Json_Room_ChangeDebatePos_RecvInfo(){
     JSON_Base ret;
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
@@ -647,3 +651,4 @@ Room_ChangeDebatePos_RecvInfo Room_ChangeDebatePos_RecvInfo::Deserialization(con
     get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
     return ret;
 }
+

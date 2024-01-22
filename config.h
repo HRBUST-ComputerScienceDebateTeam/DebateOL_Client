@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef GLOBAL_CONFIG
 #define GLOBAL_CONFIG
@@ -15,6 +15,7 @@ const QString TSET_GET_PORT  = "7100";
 const QString TEST_POST_PORT = "7100";
 const QString ECHO_POST_PORT = "7100";
 const QString VIDEO_POST_PORT = "7100";
+const QString AUDIO_POST_PORT = "7100";
 const QString PUBLIC_PORT = "7100";
 
 //各个地址
@@ -22,7 +23,11 @@ const QString ECHO_POST_PATH = "/echo";
 const QString VIDEO_UPLOAD_POST_PATH = "/videoupload";
 const QString VIDEO_CLEAN_POST_PATH = "/videoclean";
 const QString VIDEO_DOWNLOAD_GET_PATH = "/videodownload/";
-const QString USER_LOGIN_PATH = "/usertellogin";
+const QString AUDIO_UPLOAD_POST_PATH = "/audioupload";
+const QString AUDIO_CLEAN_POST_PATH = "/audioclean";
+const QString AUDIO_DOWNLOAD_GET_PATH = "/audiodownload/";
+const QString USER_LOGINTEL_PATH = "/usertellogin";
+const QString USER_REG_PATH = "/userreg";
 
 //URL
 const QString TEST_GET_URL  =   "http://" + PUBLIC_IP + ":" + TSET_GET_PORT;
@@ -32,11 +37,15 @@ const QString VIDEO_UPLOAD_POST_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST
 const QString VIDEO_CLEAN_POST_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST_PORT +  VIDEO_CLEAN_POST_PATH;
 const QString VIDEO_DOWNLOAD_GET_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST_PORT +  VIDEO_DOWNLOAD_GET_PATH;
 
-const QString USER_LOGIN_URL =   "http://" + PUBLIC_IP + ":" + PUBLIC_PORT +  USER_LOGIN_PATH;
+const QString AUDIO_UPLOAD_POST_URL =   "http://" + PUBLIC_IP + ":" + AUDIO_POST_PORT +  AUDIO_UPLOAD_POST_PATH;
+const QString AUDIO_CLEAN_POST_URL =   "http://" + PUBLIC_IP + ":" + AUDIO_POST_PORT +  AUDIO_CLEAN_POST_PATH;
+const QString AUDIO_DOWNLOAD_GET_URL =   "http://" + PUBLIC_IP + ":" + AUDIO_POST_PORT +  AUDIO_DOWNLOAD_GET_PATH;
+
+const QString USER_LOGINTEL_URL =   "http://" + PUBLIC_IP + ":" + PUBLIC_PORT +  USER_LOGINTEL_PATH;
+const QString USER_REG_URL =   "http://" + PUBLIC_IP + ":" + PUBLIC_PORT +  USER_REG_PATH;
 //net 事件注册表大小
 const int MAX_EVENTNUM = 3600000 + 10;
 
-//状态字
 #define VIDEO_OK 200
 #define VIDEO_NO_PNG 300
 #define VIDEO_WRONG_DOWNLOAD_TYPE 400
@@ -49,15 +58,27 @@ const int MAX_EVENTNUM = 3600000 + 10;
 #define USER_WRONG_DOWNLOAD_TYPE 400
 #define USER_LOWACLevel          403
 #define USER_TIMEOUT_JWT         405
-#define USER_ERR_REQINFO         406 //
-#define USER_LOGIN_ERRINFO       408 //
-#define User_Reg_Havethisnum     409 //
-#define User_Reg_Havethistel     410 //
+#define USER_ERR_REQINFO         406
+#define USER_LOGIN_ERRINFO       408
+#define User_Reg_Havethisnum     409
+#define User_Reg_Havethistel     410
 #define User_Logoff_notonline    415
 #define User_JWT_NOTOUTTIME      420
 #define User_REJWT_NOTOUTTIME    421
 #define User_REJWT_HAVEOUTTIME   422
+
 #define USER_DAL_ERR             502
+
+#define ROOM_ACTION_OK           200
+#define ROOM_LOWACLevel          403
+#define ROOM_TIMEOUT_JWT         405
+#define ROOM_ERR_REQINFO         406
+#define ROOM_NoSuchRoomInfo      407
+#define ROOM_Create_Havethisnum  409
+#define ROOM_JOINROOM_ERRPASSWD  410
+#define ROOM_Changepos_Havepeo   412
+#define ROOM_DAL_ERR             502
+
 
 
 //typeid
@@ -106,6 +127,35 @@ const int User_ModifyExInfo_SendInfo_TypeId    = 345;
 const int User_ModifyExInfo_RecvInfo_TypeId    = 346;
 
 
+const int Room_GetBaseInfo_RecvInfo_TypeId      = 401;
+const int Room_GetBaseInfo_SendInfo_TypeId      = 402;
+const int Room_GetExInfo_RecvInfo_TypeId        = 403;
+const int Room_GetExInfo_SendInfo_TypeId        = 404;
+const int Room_GetURrelation_RecvInfo_TypeId    = 405;
+const int Room_GetURrelation_SendInfo_TypeId    = 406;
+const int Room_Create_RecvInfo_TypeId           = 407;
+const int Room_Create_SendInfo_TypeId           = 408;
+const int Room_Joinroom_RecvInfo_TypeId         = 409;
+const int Room_Joinroom_SendInfo_TypeId         = 410;
+const int Room_Exitroom_RecvInfo_TypeId         = 411;
+const int Room_Exitroom_SendInfo_TypeId         = 412;
+const int Room_ChangePasswd_RecvInfo_TypeId     = 413;
+const int Room_ChangePasswd_SendInfo_TypeId     = 414;
+const int Room_ChangeExtraInfo_RecvInfo_TypeId  = 415;
+const int Room_ChangeExtraInfo_SendInfo_TypeId  = 416;
+const int Room_ChangeDebatePos_RecvInfo_TypeId  = 417;
+const int Room_ChangeDebatePos_SendInfo_TypeId  = 418;
+
+
+
+
+
+
+
+
+
+
+
 //时间
 const int time_hour   = 60*60;
 const int time_minute = 60   ;
@@ -114,9 +164,13 @@ const int jwt_time         = 10*time_minute;
 const int refresh_jwt_time =  2*time_hour  ;
 
 //密码加密：
-// 1. 登陆申请提交的是 base64 + sha256 的passwd
+// 1. 登陆申请提交的是 base64 + sha256 又base64 的passwd
 // 2. 盐是            base64 + sha256 的存入数据库
 // 3. 数据库中的密码 是上述两个相加 之后 sha256 存入数据库
+//数据库
+
+const int INT_DEFAULT = -1;
+const std::string STR_DEFAULT = "";
 
 
 #endif

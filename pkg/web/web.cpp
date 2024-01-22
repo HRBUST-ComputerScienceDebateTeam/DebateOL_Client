@@ -210,7 +210,7 @@ QString MYNET_KERNEL::GET_VIDEODL_URL(struct Video_Download_SendInfo & sendinfo)
 }
 
 void MYNET_KERNEL::slot_replyFinished(QNetworkReply* reply){
-    //cout <<"slot_replyFinished" <<endl;
+    cout <<"slot_replyFinished" <<endl;
     //如果合法
     if (reply->error() != QNetworkReply::NoError){
         qDebug()<<"request protobufHttp handle errors here";
@@ -230,63 +230,33 @@ void MYNET_KERNEL::slot_replyFinished(QNetworkReply* reply){
 
     int etypeid = get_typeid(QString::fromLatin1(getinfo).toLatin1().toStdString());
     switch(etypeid){
-    case Video_Download_RecvInfo_TypeId:{
-        Video_Download_RecvInfo * dlreinfo = new Video_Download_RecvInfo(Video_Download_RecvInfo::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString()));
-        if(dlreinfo->status == 300){
-                cout << "NO photo now !" <<endl;
-                delete dlreinfo;
+        case User_Login_RecvInfo_TypeId:{
+            //cout << "deal User_Login_RecvInfo_TypeId post" <<endl;
+            User_login_RecvInfo * dlreinfo =new User_login_RecvInfo(User_login_RecvInfo::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString()));
+            KERNEL_CALL_FUN fp = net_event[dlreinfo->sendtime];
+
+            if(!fp){
+                    cout << "err 事件没有注册" <<endl;
+            }else{
+                (kp->*fp)((void*)dlreinfo);
+            }
+        }
+        break;
+        case User_Reg_RecvInfo_TypeId:{
+            //cout << "deal User_Reg_RecvInfo_TypeId post" <<endl;
+            User_reg_RecvInfo * dlreinfo =new User_reg_RecvInfo(User_reg_RecvInfo::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString()));
+            KERNEL_CALL_FUN fp = net_event[dlreinfo->sendtime];
+
+            if(!fp){
+                cout << "err 事件没有注册" <<endl;
+            }else{
+                (kp->*fp)((void*)dlreinfo);
+            }
+        }
+        break;
+        default:
+            cout << "未识别的类型" << etypeid <<endl;
                 return;
-        }
-
-        KERNEL_CALL_FUN fp = net_event[dlreinfo->sendtime];
-        if(!fp){
-                cout << "err 事件没有注册" <<endl;
-                delete dlreinfo;
-        }else{
-                if(dlreinfo->status == 200){
-                    (kp->*fp)((void*)dlreinfo);
-                }
-        }
-    }
-    break;
-    case Video_Upload_RecvInfo_TypeId:{
-        //cout << "deal net post" <<endl;
-        Video_Upload_RecvInfo * dlreinfo =new Video_Upload_RecvInfo(Video_Upload_RecvInfo::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString()));
-
-        KERNEL_CALL_FUN fp = net_event[dlreinfo->sendtime];
-
-        if(!fp){
-                cout << "err 事件没有注册" <<endl;
-        }else{
-                //cout << "deal!" <<endl;
-                if(dlreinfo->status == 200){
-                    (kp->*fp)((void*)dlreinfo);
-                }
-        }
-    }
-    break;
-    case User_Login_RecvInfo_TypeId:{
-        //cout << "deal User_Login_RecvInfo_TypeId post" <<endl;
-        User_login_RecvInfo * dlreinfo =new User_login_RecvInfo(User_login_RecvInfo::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString()));
-        KERNEL_CALL_FUN fp = net_event[dlreinfo->sendtime];
-
-        if(!fp){
-                cout << "err 事件没有注册" <<endl;
-        }else{
-                //cout << "deal!" <<endl;
-                if(dlreinfo->status == 200){
-                    (kp->*fp)((void*)dlreinfo);
-                }
-        }
-    }
-    break;
-    case Audio_Download_RecvInfo_TypeId:
-        break;
-    case Audio_Upload_RecvInfo_TypeId:
-        break;
-    default:
-        cout << "未识别的类型" << etypeid <<endl;
-            return;
     }
 
 
