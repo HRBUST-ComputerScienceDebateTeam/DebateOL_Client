@@ -1,0 +1,651 @@
+JSON_Base Make_Json_Room_GetBaseInfo_SendInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
+	ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
+	ret.mp1["Aim_Roomnum"] = 4;ret.mp2[4] = "Aim_Roomnum";ret.mp3[4] = "string";
+	ret.mp1["info"] = 5;ret.mp2[5] = "info";ret.mp3[5] = "string";
+	return ret;
+};
+JSON_Base Room_GetBaseInfo_SendInfo::json_base_ = Make_Json_Room_GetBaseInfo_SendInfo();
+std::string Room_GetBaseInfo_SendInfo::Serialization(const Room_GetBaseInfo_SendInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(4,"string",pkg.Aim_Roomnum);
+	ret += ",";	ret += gen_jsontoken(5,"string",pkg.info);
+	ret += "}";
+	return ret;
+}
+Room_GetBaseInfo_SendInfo Room_GetBaseInfo_SendInfo::Deserialization(const std::string& s){
+	Room_GetBaseInfo_SendInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.jwt_token);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.sendtime);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.Aim_Roomnum);
+	get_tokenval(s , v[4]+1 , v[5]-1 ,ret.info);
+	return ret;
+}
+JSON_Base Make_Json_Room_GetBaseInfo_RecvInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
+	ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+	ret.mp1["info"] = 4;ret.mp2[4] = "info";ret.mp3[4] = "string";
+	return ret;
+};
+JSON_Base Room_GetBaseInfo_RecvInfo::json_base_ = Make_Json_Room_GetBaseInfo_RecvInfo();
+std::string Room_GetBaseInfo_RecvInfo::Serialization(const Room_GetBaseInfo_RecvInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+	ret += ",";	ret += gen_jsontoken(4,"string",pkg.info);
+	ret += "}";
+	return ret;
+}
+Room_GetBaseInfo_RecvInfo Room_GetBaseInfo_RecvInfo::Deserialization(const std::string& s){
+	Room_GetBaseInfo_RecvInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.info);
+	return ret;
+}
+JSON_Base Make_Json_Room_GetExInfo_SendInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
+	ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
+	ret.mp1["Aim_Roomnum"] = 4;ret.mp2[4] = "Aim_Roomnum";ret.mp3[4] = "string";
+	ret.mp1["info"] = 5;ret.mp2[5] = "info";ret.mp3[5] = "string";
+	return ret;
+};
+JSON_Base Room_GetExInfo_SendInfo::json_base_ = Make_Json_Room_GetExInfo_SendInfo();
+std::string Room_GetExInfo_SendInfo::Serialization(const Room_GetExInfo_SendInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(4,"string",pkg.Aim_Roomnum);
+	ret += ",";	ret += gen_jsontoken(5,"string",pkg.info);
+	ret += "}";
+	return ret;
+}
+Room_GetExInfo_SendInfo Room_GetExInfo_SendInfo::Deserialization(const std::string& s){
+	Room_GetExInfo_SendInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.jwt_token);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.sendtime);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.Aim_Roomnum);
+	get_tokenval(s , v[4]+1 , v[5]-1 ,ret.info);
+	return ret;
+}
+JSON_Base Make_Json_Room_GetExInfo_RecvInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
+	ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+	ret.mp1["info"] = 4;ret.mp2[4] = "info";ret.mp3[4] = "string";
+	return ret;
+};
+JSON_Base Room_GetExInfo_RecvInfo::json_base_ = Make_Json_Room_GetExInfo_RecvInfo();
+std::string Room_GetExInfo_RecvInfo::Serialization(const Room_GetExInfo_RecvInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+	ret += ",";	ret += gen_jsontoken(4,"string",pkg.info);
+	ret += "}";
+	return ret;
+}
+Room_GetExInfo_RecvInfo Room_GetExInfo_RecvInfo::Deserialization(const std::string& s){
+	Room_GetExInfo_RecvInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.info);
+	return ret;
+}
+JSON_Base Make_Json_Room_GetURrelation_SendInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
+	ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
+	ret.mp1["Aim_Roomnum"] = 4;ret.mp2[4] = "Aim_Roomnum";ret.mp3[4] = "string";
+	ret.mp1["info"] = 5;ret.mp2[5] = "info";ret.mp3[5] = "string";
+	return ret;
+};
+JSON_Base Room_GetURrelation_SendInfo::json_base_ = Make_Json_Room_GetURrelation_SendInfo();
+std::string Room_GetURrelation_SendInfo::Serialization(const Room_GetURrelation_SendInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(4,"string",pkg.Aim_Roomnum);
+	ret += ",";	ret += gen_jsontoken(5,"string",pkg.info);
+	ret += "}";
+	return ret;
+}
+Room_GetURrelation_SendInfo Room_GetURrelation_SendInfo::Deserialization(const std::string& s){
+	Room_GetURrelation_SendInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.jwt_token);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.sendtime);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.Aim_Roomnum);
+	get_tokenval(s , v[4]+1 , v[5]-1 ,ret.info);
+	return ret;
+}
+JSON_Base Make_Json_Room_GetURrelation_RecvInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
+	ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+	ret.mp1["info_UR_pos"] = 4;ret.mp2[4] = "info_UR_pos";ret.mp3[4] = "string";
+	ret.mp1["info_UR_per"] = 5;ret.mp2[5] = "info_UR_per";ret.mp3[5] = "string";
+	return ret;
+};
+JSON_Base Room_GetURrelation_RecvInfo::json_base_ = Make_Json_Room_GetURrelation_RecvInfo();
+std::string Room_GetURrelation_RecvInfo::Serialization(const Room_GetURrelation_RecvInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+	ret += ",";	ret += gen_jsontoken(4,"string",pkg.info_UR_pos);
+	ret += ",";	ret += gen_jsontoken(5,"string",pkg.info_UR_per);
+	ret += "}";
+	return ret;
+}
+Room_GetURrelation_RecvInfo Room_GetURrelation_RecvInfo::Deserialization(const std::string& s){
+	Room_GetURrelation_RecvInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.info_UR_pos);
+	get_tokenval(s , v[4]+1 , v[5]-1 ,ret.info_UR_per);
+	return ret;
+}
+JSON_Base Make_Json_Room_Create_SendInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
+	ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
+	ret.mp1["Roomnum"] = 4;ret.mp2[4] = "Roomnum";ret.mp3[4] = "string";
+	ret.mp1["Islocking"] = 5;ret.mp2[5] = "Islocking";ret.mp3[5] = "i32";
+	ret.mp1["Roomname"] = 6;ret.mp2[6] = "Roomname";ret.mp3[6] = "string";
+	ret.mp1["passwd"] = 7;ret.mp2[7] = "passwd";ret.mp3[7] = "string";
+	ret.mp1["Debate_pos"] = 8;ret.mp2[8] = "Debate_pos";ret.mp3[8] = "i32";
+	return ret;
+};
+JSON_Base Room_Create_SendInfo::json_base_ = Make_Json_Room_Create_SendInfo();
+std::string Room_Create_SendInfo::Serialization(const Room_Create_SendInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(4,"string",pkg.Roomnum);
+	ret += ",";	ret += gen_jsontoken(5,"i32",pkg.Islocking);
+	ret += ",";	ret += gen_jsontoken(6,"string",pkg.Roomname);
+	ret += ",";	ret += gen_jsontoken(7,"string",pkg.passwd);
+	ret += ",";	ret += gen_jsontoken(8,"i32",pkg.Debate_pos);
+	ret += "}";
+	return ret;
+}
+Room_Create_SendInfo Room_Create_SendInfo::Deserialization(const std::string& s){
+	Room_Create_SendInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.jwt_token);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.sendtime);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.Roomnum);
+	get_tokenval(s , v[4]+1 , v[5]-1 ,ret.Islocking);
+	get_tokenval(s , v[5]+1 , v[6]-1 ,ret.Roomname);
+	get_tokenval(s , v[6]+1 , v[7]-1 ,ret.passwd);
+	get_tokenval(s , v[7]+1 , v[8]-1 ,ret.Debate_pos);
+	return ret;
+}
+JSON_Base Make_Json_Room_Create_RecvInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
+	ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+	return ret;
+};
+JSON_Base Room_Create_RecvInfo::json_base_ = Make_Json_Room_Create_RecvInfo();
+std::string Room_Create_RecvInfo::Serialization(const Room_Create_RecvInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+	ret += "}";
+	return ret;
+}
+Room_Create_RecvInfo Room_Create_RecvInfo::Deserialization(const std::string& s){
+	Room_Create_RecvInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+	return ret;
+}
+JSON_Base Make_Json_Room_Joinroom_SendInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
+	ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
+	ret.mp1["roomnum"] = 4;ret.mp2[4] = "roomnum";ret.mp3[4] = "string";
+	ret.mp1["Debate_pos"] = 5;ret.mp2[5] = "Debate_pos";ret.mp3[5] = "i32";
+	ret.mp1["passwd"] = 6;ret.mp2[6] = "passwd";ret.mp3[6] = "string";
+	return ret;
+};
+JSON_Base Room_Joinroom_SendInfo::json_base_ = Make_Json_Room_Joinroom_SendInfo();
+std::string Room_Joinroom_SendInfo::Serialization(const Room_Joinroom_SendInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(4,"string",pkg.roomnum);
+	ret += ",";	ret += gen_jsontoken(5,"i32",pkg.Debate_pos);
+	ret += ",";	ret += gen_jsontoken(6,"string",pkg.passwd);
+	ret += "}";
+	return ret;
+}
+Room_Joinroom_SendInfo Room_Joinroom_SendInfo::Deserialization(const std::string& s){
+	Room_Joinroom_SendInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.jwt_token);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.sendtime);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.roomnum);
+	get_tokenval(s , v[4]+1 , v[5]-1 ,ret.Debate_pos);
+	get_tokenval(s , v[5]+1 , v[6]-1 ,ret.passwd);
+	return ret;
+}
+JSON_Base Make_Json_Room_Joinroom_RecvInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
+	ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+	return ret;
+};
+JSON_Base Room_Joinroom_RecvInfo::json_base_ = Make_Json_Room_Joinroom_RecvInfo();
+std::string Room_Joinroom_RecvInfo::Serialization(const Room_Joinroom_RecvInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+	ret += "}";
+	return ret;
+}
+Room_Joinroom_RecvInfo Room_Joinroom_RecvInfo::Deserialization(const std::string& s){
+	Room_Joinroom_RecvInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+	return ret;
+}
+JSON_Base Make_Json_Room_Exitroom_SendInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
+	ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
+	ret.mp1["roomnum"] = 4;ret.mp2[4] = "roomnum";ret.mp3[4] = "string";
+	return ret;
+};
+JSON_Base Room_Exitroom_SendInfo::json_base_ = Make_Json_Room_Exitroom_SendInfo();
+std::string Room_Exitroom_SendInfo::Serialization(const Room_Exitroom_SendInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(4,"string",pkg.roomnum);
+	ret += "}";
+	return ret;
+}
+Room_Exitroom_SendInfo Room_Exitroom_SendInfo::Deserialization(const std::string& s){
+	Room_Exitroom_SendInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.jwt_token);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.sendtime);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.roomnum);
+	return ret;
+}
+JSON_Base Make_Json_Room_Exitroom_RecvInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
+	ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+	return ret;
+};
+JSON_Base Room_Exitroom_RecvInfo::json_base_ = Make_Json_Room_Exitroom_RecvInfo();
+std::string Room_Exitroom_RecvInfo::Serialization(const Room_Exitroom_RecvInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+	ret += "}";
+	return ret;
+}
+Room_Exitroom_RecvInfo Room_Exitroom_RecvInfo::Deserialization(const std::string& s){
+	Room_Exitroom_RecvInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+	return ret;
+}
+JSON_Base Make_Json_Room_ChangePasswd_SendInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
+	ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
+	ret.mp1["roomnum"] = 4;ret.mp2[4] = "roomnum";ret.mp3[4] = "string";
+	ret.mp1["Opasswd"] = 5;ret.mp2[5] = "Opasswd";ret.mp3[5] = "string";
+	ret.mp1["Npasswd"] = 6;ret.mp2[6] = "Npasswd";ret.mp3[6] = "string";
+	return ret;
+};
+JSON_Base Room_ChangePasswd_SendInfo::json_base_ = Make_Json_Room_ChangePasswd_SendInfo();
+std::string Room_ChangePasswd_SendInfo::Serialization(const Room_ChangePasswd_SendInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(4,"string",pkg.roomnum);
+	ret += ",";	ret += gen_jsontoken(5,"string",pkg.Opasswd);
+	ret += ",";	ret += gen_jsontoken(6,"string",pkg.Npasswd);
+	ret += "}";
+	return ret;
+}
+Room_ChangePasswd_SendInfo Room_ChangePasswd_SendInfo::Deserialization(const std::string& s){
+	Room_ChangePasswd_SendInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.jwt_token);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.sendtime);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.roomnum);
+	get_tokenval(s , v[4]+1 , v[5]-1 ,ret.Opasswd);
+	get_tokenval(s , v[5]+1 , v[6]-1 ,ret.Npasswd);
+	return ret;
+}
+JSON_Base Make_Json_Room_ChangePasswd_RecvInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
+	ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+	return ret;
+};
+JSON_Base Room_ChangePasswd_RecvInfo::json_base_ = Make_Json_Room_ChangePasswd_RecvInfo();
+std::string Room_ChangePasswd_RecvInfo::Serialization(const Room_ChangePasswd_RecvInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+	ret += "}";
+	return ret;
+}
+Room_ChangePasswd_RecvInfo Room_ChangePasswd_RecvInfo::Deserialization(const std::string& s){
+	Room_ChangePasswd_RecvInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+	return ret;
+}
+JSON_Base Make_Json_Room_ChangeExtraInfo_SendInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
+	ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
+	ret.mp1["roomnum"] = 4;ret.mp2[4] = "roomnum";ret.mp3[4] = "string";
+	ret.mp1["info"] = 5;ret.mp2[5] = "info";ret.mp3[5] = "string";
+	return ret;
+};
+JSON_Base Room_ChangeExtraInfo_SendInfo::json_base_ = Make_Json_Room_ChangeExtraInfo_SendInfo();
+std::string Room_ChangeExtraInfo_SendInfo::Serialization(const Room_ChangeExtraInfo_SendInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(4,"string",pkg.roomnum);
+	ret += ",";	ret += gen_jsontoken(5,"string",pkg.info);
+	ret += "}";
+	return ret;
+}
+Room_ChangeExtraInfo_SendInfo Room_ChangeExtraInfo_SendInfo::Deserialization(const std::string& s){
+	Room_ChangeExtraInfo_SendInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.jwt_token);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.sendtime);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.roomnum);
+	get_tokenval(s , v[4]+1 , v[5]-1 ,ret.info);
+	return ret;
+}
+JSON_Base Make_Json_Room_ChangeExtraInfo_RecvInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
+	ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+	return ret;
+};
+JSON_Base Room_ChangeExtraInfo_RecvInfo::json_base_ = Make_Json_Room_ChangeExtraInfo_RecvInfo();
+std::string Room_ChangeExtraInfo_RecvInfo::Serialization(const Room_ChangeExtraInfo_RecvInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+	ret += "}";
+	return ret;
+}
+Room_ChangeExtraInfo_RecvInfo Room_ChangeExtraInfo_RecvInfo::Deserialization(const std::string& s){
+	Room_ChangeExtraInfo_RecvInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+	return ret;
+}
+JSON_Base Make_Json_Room_ChangeDebatePos_SendInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["jwt_token"] = 2;ret.mp2[2] = "jwt_token";ret.mp3[2] = "string";
+	ret.mp1["sendtime"] = 3;ret.mp2[3] = "sendtime";ret.mp3[3] = "i32";
+	ret.mp1["Debate_pos"] = 4;ret.mp2[4] = "Debate_pos";ret.mp3[4] = "i32";
+	return ret;
+};
+JSON_Base Room_ChangeDebatePos_SendInfo::json_base_ = Make_Json_Room_ChangeDebatePos_SendInfo();
+std::string Room_ChangeDebatePos_SendInfo::Serialization(const Room_ChangeDebatePos_SendInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"string",pkg.jwt_token);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(4,"i32",pkg.Debate_pos);
+	ret += "}";
+	return ret;
+}
+Room_ChangeDebatePos_SendInfo Room_ChangeDebatePos_SendInfo::Deserialization(const std::string& s){
+	Room_ChangeDebatePos_SendInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.jwt_token);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.sendtime);
+	get_tokenval(s , v[3]+1 , v[4]-1 ,ret.Debate_pos);
+	return ret;
+}
+JSON_Base Make_Json_Room_ChangeDebatePos_RecvInfo(){
+	JSON_Base ret;
+	ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+	ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
+	ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+	return ret;
+};
+JSON_Base Room_ChangeDebatePos_RecvInfo::json_base_ = Make_Json_Room_ChangeDebatePos_RecvInfo();
+std::string Room_ChangeDebatePos_RecvInfo::Serialization(const Room_ChangeDebatePos_RecvInfo&pkg){
+	std::string ret;
+	ret += "{";
+	ret += gen_jsontoken(1,"i32",pkg.type);
+	ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
+	ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+	ret += "}";
+	return ret;
+}
+Room_ChangeDebatePos_RecvInfo Room_ChangeDebatePos_RecvInfo::Deserialization(const std::string& s){
+	Room_ChangeDebatePos_RecvInfo ret;
+	std::vector<int>v;
+	v.push_back(0);
+	for(int i = 1;i<s.length()-1;i++){
+		if(s[i] == ',' && s[i-1] == '}' && s[i+1] =='\"'){
+			v.push_back(i);
+		}
+	}
+	v.push_back(s.length()-1);
+	get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
+	get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
+	get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+	return ret;
+}

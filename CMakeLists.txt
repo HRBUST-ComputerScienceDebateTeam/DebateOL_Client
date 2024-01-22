@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+﻿cmake_minimum_required(VERSION 3.5)
 
 project(Debate VERSION 0.1 LANGUAGES CXX)
 
@@ -51,7 +51,7 @@ include_directories(C:/Qt/Tools/mingw1120_64/opt/include)
 #LINK_LIBRARIES(${Openssl_DIR}/libopencv_videoio480.dll.a)
 #LINK_LIBRARIES(${Openssl_DIR}/libopencv_videoio480.dll.a)
 
-
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -finput-charset=UTF-8 -fexec-charset=UTF-8")
 set(PROJECT_SOURCES
     main.cpp
     ckernel.h
@@ -102,6 +102,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/thrift_json/thrift_json_video.cpp
         pkg/thrift_json/thrift_json_user.cpp
         pkg/thrift_json/thrift_json_room.cpp
+        pkg/thrift_json/thrift_json_audio.cpp
 
         #web
         pkg/web/web.cpp
@@ -145,7 +146,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/Openssl/openssl.h
         pkg/Openssl/openssl.cpp
 
-
+        #dal
+        dal/dal_config.h
+        dal/dal_config.cpp
+        dal/dal_user.h
+        dal/dal_room.h
+        dal/dal_user.cpp
+        dal/dal_room.cpp
 
         #world
         world.h

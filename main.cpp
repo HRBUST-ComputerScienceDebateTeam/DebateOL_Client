@@ -1,4 +1,4 @@
-#include "./mainwindow/mainwindow.h"
+﻿#include "./mainwindow/mainwindow.h"
 #include "./Room_main/room_main.h"
 
 #include "./config.h"
@@ -6,11 +6,14 @@
 #include "./pkg/thrift_json/thrift_json_config.h"
 #include "./pkg/web/web.h"
 
-
 #include <QApplication>
+
 
 int main(int argc, char *argv[])
 {
+//设置中文编码
+
+
     QApplication a(argc, argv);
 //    MainWindow mainw;
 //    mainw.show();

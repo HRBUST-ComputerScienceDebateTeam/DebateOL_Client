@@ -6,6 +6,7 @@
 #include "./pkg/Openssl/openssl.h"
 #include"qDebug"
 #include<QInputDialog>
+#include <QMessageBox>
 
 #define NetPackMap(a) m_netPackMap[a - DEF_PACK_BASE]
 
@@ -19,8 +20,8 @@ Ckernel::Ckernel(QObject *parent)
     m_pAudioRead = new AudioRead;
     connect(m_pLoginDlg,SIGNAL(SIG_loginCommit(QString,QString))
             ,this,SLOT(slot_loginCommit(QString,QString)));
-    connect(m_pLoginDlg,SIGNAL(SIG_registerCommit(QString,QString))
-            ,this,SLOT(slot_registerCommit(QString,QString)));
+    connect(m_pLoginDlg,SIGNAL(SIG_registerCommit(QString,QString,QString))
+            ,this,SLOT(slot_registerCommit(QString,QString,QString)));
 
     connect(We_Chat,SIGNAL(SIG_createRoom())
             ,this,SLOT(slot_createRoom()));
@@ -48,6 +49,8 @@ string Ckernel::my_refresh_jwt_token     ="";
 //回收
 void Ckernel::slot_destory()
 {
+    //发送下线请求
+
     qDebug()<<__func__;
     if(We_Chat)
     {
@@ -85,11 +88,11 @@ void Ckernel::slot_destorychat()
 }
 
 //发送注册
-void Ckernel::slot_registerCommit(QString tel, QString pass, QString name)
+void Ckernel::slot_registerCommit(QString tel, QString pass, QString num)
 {
     std::string strTel = tel.toStdString();
     std::string strPass= pass.toStdString();
-    std::string strName = name.toStdString();
+    std::string strNum = num.toStdString();
 
     User_reg_SendInfo reg_req;
 
@@ -97,9 +100,9 @@ void Ckernel::slot_registerCommit(QString tel, QString pass, QString name)
     int timid = tm.minute()*60000 + tm.second() * 1000 + tm.msec();
 
     reg_req.tel=strTel;
-    reg_req.passwd=sha256(Base64Encode(strPass));
+    reg_req.passwd=Base64Encode(sha256(Base64Encode(strPass)));
     reg_req.sendtime =timid;
-    reg_req.usernum=strName;
+    reg_req.usernum=strNum;
     reg_req.type =User_Reg_SendInfo_TypeId;
 
     string sendreq = User_reg_SendInfo::Serialization(reg_req);
@@ -107,7 +110,7 @@ void Ckernel::slot_registerCommit(QString tel, QString pass, QString name)
     MYNET_KERNEL::Init(this);
     MYNET_KERNEL * netptr = MYNET_KERNEL::getinstance();//获取单例
 
-    netptr->NETPOST(USER_LOGIN_URL ,sendreq , timid  ,  &Ckernel::SIGDEAL_reg );
+    netptr->NETPOST(USER_REG_URL ,sendreq , timid  ,  &Ckernel::SIGDEAL_reg );
 }
 //创建房间
 void Ckernel::slot_createRoom()
@@ -160,7 +163,7 @@ void Ckernel::slot_loginCommit(QString tel, QString pass)
     int timid = tm.minute()*60000 + tm.second() * 1000 + tm.msec();
 
     login_req.sendtime = timid;
-    login_req.passwd = sha256(Base64Encode(strPass));
+    login_req.passwd = Base64Encode(sha256(Base64Encode(strPass)));//多一层base64 -否则解析错误
     login_req.tel = strTel;
     login_req.type = User_LoginTel_SendInfo_TypeId;
     string sendreq = User_login_Tel_SendInfo::Serialization(login_req);
@@ -168,7 +171,7 @@ void Ckernel::slot_loginCommit(QString tel, QString pass)
     MYNET_KERNEL::Init(this);
     MYNET_KERNEL * netptr = MYNET_KERNEL::getinstance();//获取单例
 
-    netptr->NETPOST(USER_LOGIN_URL ,sendreq , timid  ,  &Ckernel::SIGDEAL_login );
+    netptr->NETPOST(USER_LOGINTEL_URL ,sendreq , timid  ,  &Ckernel::SIGDEAL_login );
 }
 
 void * Ckernel::SIGDEAL_reg(void * arg)
@@ -177,21 +180,28 @@ void * Ckernel::SIGDEAL_reg(void * arg)
     if(recvinfo->status != 200)
     {
         switch (recvinfo->status) {
+        case USER_ERR_REQINFO:
+            QMessageBox::about(m_pLoginDlg,"提示","请求包不合法");
+            qDebug()<<__func__ << "注册失败 - 请求包不合法";
+            break;
         case User_Reg_Havethisnum:
-            QMessageBox::about(m_pLoginDlg,"提示","用户名已经被使用");
-            //qDebug()<<"账户已经被注册";
+            QMessageBox::about(m_pLoginDlg,"提示","账户已经被使用");
+            qDebug()<<__func__ << "注册失败 - 手机号已经被注册";
             break;
         case User_Reg_Havethistel:
             QMessageBox::about(m_pLoginDlg,"提示","手机号已经被注册");
-            //qDebug()<<"手机号已经被注册";
+            qDebug()<<__func__ << "注册失败 - 手机号已经被注册";
             break;
         default:
-            cout << " not find status" <<endl;
+            QMessageBox::about(m_pLoginDlg,"提示","未知错误");
+            cout << __func__ << " not find status" << recvinfo->status <<endl;
             break;
         }
+        return nullptr;
     }
-    //存到本地
-    //个人信息
+    QMessageBox::about(m_pLoginDlg,"提示","注册成功");
+    qDebug()<<__func__ << "注册成功";
+
 }
 
 void * Ckernel::SIGDEAL_login (void * arg){
@@ -199,33 +209,38 @@ void * Ckernel::SIGDEAL_login (void * arg){
     User_login_RecvInfo * recvinfo = (User_login_RecvInfo *) arg;
     if(recvinfo->status != 200 ){
         switch(recvinfo->status){
-            case USER_ERR_REQINFO://请求体有误
-                return nullptr;
-                break;
-            case USER_LOGIN_ERRINFO://登陆失败 - 账号密码不对应
-                //调用提醒函数
-                //qDebug()<<"err login info";
-                QMessageBox::about(m_pLoginDlg,"提示","密码或账号错误");
-                return nullptr;
-            default:
-                cout << " not find status" <<endl;
-                break;
-            }
+        case USER_ERR_REQINFO://请求体有误
+            QMessageBox::about(m_pLoginDlg,"提示","请求体有误");
+            qDebug()<<__func__ << "请求体有误";
+            break;
+        case USER_LOGIN_ERRINFO://登陆失败 - 账号密码不对应
+            //调用提醒函数
+            QMessageBox::about(m_pLoginDlg,"提示","密码或账号错误");
+            qDebug()<<__func__ << "密码或账号错误";
+            return nullptr;
+        case USER_DAL_ERR:
+            QMessageBox::about(m_pLoginDlg,"提示","服务器内部错误");
+            qDebug()<<__func__ << "服务器内部错误";
+            return nullptr;
+        default:
+            QMessageBox::about(m_pLoginDlg,"提示","未知错误");
+            cout << __func__ << " not find status" << recvinfo->status <<endl;
+            break;
+        }
+        return nullptr;
     }
+
     //存到本地
     //个人信息
     Ckernel::myuid                    = stoi(((JWT_token::jwt_decode(recvinfo->jwt_token)).getpayloadmap())["aud"]) ;
     Ckernel::my_jwt_token             = recvinfo->jwt_token;
     Ckernel::my_refresh_jwt_token     = recvinfo->refresh_jwt_token;
-    cout << "SIGDEAL_login" << " OK" <<endl;
+    cout << "Userid 为 : " << myuid << "登录成功" <<endl;
+
+    //TODO: 阻塞获取 个人信息 设置wechat更新界面
 
     m_pLoginDlg->hide();
     We_Chat->show();
 }
-    //测试
-//    cout << "Ckernel::myuid                   " <<     Ckernel::myuid                    <<endl;
-//    cout << "Ckernel::my_jwt_token            " <<     Ckernel::my_jwt_token             <<endl;
-//    cout << "Ckernel::my_refresh_jwt_token    " <<     Ckernel::my_refresh_jwt_token     <<endl;
 
-//>>>>>>> fed663280e59afc461ecebd74b16f35e1f8a526e
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <bits/stdc++.h>
 #include <QString>
 
@@ -69,7 +69,6 @@ public:
     string info;
     int32_t sendtime;
 };
-
 class Echo_RecvInfo{
 public:
     static JSON_Base json_base_;
@@ -163,17 +162,53 @@ public:
 };
 
 
+
 //audio
-class Audio_Clean_SendInfo{
+class Audio_Upload_SendInfo{
 public:
     static JSON_Base json_base_;
 public:
-    static std::string Serialization(const Audio_Clean_SendInfo &);
-    static Audio_Clean_SendInfo Deserialization(const std::string&);
+    static std::string Serialization(const Audio_Upload_SendInfo &);
+    static Audio_Upload_SendInfo Deserialization(const std::string&);
 public:
     int32_t type;
     int32_t userId;
     int32_t roomId;
+    int32_t min;
+    int32_t sec;
+    int32_t msec;
+    string info;
+    int32_t sendtime;
+};
+class Audio_Upload_RecvInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Audio_Upload_RecvInfo &);
+    static Audio_Upload_RecvInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
+    int32_t min;
+    int32_t sec;
+    int32_t msec;
+    int32_t status;
+    int32_t sendtime;
+};
+class Audio_Download_SendInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Audio_Download_SendInfo &);
+    static Audio_Download_SendInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t userId;
+    int32_t roomId;
+    int32_t min;
+    int32_t sec;
+    int32_t msec;
     int32_t sendtime;
 };
 class Audio_Download_RecvInfo{
@@ -193,53 +228,19 @@ public:
     string info;
     int32_t sendtime;
 };
-class Audio_Download_SendInfo{
+class Audio_Clean_SendInfo{
 public:
     static JSON_Base json_base_;
 public:
-    static std::string Serialization(const Audio_Download_SendInfo &);
-    static Audio_Download_SendInfo Deserialization(const std::string&);
+    static std::string Serialization(const Audio_Clean_SendInfo &);
+    static Audio_Clean_SendInfo Deserialization(const std::string&);
 public:
     int32_t type;
     int32_t userId;
     int32_t roomId;
-    int32_t min;
-    int32_t sec;
-    int32_t msec;
     int32_t sendtime;
 };
-class Audio_Upload_RecvInfo{
-public:
-    static JSON_Base json_base_;
-public:
-    static std::string Serialization(const Audio_Upload_RecvInfo &);
-    static Audio_Upload_RecvInfo Deserialization(const std::string&);
-public:
-    int32_t type;
-    int32_t userId;
-    int32_t roomId;
-    int32_t min;
-    int32_t sec;
-    int32_t msec;
-    int32_t status;
-    int32_t sendtime;
-};
-class Audio_Upload_SendInfo{
-public:
-    static JSON_Base json_base_;
-public:
-    static std::string Serialization(const Audio_Upload_SendInfo &);
-    static Audio_Upload_SendInfo Deserialization(const std::string&);
-public:
-    int32_t type;
-    int32_t userId;
-    int32_t roomId;
-    int32_t min;
-    int32_t sec;
-    int32_t msec;
-    string info;
-    int32_t sendtime;
-};
+
 
 
 //user
@@ -268,7 +269,6 @@ public:
     int32_t status;
     string info;
 };
-
 class User_GetSocialInfo_SendInfo{
 public:
     static JSON_Base json_base_;
@@ -294,7 +294,6 @@ public:
     int32_t status;
     string info;
 };
-
 class User_GetExInfo_SendInfo{
 public:
     static JSON_Base json_base_;
@@ -344,7 +343,6 @@ public:
     int32_t sendtime;
     int32_t status;
 };
-
 class User_login_Tel_SendInfo{
 public:
     static JSON_Base json_base_;
@@ -382,8 +380,6 @@ public:
     string jwt_token;
     string refresh_jwt_token;
 };
-
-
 class User_logoff_SendInfo{
 public:
     static JSON_Base json_base_;
@@ -395,7 +391,6 @@ public:
     string jwt_token;
     int32_t sendtime;
 };
-
 class User_logoff_RecvInfo{
 public:
     static JSON_Base json_base_;
@@ -417,6 +412,7 @@ public:
     int32_t type;
     int32_t sendtime;
     string jwt_token;
+    string refresh_jwt_token;
 };
 class User_refresh_jwt1_RecvInfo{
 public:
@@ -455,7 +451,75 @@ public:
     string jwt_token;
     string refresh_jwt_token;
 };
-
+class User_friend_SendInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const User_friend_SendInfo &);
+    static User_friend_SendInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    string jwt_token;
+    int32_t sendtime;
+};
+class User_friend_RecvInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const User_friend_RecvInfo &);
+    static User_friend_RecvInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t sendtime;
+    int32_t status;
+    string info;
+};
+class User_follow_SendInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const User_follow_SendInfo &);
+    static User_follow_SendInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    string jwt_token;
+    int32_t sendtime;
+};
+class User_follow_RecvInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const User_follow_RecvInfo &);
+    static User_follow_RecvInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t sendtime;
+    int32_t status;
+    string info;
+};
+class User_followed_SendInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const User_followed_SendInfo &);
+    static User_followed_SendInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    string jwt_token;
+    int32_t sendtime;
+};
+class User_followed_RecvInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const User_followed_RecvInfo &);
+    static User_followed_RecvInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t sendtime;
+    int32_t status;
+    string info;
+};
 class User_ModifyBaseInfo_SendInfo{
 public:
     static JSON_Base json_base_;
@@ -526,101 +590,9 @@ public:
     int32_t status;
 };
 
-class User_friend_SendInfo{
-public:
-    static JSON_Base json_base_;
-public:
-    static std::string Serialization(const User_friend_SendInfo &);
-    static User_friend_SendInfo Deserialization(const std::string&);
-public:
-    int32_t type;
-    string jwt_token;
-    int32_t sendtime;
-};
-class User_friend_RecvInfo{
-public:
-    static JSON_Base json_base_;
-public:
-    static std::string Serialization(const User_friend_RecvInfo &);
-    static User_friend_RecvInfo Deserialization(const std::string&);
-public:
-    int32_t type;
-    int32_t sendtime;
-    int32_t status;
-    string info;
-};
-class User_followed_SendInfo{
-public:
-    static JSON_Base json_base_;
-public:
-    static std::string Serialization(const User_followed_SendInfo &);
-    static User_followed_SendInfo Deserialization(const std::string&);
-public:
-    int32_t type;
-    string jwt_token;
-    int32_t sendtime;
-};
-class User_followed_RecvInfo{
-public:
-    static JSON_Base json_base_;
-public:
-    static std::string Serialization(const User_followed_RecvInfo &);
-    static User_followed_RecvInfo Deserialization(const std::string&);
-public:
-    int32_t type;
-    int32_t sendtime;
-    int32_t status;
-    string info;
-};
-class User_follow_SendInfo{
-public:
-    static JSON_Base json_base_;
-public:
-    static std::string Serialization(const User_follow_SendInfo &);
-    static User_follow_SendInfo Deserialization(const std::string&);
-public:
-    int32_t type;
-    string jwt_token;
-    int32_t sendtime;
-};
-class User_follow_RecvInfo{
-public:
-    static JSON_Base json_base_;
-public:
-    static std::string Serialization(const User_follow_RecvInfo &);
-    static User_follow_RecvInfo Deserialization(const std::string&);
-public:
-    int32_t type;
-    int32_t sendtime;
-    int32_t status;
-    string info;
-};
 
 
 //room
-class Room_ChangeDebatePos_RecvInfo{
-public:
-    static JSON_Base json_base_;
-public:
-    static std::string Serialization(const Room_ChangeDebatePos_RecvInfo &);
-    static Room_ChangeDebatePos_RecvInfo Deserialization(const std::string&);
-public:
-    int32_t type;
-    int32_t sendtime;
-    int32_t status;
-};
-class Room_ChangeDebatePos_SendInfo{
-public:
-    static JSON_Base json_base_;
-public:
-    static std::string Serialization(const Room_ChangeDebatePos_SendInfo &);
-    static Room_ChangeDebatePos_SendInfo Deserialization(const std::string&);
-public:
-    int32_t type;
-    string jwt_token;
-    int32_t sendtime;
-    int32_t Debate_pos;
-};
 class Room_GetBaseInfo_SendInfo{
 public:
     static JSON_Base json_base_;
@@ -707,7 +679,7 @@ public:
     int32_t type;
     string jwt_token;
     int32_t sendtime;
-    int32_t Roomnum;
+    string Roomnum;
     int32_t Islocking;
     string Roomname;
     string passwd;
@@ -736,6 +708,7 @@ public:
     int32_t sendtime;
     string roomnum;
     int32_t Debate_pos;
+    string passwd;
 };
 class Room_Joinroom_RecvInfo{
 public:
@@ -781,6 +754,7 @@ public:
     int32_t type;
     string jwt_token;
     int32_t sendtime;
+    string roomnum;
     string Opasswd;
     string Npasswd;
 };
@@ -805,7 +779,7 @@ public:
     int32_t type;
     string jwt_token;
     int32_t sendtime;
-    int32_t roomnum;
+    string roomnum;
     string info;
 };
 class Room_ChangeExtraInfo_RecvInfo{
@@ -814,6 +788,29 @@ public:
 public:
     static std::string Serialization(const Room_ChangeExtraInfo_RecvInfo &);
     static Room_ChangeExtraInfo_RecvInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    int32_t sendtime;
+    int32_t status;
+};
+class Room_ChangeDebatePos_SendInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Room_ChangeDebatePos_SendInfo &);
+    static Room_ChangeDebatePos_SendInfo Deserialization(const std::string&);
+public:
+    int32_t type;
+    string jwt_token;
+    int32_t sendtime;
+    int32_t Debate_pos;
+};
+class Room_ChangeDebatePos_RecvInfo{
+public:
+    static JSON_Base json_base_;
+public:
+    static std::string Serialization(const Room_ChangeDebatePos_RecvInfo &);
+    static Room_ChangeDebatePos_RecvInfo Deserialization(const std::string&);
 public:
     int32_t type;
     int32_t sendtime;

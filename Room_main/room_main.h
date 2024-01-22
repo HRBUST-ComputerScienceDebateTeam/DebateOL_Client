@@ -12,12 +12,12 @@
 #include<QCloseEvent>
 #include<Qlabel>
 #include"../pkg/Video/videodeal.h"
-#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
-#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
+//#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
+//#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
 #include"../pkg/audioread/audioread.h"
 #include"../pkg/audiowrite/audiowrite.h"
-//#include"F:/opencv-build/opencv2/cvconfig.h"
-//#include"F:/opencv-build/opencv2/opencv_modules.hpp"
+#include"F:/opencv-build/opencv2/cvconfig.h"
+#include"F:/opencv-build/opencv2/opencv_modules.hpp"
 #include"../pkg/Camera/camera.h"
 #include<qpainter.h>
 #include<QBuffer>
