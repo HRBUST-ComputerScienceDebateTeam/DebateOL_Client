@@ -1,4 +1,4 @@
-#include <vector>
+﻿#include <vector>
 #include "./thrift_json_config.h"
 #include <QString>
 #include <stdlib.h>
@@ -52,7 +52,6 @@ Audio_Upload_SendInfo Audio_Upload_SendInfo::Deserialization(const std::string& 
     get_tokenval(s , v[7]+1 , v[8]-1 ,ret.sendtime);
     return ret;
 }
-
 JSON_Base Make_Json_Audio_Upload_RecvInfo(){
     JSON_Base ret;
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
@@ -100,7 +99,6 @@ Audio_Upload_RecvInfo Audio_Upload_RecvInfo::Deserialization(const std::string& 
     get_tokenval(s , v[7]+1 , v[8]-1 ,ret.sendtime);
     return ret;
 }
-
 JSON_Base Make_Json_Audio_Download_SendInfo(){
     JSON_Base ret;
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
@@ -145,7 +143,6 @@ Audio_Download_SendInfo Audio_Download_SendInfo::Deserialization(const std::stri
     get_tokenval(s , v[6]+1 , v[7]-1 ,ret.sendtime);
     return ret;
 }
-
 JSON_Base Make_Json_Audio_Download_RecvInfo(){
     JSON_Base ret;
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
@@ -196,7 +193,6 @@ Audio_Download_RecvInfo Audio_Download_RecvInfo::Deserialization(const std::stri
     get_tokenval(s , v[8]+1 , v[9]-1 ,ret.sendtime);
     return ret;
 }
-
 JSON_Base Make_Json_Audio_Clean_SendInfo(){
     JSON_Base ret;
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";

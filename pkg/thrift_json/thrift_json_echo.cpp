@@ -1,4 +1,4 @@
-#include "./thrift_json_config.h"
+﻿#include "./thrift_json_config.h"
 #include <QString>
 #include <stdlib.h>
 #include <QDebug>

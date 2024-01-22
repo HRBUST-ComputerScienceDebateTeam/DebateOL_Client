@@ -1,4 +1,4 @@
-#include "./thrift_json_config.h"
+﻿#include "./thrift_json_config.h"
 #include <QDebug>
 JSON_Base Make_Json_Video_Upload_SendInfo(){
     JSON_Base ret;
@@ -22,7 +22,7 @@ std::string Video_Upload_SendInfo::Serialization(const Video_Upload_SendInfo&pkg
     ret += ",";	ret += gen_jsontoken(4,"i32",pkg.min);
     ret += ",";	ret += gen_jsontoken(5,"i32",pkg.sec);
     ret += ",";	ret += gen_jsontoken(6,"i32",pkg.msec);
-    ret += ",";	ret += gen_jsontokenWithBase64(7,"string",pkg.info);
+    ret += ",";	ret += gen_jsontoken(7,"string",pkg.info);
     ret += ",";	ret += gen_jsontoken(8,"i32",pkg.sendtime);
     ret += "}";
     return ret;
@@ -43,7 +43,7 @@ Video_Upload_SendInfo Video_Upload_SendInfo::Deserialization(const std::string& 
     get_tokenval(s , v[3]+1 , v[4]-1 ,ret.min);
     get_tokenval(s , v[4]+1 , v[5]-1 ,ret.sec);
     get_tokenval(s , v[5]+1 , v[6]-1 ,ret.msec);
-    get_tokenvalWithBase64(s , v[6]+1 , v[7]-1 ,ret.info);
+    get_tokenval(s , v[6]+1 , v[7]-1 ,ret.info);
     get_tokenval(s , v[7]+1 , v[8]-1 ,ret.sendtime);
     return ret;
 }
@@ -162,7 +162,7 @@ std::string Video_Download_RecvInfo::Serialization(const Video_Download_RecvInfo
     ret += ",";	ret += gen_jsontoken(5,"i32",pkg.sec);
     ret += ",";	ret += gen_jsontoken(6,"i32",pkg.msec);
     ret += ",";	ret += gen_jsontoken(7,"i32",pkg.status);
-    ret += ",";	ret += gen_jsontokenWithBase64(8,"string",pkg.info);
+    ret += ",";	ret += gen_jsontoken(8,"string",pkg.info);
     ret += ",";	ret += gen_jsontoken(9,"i32",pkg.sendtime);
     ret += "}";
     return ret;
@@ -184,11 +184,19 @@ Video_Download_RecvInfo Video_Download_RecvInfo::Deserialization(const std::stri
     get_tokenval(s , v[4]+1 , v[5]-1 ,ret.sec);
     get_tokenval(s , v[5]+1 , v[6]-1 ,ret.msec);
     get_tokenval(s , v[6]+1 , v[7]-1 ,ret.status);
-    get_tokenvalWithBase64(s , v[7]+1 , v[8]-1 ,ret.info);
+    get_tokenval(s , v[7]+1 , v[8]-1 ,ret.info);
     get_tokenval(s , v[8]+1 , v[9]-1 ,ret.sendtime);
     return ret;
 }
-JSON_Base Video_Clean_SendInfo::json_base_ = Make_Json_Video_Upload_SendInfo();
+JSON_Base Make_Json_Video_Clean_SendInfo(){
+    JSON_Base ret;
+    ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
+    ret.mp1["userId"] = 2;ret.mp2[2] = "userId";ret.mp3[2] = "i32";
+    ret.mp1["roomId"] = 3;ret.mp2[3] = "roomId";ret.mp3[3] = "i32";
+    ret.mp1["sendtime"] = 4;ret.mp2[4] = "sendtime";ret.mp3[4] = "i32";
+    return ret;
+};
+JSON_Base Video_Clean_SendInfo::json_base_ = Make_Json_Video_Clean_SendInfo();
 std::string Video_Clean_SendInfo::Serialization(const Video_Clean_SendInfo&pkg){
     std::string ret;
     ret += "{";
