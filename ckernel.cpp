@@ -16,6 +16,7 @@ Ckernel::Ckernel(QObject *parent)
     //m_room = new Room_main;
     We_Chat =new WeChatDialog;
     m_pLoginDlg =new LoginDialog;
+    m_pAudioRead = new AudioRead;
     connect(m_pLoginDlg,SIGNAL(SIG_loginCommit(QString,QString))
             ,this,SLOT(slot_loginCommit(QString,QString)));
     connect(m_pLoginDlg,SIGNAL(SIG_registerCommit(QString,QString))
@@ -25,6 +26,8 @@ Ckernel::Ckernel(QObject *parent)
             ,this,SLOT(slot_createRoom()));
     connect(We_Chat,SIGNAL(SIG_joinRoom())
             ,this,SLOT(slot_joinRoom()));
+
+
 
 //    connect(m_room , SIGNAL(SIG_close())
 //            ,this,SLOT(slot_destory()));
@@ -46,6 +49,24 @@ string Ckernel::my_refresh_jwt_token     ="";
 void Ckernel::slot_destory()
 {
     qDebug()<<__func__;
+    if(We_Chat)
+    {
+        We_Chat->hide();
+        delete We_Chat;
+        We_Chat = NULL;
+    }
+    if(m_pLoginDlg)
+    {
+        m_pLoginDlg->hide();
+        delete m_pLoginDlg;
+        m_pLoginDlg = NULL;
+    }
+    if(m_pAudioRead)
+    {
+        m_pAudioRead->pause();
+        delete m_pAudioRead;
+        m_pAudioRead = NULL;
+    }
     if(m_room)
     {
         delete m_room;
@@ -98,6 +119,10 @@ void Ckernel::slot_createRoom()
     }
     //发命令 创建房间
 
+
+
+
+
 }
 //加入房间
 void Ckernel::slot_joinRoom()
@@ -109,6 +134,16 @@ void Ckernel::slot_joinRoom()
     }
     QString strRoom = QInputDialog::getText( We_Chat , "加入房间" ,"输入房间号");
     //发命令 加入房间
+
+
+        //音频内容添加
+    /*AudioWrite *aw =NULL;
+     //为每个人创建播放对象
+    if(m_mapIDToAudioWrite.count(/*结构体///->userID) == 0)
+        {
+        aw = new AudioWrite;
+        m_mapIDToAudioWrite[/*结构体///->userID] = aw;
+    }*/
 }
 
 

@@ -10,6 +10,7 @@ class AudioRead: public QObject
     Q_OBJECT
 public:
     explicit AudioRead(QObject *parent = 0);
+    ~AudioRead();
 public slots:
     //定时超时，从缓冲区读取音频数据
     void ReadMore();

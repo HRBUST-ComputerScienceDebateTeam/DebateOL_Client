@@ -39,6 +39,20 @@ AudioRead::AudioRead(QObject *parent) : QObject(parent)
     m_audioState = stopped;   
 }
 
+AudioRead::~AudioRead()
+{
+    if(m_timer)
+    {
+        m_timer->stop();
+        delete m_timer;
+    }
+    if(m_audio_in)
+    {
+        m_audio_in->stop();
+        delete m_audio_in;
+    }
+}
+
 void AudioRead::ReadMore()
 {
     //qDebug()<<__func__;
@@ -80,6 +94,7 @@ void AudioRead::pause()
         {
             m_audio_in->stop();
             delete m_audio_in;
+            m_audio_in = NULL;
         }
         m_audioState = pausing;
     }
