@@ -18,6 +18,7 @@
 #include"../pkg/audiowrite/audiowrite.h"
 //#include"F:/opencv-build/opencv2/cvconfig.h"
 //#include"F:/opencv-build/opencv2/opencv_modules.hpp"
+#include"../pkg/Audio/audiodeal.h"
 #include"../pkg/Camera/camera.h"
 #include<qpainter.h>
 #include<QBuffer>
@@ -92,6 +93,7 @@ private:
     Camera * m_camera;
     QLabel * m_user_label[9];
     VideoDeal * m_user_video[9];
+    audiodeal * m_user_audio[9];
 
     AudioRead *m_pAudioRead;
     AudioWrite *m_pAudioWrite;

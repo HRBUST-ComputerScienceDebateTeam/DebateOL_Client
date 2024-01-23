@@ -41,11 +41,12 @@ Room_main::Room_main(QWidget *parent)
     for(int i=1;i<3;i++)
     {
         m_user_video[i] = new VideoDeal(i , mypos==i);
+        m_user_audio[i] = new audiodeal(i , mypos==i);
         connect(m_user_video[i],SIGNAL(SIG_RefreshFrame(int,int))
                 ,this,SLOT(slot_RefreshFrame(int,int)));
         connect(m_user_video[i],SIGNAL(SIG_DownloadFrame(int ,int))
                 ,this,SLOT(slot_DownloadFrame(int,int)));
-        connect(m_user_video[i],SIGNAL(SIG_AudioDownloadFrame(int,int))
+        connect(m_user_audio[i],SIGNAL(SIG_AudioDownloadFrame(int,int))
                 ,this,SLOT(slot_DownloadaudioFrame(int,int)));
     }
     connect(this,SIGNAL(SIG_setImage(int,QImage&))
