@@ -1,4 +1,4 @@
-//房间
+﻿//房间
 //房间有以下功能（这里出现的都是客户端向服务器的请求 返回给客户端）
 //获取房间信息
 //获取房间扩展信息
@@ -82,8 +82,7 @@ struct Room_Create_SendInfo {
 struct Room_Create_RecvInfo {
   1:i32 type,
   2:i32 sendtime,
-  3:i32 status,
-  4:string info
+  3:i32 status
 }
 
 
@@ -96,11 +95,11 @@ struct Room_Joinroom_SendInfo {
   5:i32 Debate_pos,
   6:string passwd
 }
+
 struct Room_Joinroom_RecvInfo {
   1:i32 type,
   2:i32 sendtime,
-  3:i32 status,
-  4:string info
+  3:i32 status
 }
 
 //退出房间请求
@@ -113,8 +112,7 @@ struct Room_Exitroom_SendInfo {
 struct Room_Exitroom_RecvInfo {
   1:i32 type,
   2:i32 sendtime,
-  3:i32 status,
-  4:string info
+  3:i32 status
 }
 
 struct Room_ChangePasswd_SendInfo {
@@ -128,8 +126,7 @@ struct Room_ChangePasswd_SendInfo {
 struct Room_ChangePasswd_RecvInfo {
   1:i32 type,
   2:i32 sendtime,
-  3:i32 status,
-  4:string info
+  3:i32 status
 }
 
 struct Room_ChangeExtraInfo_SendInfo {
@@ -142,8 +139,7 @@ struct Room_ChangeExtraInfo_SendInfo {
 struct Room_ChangeExtraInfo_RecvInfo {
   1:i32 type,
   2:i32 sendtime,
-  3:i32 status,
-  4:string info
+  3:i32 status
 }
 
 struct Room_ChangeDebatePos_SendInfo {
@@ -155,8 +151,7 @@ struct Room_ChangeDebatePos_SendInfo {
 struct Room_ChangeDebatePos_RecvInfo {
   1:i32 type,
   2:i32 sendtime,
-  3:i32 status,
-  4:string info
+  3:i32 status
 }
 
 

@@ -1,4 +1,4 @@
-#ifndef ROOM_MAIN_H
+﻿#ifndef ROOM_MAIN_H
 #define ROOM_MAIN_H
 
 #include <QMainWindow>
@@ -12,12 +12,13 @@
 #include<QCloseEvent>
 #include<Qlabel>
 #include"../pkg/Video/videodeal.h"
-#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
-#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
+//#include"F:/opencv4.8.0/bin/opencv2/cvconfig.h"
+//#include"F:/opencv4.8.0/bin/opencv2/opencv_modules.hpp"
 #include"../pkg/audioread/audioread.h"
 #include"../pkg/audiowrite/audiowrite.h"
-//#include"F:/opencv-build/opencv2/cvconfig.h"
-//#include"F:/opencv-build/opencv2/opencv_modules.hpp"
+#include"../pkg/JWT/jwt.h"
+#include"F:/opencv-build/opencv2/cvconfig.h"
+#include"F:/opencv-build/opencv2/opencv_modules.hpp
 #include"../pkg/Audio/audiodeal.h"
 #include"../pkg/Camera/camera.h"
 #include<qpainter.h>
@@ -38,7 +39,9 @@ signals:
     void SIG_setImage(int userpos,QImage& img);
 
 public:
-    explicit Room_main(QWidget *parent = nullptr);
+    //explicit Room_main(QWidget *parent = nullptr);
+    explicit Room_main( int roomid , string roomnum , int userid , int userpos \
+                       ,  string jwt_token1 , string jwt_token2 ,QWidget *parent = nullptr );
     ~Room_main();
     void closeEvent(QCloseEvent *event);
 
@@ -78,6 +81,14 @@ public:
 
     //房间号
     int myroomid;
+    string myroomnum;
+
+    //使用者id;
+    int myid;
+
+    //使用者token
+    string my_jwt_token;
+    string my_refresh_jwt_token;
 
 
     //本地更新队列

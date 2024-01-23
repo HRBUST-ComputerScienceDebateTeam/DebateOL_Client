@@ -1,5 +1,6 @@
 ﻿#include "./web.h"
 #include "../../config.h"
+#include "../../pkg/Openssl/openssl.h"
 #include <thread>
 #include <cstdio>
 //#include <winsock2.h>
@@ -7,6 +8,35 @@
 
 #pragma comment(lib, "ws2_32.lib")
 using namespace std;
+
+#define WEB_ROUTING_ROOM(x) \
+    case x##_TypeId:{ \
+        cout << #x << " WEBrouting" << endl; \
+        x * dlreinfo = new x ( x::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString())); \
+        ROOMMAIN_CALL_FUN fp = net_event[dlreinfo->sendtime]; \
+        if(!fp){ \
+            cout << "err 事件没有注册" <<endl; \
+            delete dlreinfo; \
+        }else{ \
+                (rp->*fp)((void*)dlreinfo); \
+        } \
+    } \
+    break;
+
+#define WEB_ROUTING_KERNEL(x) \
+    case x##_TypeId:{ \
+        cout << #x << " WEBrouting" << endl; \
+        x * dlreinfo = new x ( x::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString())); \
+        KERNEL_CALL_FUN fp = net_event[dlreinfo->sendtime]; \
+        if(!fp){ \
+            cout << "err 事件没有注册" <<endl; \
+            delete dlreinfo; \
+        }else{ \
+            (kp->*fp)((void*)dlreinfo); \
+        } \
+    } \
+    break;
+
 
 void MYNET_ROOM::NETGET(QString url , int timid , ROOMMAIN_CALL_FUN fun){
     //cout << "NETGET" <<endl;
@@ -56,6 +86,8 @@ QString MYNET_ROOM::GET_VIDEODL_URL(struct Video_Download_SendInfo & sendinfo){
     return ret;
 }
 
+
+
 void MYNET_ROOM::slot_replyFinished(QNetworkReply* reply){
     cout <<"slot_replyFinished" <<endl;
     //如果合法
@@ -77,45 +109,10 @@ void MYNET_ROOM::slot_replyFinished(QNetworkReply* reply){
 
     int etypeid = get_typeid(QString::fromLatin1(getinfo).toLatin1().toStdString());
     switch(etypeid){
-    case Video_Download_RecvInfo_TypeId:{
-            Video_Download_RecvInfo * dlreinfo = new Video_Download_RecvInfo(Video_Download_RecvInfo::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString()));
-            if(dlreinfo->status == 300){
-                cout << "NO photo now !" <<endl;
-                delete dlreinfo;
-                return;
-            }
-
-            ROOMMAIN_CALL_FUN fp = net_event[dlreinfo->sendtime];
-            if(!fp){
-                cout << "err 事件没有注册" <<endl;
-                delete dlreinfo;
-            }else{
-                if(dlreinfo->status == 200){
-                    (rp->*fp)((void*)dlreinfo);
-                }
-            }
-        }
-        break;
-    case Video_Upload_RecvInfo_TypeId:{
-            //cout << "deal net post" <<endl;
-            Video_Upload_RecvInfo * dlreinfo =new Video_Upload_RecvInfo(Video_Upload_RecvInfo::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString()));
-
-            ROOMMAIN_CALL_FUN fp = net_event[dlreinfo->sendtime];
-
-            if(!fp){
-                cout << "err 事件没有注册" <<endl;
-            }else{
-                //cout << "deal!" <<endl;
-                if(dlreinfo->status == 200){
-                    (rp->*fp)((void*)dlreinfo);
-                }
-            }
-        }
-        break;
-    case Audio_Download_RecvInfo_TypeId:
-        break;
-    case Audio_Upload_RecvInfo_TypeId:
-        break;
+            WEB_ROUTING_ROOM(Video_Download_RecvInfo  );
+            WEB_ROUTING_ROOM(Video_Upload_RecvInfo  );
+            WEB_ROUTING_ROOM(Audio_Download_RecvInfo  );
+            WEB_ROUTING_ROOM(Audio_Upload_RecvInfo  );
     default:
         cout << "未识别的类型" << etypeid <<endl;
         return;
@@ -230,32 +227,31 @@ void MYNET_KERNEL::slot_replyFinished(QNetworkReply* reply){
 
     int etypeid = get_typeid(QString::fromLatin1(getinfo).toLatin1().toStdString());
     switch(etypeid){
-        case User_Login_RecvInfo_TypeId:{
-            //cout << "deal User_Login_RecvInfo_TypeId post" <<endl;
-            User_login_RecvInfo * dlreinfo =new User_login_RecvInfo(User_login_RecvInfo::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString()));
-            KERNEL_CALL_FUN fp = net_event[dlreinfo->sendtime];
-
-            if(!fp){
-                    cout << "err 事件没有注册" <<endl;
-            }else{
-                (kp->*fp)((void*)dlreinfo);
-            }
-        }
-        break;
-        case User_Reg_RecvInfo_TypeId:{
-            //cout << "deal User_Reg_RecvInfo_TypeId post" <<endl;
-            User_reg_RecvInfo * dlreinfo =new User_reg_RecvInfo(User_reg_RecvInfo::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString()));
-            KERNEL_CALL_FUN fp = net_event[dlreinfo->sendtime];
-
-            if(!fp){
-                cout << "err 事件没有注册" <<endl;
-            }else{
-                (kp->*fp)((void*)dlreinfo);
-            }
-        }
-        break;
+        WEB_ROUTING_KERNEL(User_login_RecvInfo);
+        WEB_ROUTING_KERNEL(User_GetBaseInfo_RecvInfo      );
+        WEB_ROUTING_KERNEL(User_GetSocialInfo_RecvInfo    );
+        WEB_ROUTING_KERNEL(User_GetExInfo_RecvInfo     );
+        WEB_ROUTING_KERNEL(User_reg_RecvInfo              );
+        WEB_ROUTING_KERNEL(User_logoff_RecvInfo           );
+        WEB_ROUTING_KERNEL(User_refresh_jwt1_RecvInfo     );
+        WEB_ROUTING_KERNEL(User_refresh_jwt2_RecvInfo     );
+        WEB_ROUTING_KERNEL(User_friend_RecvInfo           );
+        WEB_ROUTING_KERNEL(User_follow_RecvInfo           );
+        WEB_ROUTING_KERNEL(User_followed_RecvInfo         );
+        WEB_ROUTING_KERNEL(User_ModifyBaseInfo_RecvInfo   );
+        WEB_ROUTING_KERNEL(User_ModifySocialInfo_RecvInfo );
+        WEB_ROUTING_KERNEL(User_ModifyExInfo_RecvInfo     );
+        WEB_ROUTING_KERNEL(Room_GetBaseInfo_RecvInfo      );
+        WEB_ROUTING_KERNEL(Room_GetExInfo_RecvInfo        );
+        WEB_ROUTING_KERNEL(Room_GetURrelation_RecvInfo    );
+        WEB_ROUTING_KERNEL(Room_Create_RecvInfo           );
+        WEB_ROUTING_KERNEL(Room_Joinroom_RecvInfo         );
+        WEB_ROUTING_KERNEL(Room_Exitroom_RecvInfo         );
+        WEB_ROUTING_KERNEL(Room_ChangePasswd_RecvInfo     );
+        WEB_ROUTING_KERNEL(Room_ChangeExtraInfo_RecvInfo  );
+        WEB_ROUTING_KERNEL(Room_ChangeDebatePos_RecvInfo  );
         default:
-            cout << "未识别的类型" << etypeid <<endl;
+            cout << "Web： we don't know this type:" << etypeid <<endl;
                 return;
     }
 
@@ -295,5 +291,47 @@ MYNET_KERNEL* MYNET_KERNEL::getinstance(){
     }
     return pnet_kernel;
 }
+
+std::string MYNET_ROOM::NETPOST_BLOCK(QString url , std::string &data){//对应url发送对应信息 阻塞回收
+    //cout << "MYNET_room::NETPOST block" <<endl;
+    const QUrl qurl = QUrl::fromUserInput(url);
+    QNetworkRequest qnr(url);
+
+    //application/json	作为请求头告诉服务端消息主体是序列化的JSON字符串。除低版本的IE，基本都支持
+    qnr.setHeader(QNetworkRequest::ContentTypeHeader,QVariant("application/json"));
+    qnr.setRawHeader("Connection", "keep-alive");
+    qnr.setRawHeader("Content-Length" , QByteArray().number(data.length()));
+    QByteArray qByteHttpData(data.c_str(),data.length());
+
+    QNetworkReply* reply = pmanager_room->post(qnr ,qByteHttpData); //m_qnam是QNetworkAccessManager对象
+    QEventLoop eventLoop;
+    connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
+    eventLoop.exec(QEventLoop::ExcludeUserInputEvents);
+
+    string replyDate = reply->readAll().toStdString();
+
+    return replyDate;
+}
+std::string  MYNET_KERNEL::NETPOST_BLOCK(QString url , std::string &data){//对应url发送对应信息 阻塞回收
+    //cout << "MYNET_room::NETPOST block" <<endl;
+    const QUrl qurl = QUrl::fromUserInput(url);
+    QNetworkRequest qnr(url);
+
+    //application/json	作为请求头告诉服务端消息主体是序列化的JSON字符串。除低版本的IE，基本都支持
+    qnr.setHeader(QNetworkRequest::ContentTypeHeader,QVariant("application/json"));
+    qnr.setRawHeader("Connection", "keep-alive");
+    qnr.setRawHeader("Content-Length" , QByteArray().number(data.length()));
+    QByteArray qByteHttpData(data.c_str(),data.length());
+
+    QNetworkReply* reply = pmanager_kernel->post(qnr ,qByteHttpData); //m_qnam是QNetworkAccessManager对象
+    QEventLoop eventLoop;
+    connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
+    eventLoop.exec(QEventLoop::ExcludeUserInputEvents);
+
+    string replyDate = reply->readAll().toStdString();
+
+    return replyDate;
+}
+
 MYNET_KERNEL * MYNET_KERNEL::pnet_kernel;
 Ckernel * MYNET_KERNEL::kp;

@@ -1,4 +1,4 @@
-#ifndef WECHATDIALOG_H
+﻿#ifndef WECHATDIALOG_H
 #define WECHATDIALOG_H
 
 #include <QDialog>
@@ -12,8 +12,8 @@ class WeChatDialog : public QDialog
     Q_OBJECT
 signals:
     void SIG_closechat();
-    void SIG_createRoom();
-    void SIG_joinRoom();
+    void SIG_createRoom(std::string s);
+    void SIG_joinRoom(std::string s);
 public:
     explicit WeChatDialog(QWidget *parent = nullptr);
     ~WeChatDialog();

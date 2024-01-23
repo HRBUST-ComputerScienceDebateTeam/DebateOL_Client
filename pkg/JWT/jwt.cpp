@@ -1,4 +1,4 @@
-#include "jwt.h"
+﻿#include "jwt.h"
 
 string JWT_token::jwt_create(const string secret , string iss , string aud , string iat , string exp ,map<string , string>mp ){
     JWT_token ret;

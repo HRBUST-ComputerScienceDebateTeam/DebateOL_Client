@@ -1,4 +1,4 @@
-#include <QtNetwork>
+﻿#include <QtNetwork>
 #include <QString>
 #include <QVariant>
 #include "../thrift_json/thrift_json_config.h"
@@ -37,6 +37,7 @@ public:
     //执行事件结果异步的发送给对应的回调函数
     void NETGET(QString url , int tim , ROOMMAIN_CALL_FUN);
     void NETPOST(QString url , std::string &data, int tim, ROOMMAIN_CALL_FUN);
+    std::string NETPOST_BLOCK(QString url , std::string &data);//对应url发送对应信息 阻塞回收
 private:
     //网络大管家 pmanager负责通讯
     QNetworkAccessManager * pmanager_room;
@@ -70,6 +71,7 @@ public:
     //执行事件结果异步的发送给对应的回调函数
     void NETGET(QString url , int tim , KERNEL_CALL_FUN);
     void NETPOST(QString url , std::string &data, int tim, KERNEL_CALL_FUN);
+    std::string NETPOST_BLOCK(QString url , std::string &data);//对应url发送对应信息 阻塞回收
 private:
     //网络大管家 pmanager负责通讯
     QNetworkAccessManager * pmanager_kernel;

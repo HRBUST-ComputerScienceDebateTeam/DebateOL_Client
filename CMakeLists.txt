@@ -8,9 +8,9 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-#set(OpenCV_DIR F:/opencv-build)
+set(OpenCV_DIR F:/opencv-build)
 set(Openssl_DIR F:/openssl)
-set(OpenCV_DIR F:/opencv4.8.0/bin)
+#set(OpenCV_DIR F:/opencv4.8.0/bin)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
@@ -145,6 +145,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/JWT/jwt.h
         pkg/Openssl/openssl.h
         pkg/Openssl/openssl.cpp
+        pkg/QT_Multiple_info/QT_Multiple_info.h
+        pkg/QT_Multiple_info/QT_Multiple_info.cpp
+
+        #idls
+        idls/video.thrift
+        idls/echo.thrift
+        idls/audio.thrift
+        idls/room.thrift
+        idls/user.thrift
+
 
         #dal
         dal/dal_config.h

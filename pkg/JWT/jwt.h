@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+﻿#include <bits/stdc++.h>
 #include <cstdint>
 #include <regex>
 #include <string>
@@ -6,6 +6,9 @@
 #include "../Openssl/openssl.h"
 #include "./secret.h"//secret密钥
 using namespace std;
+
+#ifndef JWTTOKEN
+#define JWTTOKEN
 
 /* 错误定义 */
 #define JWT_NOLABELEXP   2
@@ -15,7 +18,7 @@ using namespace std;
 #define JWT_HASH_OK      0
 
 //定义类型
-typedef class JWT_token{
+class JWT_token{
 
 private:
     //header 存放类型以及加密方法
@@ -65,7 +68,7 @@ public:
     //检查标签合法化 指第三部分
     static bool jwt_check_hash(const string secret,string s);
 
-}JWT_token;
+};
 
 
 
@@ -75,3 +78,4 @@ public:
 //jwt 头部base64 + '.' + 负载 base64 (时间) + 签名
 
 
+#endif
