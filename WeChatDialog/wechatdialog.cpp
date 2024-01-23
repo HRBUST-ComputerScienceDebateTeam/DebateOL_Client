@@ -18,11 +18,6 @@ WeChatDialog::WeChatDialog(QWidget *parent) :
 
 WeChatDialog::~WeChatDialog()
 {
-    //回收的时候发送下线请求
-    MYNET_KERNEL * net = MYNET_KERNEL::getinstance();
-    Room_Exitroom_SendInfo sd;
-
-    net->NETPOST_BLOCK(Room_Exitroom_URL , data);
     delete ui;
 }
 

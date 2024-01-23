@@ -1,4 +1,4 @@
-#ifndef VIDEO_CONFIG_H
+﻿#ifndef VIDEO_CONFIG_H
 #define VIDEO_CONFIG_H
 
 #include"opencv2/highgui/highgui.hpp"

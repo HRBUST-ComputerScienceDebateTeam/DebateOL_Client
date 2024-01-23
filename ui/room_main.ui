@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>2000</width>
+    <height>2000</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
    <widget class="QLabel" name="second">
     <property name="geometry">
      <rect>
-      <x>299</x>
+      <x>530</x>
       <y>49</y>
       <width>261</width>
       <height>271</height>
@@ -42,15 +42,23 @@
     <property name="scaledContents">
      <bool>true</bool>
     </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="closevideo">
     <property name="geometry">
      <rect>
-      <x>116</x>
-      <y>20</y>
-      <width>80</width>
-      <height>24</height>
+      <x>127</x>
+      <y>331</y>
+      <width>81</width>
+      <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>关闭摄像头</string>
@@ -65,21 +73,35 @@
       <height>271</height>
      </rect>
     </property>
+    <property name="tabletTracking">
+     <bool>false</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
     <property name="text">
      <string/>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
     </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="openvideo">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>20</y>
+      <x>41</x>
+      <y>331</y>
       <width>80</width>
-      <height>24</height>
+      <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>开启摄像头</string>
@@ -88,11 +110,16 @@
    <widget class="QPushButton" name="pb_start">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>20</y>
+      <x>41</x>
+      <y>353</y>
       <width>80</width>
-      <height>24</height>
+      <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>开启麦克风</string>
@@ -101,14 +128,45 @@
    <widget class="QPushButton" name="pb_pause">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>20</y>
-      <width>80</width>
-      <height>24</height>
+      <x>127</x>
+      <y>353</y>
+      <width>81</width>
+      <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>关闭麦克风</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="video">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>390</y>
+      <width>61</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>摄像头</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="audio">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>390</y>
+      <width>81</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>麦克风</string>
     </property>
    </widget>
   </widget>
@@ -117,7 +175,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>2000</width>
      <height>21</height>
     </rect>
    </property>

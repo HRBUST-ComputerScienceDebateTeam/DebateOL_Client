@@ -5,7 +5,8 @@
 #include "Room_main/room_main.h"
 #include"./WeChatDialog/wechatdialog.h"
 #include"./LoginDialog/logindialog.h"
-
+#include"./pkg/audioread/audioread.h"
+#include"./pkg/audiowrite/audiowrite.h"
 
 class Ckernel : public QObject
 {
@@ -27,8 +28,10 @@ public slots:
     void slot_loginCommit(QString tel,QString pass);
     void slot_registerCommit(QString tel,QString pass,QString num);
     //void slot_refreshUser( int id,QImage &img);
+
     void slot_createRoom(std::string s);
     void slot_joinRoom(std::string s);
+
 private:
     Room_main * m_room;
     LoginDialog *m_pLoginDlg;
@@ -40,6 +43,10 @@ public:
     static string my_jwt_token;
     static string my_refresh_jwt_token;
     int room_id;
+
+    //音频使用 音频一个采集多个播放，每个房间成员使用map映射
+    AudioRead *m_pAudioRead;
+    std::map<int , AudioWrite*> m_mapIDToAudioWrite;
 private:
     //回调函数
     void* SIGDEAL_login(void * arg);

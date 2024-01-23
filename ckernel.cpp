@@ -17,6 +17,7 @@ Ckernel::Ckernel(QObject *parent)
     m_room = nullptr;
     We_Chat =new WeChatDialog;
     m_pLoginDlg =new LoginDialog;
+    m_pAudioRead = new AudioRead;
     connect(m_pLoginDlg,SIGNAL(SIG_loginCommit(QString,QString))
             ,this,SLOT(slot_loginCommit(QString,QString)));
     connect(m_pLoginDlg,SIGNAL(SIG_registerCommit(QString,QString,QString))
@@ -26,6 +27,8 @@ Ckernel::Ckernel(QObject *parent)
             ,this,SLOT(slot_createRoom(std::string)));
     connect(We_Chat,SIGNAL(SIG_joinRoom(std::string))
             ,this,SLOT(slot_joinRoom(std::string)));
+
+
 
 //    connect(m_room , SIGNAL(SIG_close())
 //            ,this,SLOT(slot_destory()));
@@ -49,6 +52,24 @@ void Ckernel::slot_destory()
     //发送下线请求
 
     qDebug()<<__func__;
+    if(We_Chat)
+    {
+        We_Chat->hide();
+        delete We_Chat;
+        We_Chat = NULL;
+    }
+    if(m_pLoginDlg)
+    {
+        m_pLoginDlg->hide();
+        delete m_pLoginDlg;
+        m_pLoginDlg = NULL;
+    }
+    if(m_pAudioRead)
+    {
+        m_pAudioRead->pause();
+        delete m_pAudioRead;
+        m_pAudioRead = NULL;
+    }
     if(m_room)
     {
         delete m_room;
@@ -123,6 +144,7 @@ void Ckernel::slot_createRoom(std::string s)
     MYNET_KERNEL * netptr = MYNET_KERNEL::getinstance();//获取单例
     std::string ss = Room_Create_SendInfo::Serialization(sendinfo);
     netptr->NETPOST(Room_Create_URL , ss, tid  ,  &Ckernel::SIGDEAL_CreateRoom );
+
 }
 
 //加入房间
@@ -142,6 +164,17 @@ void Ckernel::slot_joinRoom(std::string s)
     QTime tm = QTime::currentTime();
     int tid = tm.minute()*60000+tm.second()*1000+tm.msec();
     mp1["sendtime"] =to_string(tid);
+
+
+        //音频内容添加
+    /*AudioWrite *aw =NULL;
+     //为每个人创建播放对象
+    if(m_mapIDToAudioWrite.count(/*结构体///->userID) == 0)
+        {
+        aw = new AudioWrite;
+        m_mapIDToAudioWrite[/*结构体///->userID] = aw;
+    }*/
+
 
     MYNET_KERNEL::Init(this);
     MYNET_KERNEL * netptr = MYNET_KERNEL::getinstance();//获取单例
