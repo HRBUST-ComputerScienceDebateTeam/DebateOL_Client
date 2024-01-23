@@ -74,29 +74,29 @@ const QString AUDIO_DOWNLOAD_GET_URL =   "http://" + PUBLIC_IP + ":" + AUDIO_POS
 const QString USER_LOGINTEL_URL =   "http://" + PUBLIC_IP + ":" + PUBLIC_PORT +  USER_LOGINTEL_PATH;
 const QString USER_REG_URL =   "http://" + PUBLIC_IP + ":" + PUBLIC_PORT +  USER_REG_PATH;
 
-const QString USER_LOGINNUM_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  USER_LOGINNUM_PATH;
-const QString User_GetBaseInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_GetBaseInfo_PATH;
-const QString User_GetSocialInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_GetSocialInfo_PATH;
-const QString User_GetExInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_GetExInfo_PATH;
-const QString User_logoff_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_logoff_PATH;
-const QString User_refresh_jwt1_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_refresh_jwt1_PATH;
-const QString User_refresh_jwt2_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_refresh_jwt2_PATH;
-const QString User_ModifyBaseInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_ModifyBaseInfo_PATH;
-const QString User_ModifySocialInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_ModifySocialInfo_PATH;
-const QString User_ModifyExInfo_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_ModifyExInfo_PATH;
-const QString User_follow_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_follow_PATH;
-const QString User_followed_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_followed_PATH;
-const QString User_friend_URL=   "http://" + PUBLIC_IP +"." + PUBLIC_PORT +  User_friend_PATH;
+const QString USER_LOGINNUM_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  USER_LOGINNUM_PATH;
+const QString User_GetBaseInfo_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_GetBaseInfo_PATH;
+const QString User_GetSocialInfo_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_GetSocialInfo_PATH;
+const QString User_GetExInfo_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_GetExInfo_PATH;
+const QString User_logoff_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_logoff_PATH;
+const QString User_refresh_jwt1_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_refresh_jwt1_PATH;
+const QString User_refresh_jwt2_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_refresh_jwt2_PATH;
+const QString User_ModifyBaseInfo_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_ModifyBaseInfo_PATH;
+const QString User_ModifySocialInfo_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_ModifySocialInfo_PATH;
+const QString User_ModifyExInfo_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_ModifyExInfo_PATH;
+const QString User_follow_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_follow_PATH;
+const QString User_followed_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_followed_PATH;
+const QString User_friend_URL=   "http://" + PUBLIC_IP +":" + PUBLIC_PORT +  User_friend_PATH;
 
-const QString Room_ChangeDebatePos_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_ChangeDebatePos_PATH ;
-const QString Room_ChangeExtraInfo_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_ChangeExtraInfo_PATH ;
-const QString Room_ChangePasswd_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_ChangePasswd_PATH ;
-const QString Room_Exitroom_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_Exitroom_PATH ;
-const QString Room_Joinroom_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_Joinroom_PATH ;
-const QString Room_Create_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_Create_PATH ;
-const QString Room_GetURrelation_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_GetURrelation_PATH ;
-const QString Room_GetExInfo_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_GetExInfo_PATH ;
-const QString Room_GetBaseInfo_URL = "http://" + PUBLIC_IP + "." + PUBLIC_PORT + Room_GetBaseInfo_PATH ;
+const QString Room_ChangeDebatePos_URL = "http://" + PUBLIC_IP + ":" + PUBLIC_PORT + Room_ChangeDebatePos_PATH ;
+const QString Room_ChangeExtraInfo_URL = "http://" + PUBLIC_IP + ":" + PUBLIC_PORT + Room_ChangeExtraInfo_PATH ;
+const QString Room_ChangePasswd_URL = "http://" + PUBLIC_IP + ":" + PUBLIC_PORT + Room_ChangePasswd_PATH ;
+const QString Room_Exitroom_URL = "http://" + PUBLIC_IP + ":" + PUBLIC_PORT + Room_Exitroom_PATH ;
+const QString Room_Joinroom_URL = "http://" + PUBLIC_IP + ":" + PUBLIC_PORT + Room_Joinroom_PATH ;
+const QString Room_Create_URL = "http://" + PUBLIC_IP + ":" + PUBLIC_PORT + Room_Create_PATH ;
+const QString Room_GetURrelation_URL = "http://" + PUBLIC_IP + ":" + PUBLIC_PORT + Room_GetURrelation_PATH ;
+const QString Room_GetExInfo_URL = "http://" + PUBLIC_IP + ":" + PUBLIC_PORT + Room_GetExInfo_PATH ;
+const QString Room_GetBaseInfo_URL = "http://" + PUBLIC_IP + ":" + PUBLIC_PORT + Room_GetBaseInfo_PATH ;
 
 
 //net 事件注册表大小
@@ -132,6 +132,7 @@ const int MAX_EVENTNUM = 3600000 + 10;
 #define ROOM_NoSuchRoomInfo      407
 #define ROOM_Create_Havethisnum  409
 #define ROOM_JOINROOM_ERRPASSWD  410
+#define ROOM_PlayerInotherRoom   411
 #define ROOM_Changepos_Havepeo   412
 #define ROOM_DAL_ERR             502
 
@@ -155,13 +156,13 @@ const int User_GetBaseInfo_RecvInfo_TypeId   = 302;
 const int User_GetSocialInfo_SendInfo_TypeId = 303;
 const int User_GetSocialInfo_RecvInfo_TypeId = 304;
 const int User_GetExtraInfo_SendInfo_TypeId  = 305;
-const int User_GetExtraInfo_RecvInfo_TypeId  = 306;
+const int User_GetExInfo_RecvInfo_TypeId  = 306;
 
-const int User_LoginNum_SendInfo_TypeId = 310;
-const int User_LoginTel_SendInfo_TypeId = 311;
-const int User_Login_RecvInfo_TypeId    = 312;
-const int User_Reg_SendInfo_TypeId      = 313;
-const int User_Reg_RecvInfo_TypeId      = 314;
+const int User_loginNum_SendInfo_TypeId = 310;
+const int User_loginTel_SendInfo_TypeId = 311;
+const int User_login_RecvInfo_TypeId    = 312;
+const int User_reg_SendInfo_TypeId      = 313;
+const int User_reg_RecvInfo_TypeId      = 314;
 
 const int User_logoff_SendInfo_TypeId          = 321;
 const int User_logoff_RecvInfo_TypeId          = 322;

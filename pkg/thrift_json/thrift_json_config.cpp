@@ -1,4 +1,4 @@
-#include "./thrift_json_config.h"
+﻿#include "./thrift_json_config.h"
 #include <QString>
 #include <bits/stdc++.h>
 #include <stdlib.h>
@@ -31,22 +31,10 @@ std::string gen_jsontoken(int id, std::string type_name , string val){
     ret += "{\"" + type_name +"\":";
     //qDebug()<< QString(QByteArray(val.c_str() , val.length()).toBase64()).toStdString();
 
-    ret += "\"" + val +"\"";
-    ret += "}";
-    return ret;
-}
-std::string gen_jsontokenWithBase64(int id, std::string type_name , string val){
-    string ret;
-
-    ret += "\"" + QString().setNum(id).toStdString() + "\":";
-    ret += "{\"" + type_name +"\":";
-    //qDebug()<< QString(QByteArray(val.c_str() , val.length()).toBase64()).toStdString();
-
     ret += "\"" + QString::fromLatin1(QByteArray(val.c_str() , val.length()).toBase64()).toLatin1().toStdString() +"\"";
     ret += "}";
     return ret;
 }
-
 //template<typename VAL_TYPE>
 //void get_tokenval(const string &s , int l , int r , VAL_TYPE & typeval ){
 //    //"2":{"str":"hi"}
@@ -77,21 +65,6 @@ void get_tokenval(const string &s , int l , int r , char & typeval ){
     typeval= char(ch);
 }
 
-void get_tokenvalWithBase64(const string &s , int l , int r , string & typeval ){
-    //"2":{"str":"hi"}
-    int aimpos = 0;
-    for(int i = l;i<=r;i++){
-        if(s[i] == ':' && s[i+1] != '{'){
-            aimpos = i;
-            break;
-        }
-    }
-    string_view ss = s;
-    string base =  string(ss.substr(aimpos+2 , r - aimpos -3 ));
-    //qDebug().noquote() << aimpos+1 <<" " <<  r <<" " << base;
-    QString tmp = QString::fromLatin1(QByteArray::fromBase64(QByteArray::fromStdString(base)));
-    typeval= tmp.toLatin1().toStdString();
-}
 void get_tokenval(const string &s , int l , int r , string & typeval ){
     //"2":{"str":"hi"}
     int aimpos = 0;
@@ -104,7 +77,7 @@ void get_tokenval(const string &s , int l , int r , string & typeval ){
     string_view ss = s;
     string base =  string(ss.substr(aimpos+2 , r - aimpos -3 ));
     //qDebug().noquote() << aimpos+1 <<" " <<  r <<" " << base;
-    QString tmp = QString::fromLatin1(QByteArray::fromStdString(base));
+    QString tmp = QString::fromLatin1(QByteArray::fromBase64(QByteArray::fromStdString(base)));
     typeval= tmp.toLatin1().toStdString();
 }
 

@@ -145,6 +145,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pkg/JWT/jwt.h
         pkg/Openssl/openssl.h
         pkg/Openssl/openssl.cpp
+        pkg/QT_Multiple_info/QT_Multiple_info.h
+        pkg/QT_Multiple_info/QT_Multiple_info.cpp
+
+        #idls
+        idls/video.thrift
+        idls/echo.thrift
+        idls/audio.thrift
+        idls/room.thrift
+        idls/user.thrift
+
 
         #dal
         dal/dal_config.h

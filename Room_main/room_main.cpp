@@ -1,4 +1,4 @@
-#include "room_main.h"
+﻿#include "room_main.h"
 #include "../ui/ui_room_main.h"
 #include<QMessageBox>
 #include"../pkg/Video/videodeal.h"
@@ -13,11 +13,11 @@
 
 
 std::map<int,std::string>  Room_main::m_map[9];
-int Room_main::pos_id[9] = {/*0*/0 , /*1*/1 , /*2*/3 , /*3*/0 , /*4*/0 , /*5*/0 , /*6*/0 , /*7*/0 , /*8*/0  };
-int Room_main::id_pos[9] = {/*0*/0 , /*1*/1 , /*2*/0 , /*3*/2 , /*4*/0 , /*5*/0 , /*6*/0 , /*7*/0 , /*8*/0 };
+int Room_main::pos_id[9] = {/*0*/0 , /*1*/0 , /*2*/0 , /*3*/0 , /*4*/0 , /*5*/0 , /*6*/0 , /*7*/0 , /*8*/0  };
+int Room_main::id_pos[9] = {/*0*/0 , /*1*/0 , /*2*/0 , /*3*/0 , /*4*/0 , /*5*/0 , /*6*/0 , /*7*/0 , /*8*/0 };
 
 
-Room_main::Room_main(QWidget *parent)
+Room_main::Room_main(int roomid , int roomnum , int userid , int userpos , string jwt_token1 , string jwt_token2 ,QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Room_main)
 {
@@ -33,11 +33,24 @@ Room_main::Room_main(QWidget *parent)
 
 
     mypos = 2;
-    myroomid = 10;
+    //使用者辩位
+    mypos = userpos;
+    myroomnum = roomnum;
+    myroomid = roomid;
+    myid = userid;
+
+    //使用者token
+    my_jwt_token = jwt_token1;
+    my_refresh_jwt_token = jwt_token2;
+
     m_camera = new Camera;
+
+    //定时器更新辩位
+
+    //相框的设定
     m_user_label[1] = ui->me;
     m_user_label[2] = ui->second;
-    for(int i=1;i<3;i++)
+    for(int i=1;i<=8;i++)
     {
         m_user_video[i] = new VideoDeal(i , mypos==i);
         connect(m_user_video[i],SIGNAL(SIG_RefreshFrame(int,int))
@@ -88,6 +101,68 @@ void  Room_main::closeEvent(QCloseEvent *event)
     {
         Q_EMIT SIG_close();
         event->accept();
+
+        //回收的时候发送下线请求
+        MYNET_KERNEL * net = MYNET_KERNEL::getinstance();
+
+        //先更新jwt_token;
+        QTime tim = QTime::currentTime();
+        User_refresh_jwt1_SendInfo sd1;
+        sd1.jwt_token = this->my_jwt_token;
+        sd1.type      = User_refresh_jwt1_SendInfo_TypeId;
+        sd1.sendtime = tim.minute()*60000 + tim.second()*1000+ tim.msec();
+        sd1.refresh_jwt_token = this->my_refresh_jwt_token;
+        string data1 = User_refresh_jwt1_SendInfo::Serialization(sd1);
+        string recv1 = net->NETPOST_BLOCK(User_refresh_jwt1_URL , data1);
+        if(recv1 == ""){
+            cout << "用户 " << this->myid << "异常退出" <<endl;
+            return;
+        }else{
+            User_refresh_jwt1_RecvInfo rcv = User_refresh_jwt1_RecvInfo::Deserialization(recv1);
+            if(rcv.status == USER_ACTION_OK){
+                this->my_jwt_token = rcv.jwt_token;
+            }else if(rcv.status == USER_TIMEOUT_JWT){
+                //用户jwt超时
+                //去更新rejwt
+                User_refresh_jwt2_SendInfo sd2;
+                sd2.jwt_token = this->my_jwt_token;
+                sd2.type      = User_refresh_jwt1_SendInfo_TypeId;
+                sd2.sendtime = tim.minute()*60000 + tim.second()*1000+ tim.msec();
+                sd2.refresh_jwt_token = this->my_refresh_jwt_token;
+                string data2 = User_refresh_jwt2_SendInfo::Serialization(sd2);
+                string recv2 = net->NETPOST_BLOCK(User_refresh_jwt2_URL , data2);
+                if(recv2 == ""){
+                    cout << "用户 " << this->myid << "异常退出" <<endl;
+                    return;
+                }else{
+                    User_refresh_jwt2_RecvInfo rcv2 = User_refresh_jwt2_RecvInfo::Deserialization(recv2);
+                    if(rcv2.status == USER_ACTION_OK){
+                        this->my_refresh_jwt_token = rcv2.refresh_jwt_token;
+                        this->my_jwt_token = rcv2.jwt_token;
+                    }else{
+                        cout << "用户 " << this->myid << "异常退出" <<endl;
+                        return;
+                    }
+                }
+            }else{
+                cout << "用户 " << this->myid << "异常退出" <<endl;
+                return;
+            }
+        }
+        Room_Exitroom_SendInfo sd;
+        QTime tm = QTime::currentTime();
+        sd.type = Room_Exitroom_SendInfo_TypeId;
+        sd.sendtime = tm.minute()*60000 + tm.second()*1000+ tm.msec();
+        sd.roomnum = this->myroomnum;
+        sd.jwt_token = this->my_jwt_token;
+        string data = Room_Exitroom_SendInfo::Serialization(sd);
+        string recv = net->NETPOST_BLOCK(Room_Exitroom_URL , data);
+        Room_Exitroom_RecvInfo  rcv3 = Room_Exitroom_RecvInfo::Deserialization(recv);
+        if(rcv3.status == USER_ACTION_OK){
+            cout << "用户" << this->myid << "正常退出房间" << endl;
+        }else{
+            cout << "用户" << this->myid << "异常退出" << endl;
+        }
     }
     else
     {
@@ -214,7 +289,11 @@ void Room_main::on_pb_pause_clicked()
 void* Room_main::SIGDEAL_DownloadFrame(void * arg){
     //cout << __func__<<endl;
     Video_Download_RecvInfo * dlreinfo = (Video_Download_RecvInfo *)arg;
-
+    if(dlreinfo->status == 300){
+        cout << "NO photo now !" <<endl;
+        delete dlreinfo;
+        return nullptr;
+    }
     if(dlreinfo->status != 200) {
         delete dlreinfo;
         return nullptr;

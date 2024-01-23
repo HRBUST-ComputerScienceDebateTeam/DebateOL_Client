@@ -1,4 +1,4 @@
-#ifndef CKERNEL_H
+﻿#ifndef CKERNEL_H
 #define CKERNEL_H
 
 #include <QObject>
@@ -27,8 +27,8 @@ public slots:
     void slot_loginCommit(QString tel,QString pass);
     void slot_registerCommit(QString tel,QString pass,QString num);
     //void slot_refreshUser( int id,QImage &img);
-    void slot_createRoom();
-    void  slot_joinRoom();
+    void slot_createRoom(std::string s);
+    void slot_joinRoom(std::string s);
 private:
     Room_main * m_room;
     LoginDialog *m_pLoginDlg;
@@ -44,6 +44,8 @@ private:
     //回调函数
     void* SIGDEAL_login(void * arg);
     void* SIGDEAL_reg(void * arg);
+    void* SIGDEAL_CreateRoom(void* arg);
+    void* SIGDEAL_JoinRoom(void* arg);
 };
 
 #endif // CKERNEL_H
