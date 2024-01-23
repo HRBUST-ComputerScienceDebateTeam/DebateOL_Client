@@ -40,7 +40,7 @@ signals:
 
 public:
     //explicit Room_main(QWidget *parent = nullptr);
-    explicit Room_main( int roomid , int roomnum , int userid , int userpos \
+    explicit Room_main( int roomid , string roomnum , int userid , int userpos \
                        ,  string jwt_token1 , string jwt_token2 ,QWidget *parent = nullptr );
     ~Room_main();
     void closeEvent(QCloseEvent *event);
@@ -81,7 +81,7 @@ public:
 
     //房间号
     int myroomid;
-    int myroomnum;
+    string myroomnum;
 
     //使用者id;
     int myid;

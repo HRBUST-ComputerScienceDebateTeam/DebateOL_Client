@@ -274,6 +274,7 @@ JSON_Base Make_Json_Room_Create_RecvInfo(){
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
     ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+    ret.mp1["info"] = 4;ret.mp2[4] = "info";ret.mp3[4] = "string";
     return ret;
 };
 JSON_Base Room_Create_RecvInfo::json_base_ = Make_Json_Room_Create_RecvInfo();
@@ -283,6 +284,7 @@ std::string Room_Create_RecvInfo::Serialization(const Room_Create_RecvInfo&pkg){
     ret += gen_jsontoken(1,"i32",pkg.type);
     ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
     ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+    ret += ",";	ret += gen_jsontoken(4,"string",pkg.info);
     ret += "}";
     return ret;
 }
@@ -299,6 +301,7 @@ Room_Create_RecvInfo Room_Create_RecvInfo::Deserialization(const std::string& s)
     get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
     get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
     get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+    get_tokenval(s , v[3]+1 , v[4]-1 ,ret.info);
     return ret;
 }
 JSON_Base Make_Json_Room_Joinroom_SendInfo(){
@@ -347,6 +350,7 @@ JSON_Base Make_Json_Room_Joinroom_RecvInfo(){
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
     ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+    ret.mp1["info"] = 4;ret.mp2[4] = "info";ret.mp3[4] = "string";
     return ret;
 };
 JSON_Base Room_Joinroom_RecvInfo::json_base_ = Make_Json_Room_Joinroom_RecvInfo();
@@ -356,6 +360,7 @@ std::string Room_Joinroom_RecvInfo::Serialization(const Room_Joinroom_RecvInfo&p
     ret += gen_jsontoken(1,"i32",pkg.type);
     ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
     ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+    ret += ",";	ret += gen_jsontoken(4,"string",pkg.info);
     ret += "}";
     return ret;
 }
@@ -372,6 +377,7 @@ Room_Joinroom_RecvInfo Room_Joinroom_RecvInfo::Deserialization(const std::string
     get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
     get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
     get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+    get_tokenval(s , v[3]+1 , v[4]-1 ,ret.info);
     return ret;
 }
 JSON_Base Make_Json_Room_Exitroom_SendInfo(){
@@ -414,6 +420,7 @@ JSON_Base Make_Json_Room_Exitroom_RecvInfo(){
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
     ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+    ret.mp1["info"] = 4;ret.mp2[4] = "info";ret.mp3[4] = "string";
     return ret;
 };
 JSON_Base Room_Exitroom_RecvInfo::json_base_ = Make_Json_Room_Exitroom_RecvInfo();
@@ -423,6 +430,7 @@ std::string Room_Exitroom_RecvInfo::Serialization(const Room_Exitroom_RecvInfo&p
     ret += gen_jsontoken(1,"i32",pkg.type);
     ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
     ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+    ret += ",";	ret += gen_jsontoken(4,"string",pkg.info);
     ret += "}";
     return ret;
 }
@@ -439,6 +447,7 @@ Room_Exitroom_RecvInfo Room_Exitroom_RecvInfo::Deserialization(const std::string
     get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
     get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
     get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+    get_tokenval(s , v[3]+1 , v[4]-1 ,ret.info);
     return ret;
 }
 JSON_Base Make_Json_Room_ChangePasswd_SendInfo(){
@@ -487,6 +496,7 @@ JSON_Base Make_Json_Room_ChangePasswd_RecvInfo(){
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
     ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+    ret.mp1["info"] = 4;ret.mp2[4] = "info";ret.mp3[4] = "string";
     return ret;
 };
 JSON_Base Room_ChangePasswd_RecvInfo::json_base_ = Make_Json_Room_ChangePasswd_RecvInfo();
@@ -496,6 +506,7 @@ std::string Room_ChangePasswd_RecvInfo::Serialization(const Room_ChangePasswd_Re
     ret += gen_jsontoken(1,"i32",pkg.type);
     ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
     ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+    ret += ",";	ret += gen_jsontoken(4,"string",pkg.info);
     ret += "}";
     return ret;
 }
@@ -512,6 +523,7 @@ Room_ChangePasswd_RecvInfo Room_ChangePasswd_RecvInfo::Deserialization(const std
     get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
     get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
     get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+    get_tokenval(s , v[3]+1 , v[4]-1 ,ret.info);
     return ret;
 }
 JSON_Base Make_Json_Room_ChangeExtraInfo_SendInfo(){
@@ -557,6 +569,7 @@ JSON_Base Make_Json_Room_ChangeExtraInfo_RecvInfo(){
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
     ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+    ret.mp1["info"] = 4;ret.mp2[4] = "info";ret.mp3[4] = "string";
     return ret;
 };
 JSON_Base Room_ChangeExtraInfo_RecvInfo::json_base_ = Make_Json_Room_ChangeExtraInfo_RecvInfo();
@@ -566,6 +579,7 @@ std::string Room_ChangeExtraInfo_RecvInfo::Serialization(const Room_ChangeExtraI
     ret += gen_jsontoken(1,"i32",pkg.type);
     ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
     ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+    ret += ",";	ret += gen_jsontoken(4,"string",pkg.info);
     ret += "}";
     return ret;
 }
@@ -582,6 +596,7 @@ Room_ChangeExtraInfo_RecvInfo Room_ChangeExtraInfo_RecvInfo::Deserialization(con
     get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
     get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
     get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+    get_tokenval(s , v[3]+1 , v[4]-1 ,ret.info);
     return ret;
 }
 JSON_Base Make_Json_Room_ChangeDebatePos_SendInfo(){
@@ -624,6 +639,7 @@ JSON_Base Make_Json_Room_ChangeDebatePos_RecvInfo(){
     ret.mp1["type"] = 1;ret.mp2[1] = "type";ret.mp3[1] = "i32";
     ret.mp1["sendtime"] = 2;ret.mp2[2] = "sendtime";ret.mp3[2] = "i32";
     ret.mp1["status"] = 3;ret.mp2[3] = "status";ret.mp3[3] = "i32";
+    ret.mp1["info"] = 4;ret.mp2[4] = "info";ret.mp3[4] = "string";
     return ret;
 };
 JSON_Base Room_ChangeDebatePos_RecvInfo::json_base_ = Make_Json_Room_ChangeDebatePos_RecvInfo();
@@ -633,6 +649,7 @@ std::string Room_ChangeDebatePos_RecvInfo::Serialization(const Room_ChangeDebate
     ret += gen_jsontoken(1,"i32",pkg.type);
     ret += ",";	ret += gen_jsontoken(2,"i32",pkg.sendtime);
     ret += ",";	ret += gen_jsontoken(3,"i32",pkg.status);
+    ret += ",";	ret += gen_jsontoken(4,"string",pkg.info);
     ret += "}";
     return ret;
 }
@@ -649,6 +666,7 @@ Room_ChangeDebatePos_RecvInfo Room_ChangeDebatePos_RecvInfo::Deserialization(con
     get_tokenval(s , v[0]+1 , v[1]-1 ,ret.type);
     get_tokenval(s , v[1]+1 , v[2]-1 ,ret.sendtime);
     get_tokenval(s , v[2]+1 , v[3]-1 ,ret.status);
+    get_tokenval(s , v[3]+1 , v[4]-1 ,ret.info);
     return ret;
 }
 

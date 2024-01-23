@@ -14,6 +14,8 @@
 Ckernel::Ckernel(QObject *parent)
     : QObject{parent}
 {
+    connect(m_room , SIGNAL(SIG_close())
+                ,this,SLOT(slot_destory()));
     m_room = nullptr;
     We_Chat =new WeChatDialog;
     m_pLoginDlg =new LoginDialog;
@@ -29,11 +31,6 @@ Ckernel::Ckernel(QObject *parent)
             ,this,SLOT(slot_joinRoom(std::string)));
 
 
-
-//    connect(m_room , SIGNAL(SIG_close())
-//            ,this,SLOT(slot_destory()));
-    connect(We_Chat , SIGNAL(SIG_closechat())
-           ,this,SLOT(slot_destorychat()));
     //m_pVideoRead = new VideoRead;
     m_pLoginDlg->show();
     //m_room->show();
@@ -45,6 +42,12 @@ int    Ckernel::myuid                    =-1;
 string Ckernel::my_jwt_token             ="";
 string Ckernel::my_refresh_jwt_token     ="";
 
+//void Ckernel::~Ckernel(){
+//    if(m_room){
+//        delete m_room;
+//        m_room = nullptr;
+//    }
+//}
 
 //回收
 void Ckernel::slot_destory()
@@ -327,10 +330,17 @@ void * Ckernel::SIGDEAL_JoinRoom(void * arg){
         return nullptr;
     }
 
-    //创建成功
+    //加入
     cout << "Room Join success ! " <<endl;
+    //获取房间号 myuid;
+    map<string , string> mp = JsonstringToMap(recvinfo->info);
+    room_id = std::stoi(mp["Roomid"]);
+    roomnum = mp["Roomnum"];
+    m_room = new Room_main(room_id , roomnum , myuid , stoi(mp["Debate_pos"]) , my_jwt_token , my_refresh_jwt_token);
+    connect(We_Chat , SIGNAL(SIG_closechat()),this,SLOT(slot_destorychat()));
+    We_Chat->hide();
+    m_room->show();
     return nullptr;
-
 }
 
 void * Ckernel::SIGDEAL_CreateRoom(void * arg){
@@ -364,6 +374,18 @@ void * Ckernel::SIGDEAL_CreateRoom(void * arg){
     }
 
     //创建成功
-    cout << "Room创建成功" <<endl;
-        return nullptr;
+    cout << "Roomcreate_success" <<endl;
+    //获取房间号 myuid;
+    map<string , string> mp = JsonstringToMap(recvinfo->info);
+    room_id = std::stoi(mp["Roomid"]);
+    roomnum = mp["Roomnum"];
+    cerr << room_id <<endl;
+    cerr << roomnum <<endl;
+    cerr << stoi(mp["Debate_pos"] ) <<endl;
+    cerr << myuid <<endl;
+    m_room = new Room_main(room_id , roomnum , myuid , stoi(mp["Debate_pos"]) , my_jwt_token , my_refresh_jwt_token);
+    connect(We_Chat , SIGNAL(SIG_closechat()),this,SLOT(slot_destorychat()));
+    We_Chat->hide();
+    m_room->show();
+    return nullptr;
 }

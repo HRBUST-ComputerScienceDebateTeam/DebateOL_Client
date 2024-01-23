@@ -17,7 +17,7 @@ int Room_main::pos_id[9] = {/*0*/0 , /*1*/0 , /*2*/0 , /*3*/0 , /*4*/0 , /*5*/0 
 int Room_main::id_pos[9] = {/*0*/0 , /*1*/0 , /*2*/0 , /*3*/0 , /*4*/0 , /*5*/0 , /*6*/0 , /*7*/0 , /*8*/0 };
 
 
-Room_main::Room_main(int roomid , int roomnum , int userid , int userpos , string jwt_token1 , string jwt_token2 ,QWidget *parent)
+Room_main::Room_main(int roomid , string roomnum , int userid , int userpos , string jwt_token1 , string jwt_token2 ,QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Room_main)
 {
@@ -33,7 +33,6 @@ Room_main::Room_main(int roomid , int roomnum , int userid , int userpos , strin
     connect(m_pAudioRead,SIGNAL(SIG_audioFrame(QByteArray))
             ,this,SLOT(slot_UploadaudioFrame(QByteArray)));
 
-    mypos = 2;
     //使用者辩位
     mypos = userpos;
     myroomnum = roomnum;
@@ -47,6 +46,7 @@ Room_main::Room_main(int roomid , int roomnum , int userid , int userpos , strin
     m_camera = new Camera;
 
     //定时器更新辩位
+
 
     //相框的设定
     m_user_label[1] = ui->me;
@@ -329,7 +329,7 @@ void Room_main::on_pb_pause_clicked()
 
 
 //接受的是反序列化后的答案
-//不要求是槽函数 静态
+//不要求是槽函数 不要求静态
 void* Room_main::SIGDEAL_DownloadFrame(void * arg){
     //cout << __func__<<endl;
     Video_Download_RecvInfo * dlreinfo = (Video_Download_RecvInfo *)arg;

@@ -695,6 +695,7 @@ public:
     int32_t type;
     int32_t sendtime;
     int32_t status;
+    string info;
 };
 class Room_Joinroom_SendInfo{
 public:
@@ -720,6 +721,7 @@ public:
     int32_t type;
     int32_t sendtime;
     int32_t status;
+    string info;
 };
 class Room_Exitroom_SendInfo{
 public:
@@ -743,6 +745,7 @@ public:
     int32_t type;
     int32_t sendtime;
     int32_t status;
+    string info;
 };
 class Room_ChangePasswd_SendInfo{
 public:
@@ -768,6 +771,7 @@ public:
     int32_t type;
     int32_t sendtime;
     int32_t status;
+    string info;
 };
 class Room_ChangeExtraInfo_SendInfo{
 public:
@@ -792,6 +796,7 @@ public:
     int32_t type;
     int32_t sendtime;
     int32_t status;
+    string info;
 };
 class Room_ChangeDebatePos_SendInfo{
 public:
@@ -815,5 +820,5 @@ public:
     int32_t type;
     int32_t sendtime;
     int32_t status;
+    string info;
 };
-
