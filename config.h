@@ -22,10 +22,10 @@ const QString PUBLIC_PORT = "7100";
 const QString ECHO_POST_PATH = "/echo";
 const QString VIDEO_UPLOAD_POST_PATH = "/videoupload";
 const QString VIDEO_CLEAN_POST_PATH = "/videoclean";
-const QString VIDEO_DOWNLOAD_GET_PATH = "/videodownload/";
+const QString VIDEO_DOWNLOAD_POST_PATH = "/videodownload";
 const QString AUDIO_UPLOAD_POST_PATH = "/audioupload";
 const QString AUDIO_CLEAN_POST_PATH = "/audioclean";
-const QString AUDIO_DOWNLOAD_GET_PATH = "/audiodownload/";
+const QString AUDIO_DOWNLOAD_POST_PATH = "/audiodownload";
 
 const QString USER_LOGINTEL_PATH = "/usertellogin";
 const QString USER_REG_PATH = "/userreg";
@@ -65,11 +65,11 @@ const QString TEST_POST_URL =   "http://" + PUBLIC_IP + ":" + TEST_POST_PORT;
 const QString ECHO_POST_URL =   "http://" + PUBLIC_IP + ":" + ECHO_POST_PORT +  ECHO_POST_PATH;
 const QString VIDEO_UPLOAD_POST_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST_PORT +  VIDEO_UPLOAD_POST_PATH;
 const QString VIDEO_CLEAN_POST_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST_PORT +  VIDEO_CLEAN_POST_PATH;
-const QString VIDEO_DOWNLOAD_GET_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST_PORT +  VIDEO_DOWNLOAD_GET_PATH;
+const QString VIDEO_DOWNLOAD_POST_URL =   "http://" + PUBLIC_IP + ":" + VIDEO_POST_PORT +  VIDEO_DOWNLOAD_POST_PATH;
 
 const QString AUDIO_UPLOAD_POST_URL =   "http://" + PUBLIC_IP + ":" + AUDIO_POST_PORT +  AUDIO_UPLOAD_POST_PATH;
 const QString AUDIO_CLEAN_POST_URL =   "http://" + PUBLIC_IP + ":" + AUDIO_POST_PORT +  AUDIO_CLEAN_POST_PATH;
-const QString AUDIO_DOWNLOAD_GET_URL =   "http://" + PUBLIC_IP + ":" + AUDIO_POST_PORT +  AUDIO_DOWNLOAD_GET_PATH;
+const QString AUDIO_DOWNLOAD_POST_URL =   "http://" + PUBLIC_IP + ":" + AUDIO_POST_PORT +  AUDIO_DOWNLOAD_POST_PATH;
 
 const QString USER_LOGINTEL_URL =   "http://" + PUBLIC_IP + ":" + PUBLIC_PORT +  USER_LOGINTEL_PATH;
 const QString USER_REG_URL =   "http://" + PUBLIC_IP + ":" + PUBLIC_PORT +  USER_REG_PATH;

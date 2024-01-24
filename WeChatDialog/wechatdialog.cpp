@@ -39,8 +39,6 @@ void WeChatDialog::setInfo(QString name, QString name_style, int icon)
 {
     ui->lb_name->setText(name);
     ui->lb_style->setText(name_style);
-
-
 }
 
 void WeChatDialog::on_pb_create_clicked()
@@ -65,7 +63,7 @@ void WeChatDialog::on_pb_create_clicked()
     mp["Roomname"] = "";
     mp["passwd"] = "";
     mp["Debate_pos"] = "";
-    std::string morinfo = "请输入创建房间需要的参数";
+    std::string morinfo = "请输入创建房间需要的参数\nIslocking 填写 0/1 ";
     My_Multiple_Info * myMinfo= new My_Multiple_Info(this , MapToJsonstring(mp) , morinfo);
     std::string  s = myMinfo->run();
     delete myMinfo;
@@ -77,7 +75,6 @@ void WeChatDialog::on_pb_create_clicked()
 void WeChatDialog::on_pb_join_clicked()
 {
     //TODO查询是否有密码 - 阻塞
-
     //获取信息
     std::map<std::string,std::string> mp;
     mp["roomnum"] = "";
@@ -87,7 +84,7 @@ void WeChatDialog::on_pb_join_clicked()
     My_Multiple_Info * myMinfo= new My_Multiple_Info(this , MapToJsonstring(mp) , morinfo);
     std::string  s = myMinfo->run();
     delete myMinfo;
-
+    if(s == "") return;
     Q_EMIT SIG_joinRoom(s);
 }
 

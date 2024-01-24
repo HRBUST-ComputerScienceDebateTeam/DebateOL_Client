@@ -17,8 +17,7 @@
 #include"../pkg/audioread/audioread.h"
 #include"../pkg/audiowrite/audiowrite.h"
 #include"../pkg/JWT/jwt.h"
-#include"F:/opencv-build/opencv2/cvconfig.h"
-#include"F:/opencv-build/opencv2/opencv_modules.hpp
+
 #include"../pkg/Audio/audiodeal.h"
 #include"../pkg/Camera/camera.h"
 #include<qpainter.h>
@@ -35,8 +34,9 @@ class Room_main : public QMainWindow
 
 
 signals:
-    void SIG_close();
+    void SIG_closeroom();
     void SIG_setImage(int userpos,QImage& img);
+    void SIG_SendDebatePostoRoom();
 
 public:
     //explicit Room_main(QWidget *parent = nullptr);
@@ -59,6 +59,13 @@ public slots:
     void slot_UploadaudioFrame(QByteArray ba);
     //音频下载
     void slot_DownloadaudioFrame(int userpos ,int tim);
+    //音频刷新
+    void slot_AudioRefreshFrame(int userpos,int tim);
+
+    //定时器 发送获取辩位信息
+    void slot_getDebatePos();
+    //调用以设置辩位
+    void ToUpdateDebatePos(string s);
 private slots:
     //控制相关
     void on_openvideo_clicked();
@@ -66,6 +73,7 @@ private slots:
 
     void on_pb_start_clicked();
     void on_pb_pause_clicked();
+
 
 
 
@@ -93,6 +101,7 @@ public:
 
     //本地更新队列
     static std::map<int,std::string>  m_map[9];
+    static std::map<int,std::string>  m_map_Audio[9];
     static int pos_id[9];
     static int id_pos[9];
 
@@ -107,7 +116,11 @@ private:
     audiodeal * m_user_audio[9];
 
     AudioRead *m_pAudioRead;
-    AudioWrite *m_pAudioWrite;
+    //AudioWrite *m_pAudioWrite;
+    AudioWrite *m_pAudioWrite[9];
+public:
+    //定时器 - 更新房间信息
+    QTimer *m_timer_getDebatePos;
 };
 
 #endif // ROOM_MAIN_H

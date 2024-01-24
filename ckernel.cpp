@@ -14,8 +14,6 @@
 Ckernel::Ckernel(QObject *parent)
     : QObject{parent}
 {
-    connect(m_room , SIGNAL(SIG_close())
-                ,this,SLOT(slot_destory()));
     m_room = nullptr;
     We_Chat =new WeChatDialog;
     m_pLoginDlg =new LoginDialog;
@@ -54,7 +52,7 @@ void Ckernel::slot_destory()
 {
     //发送下线请求
 
-    qDebug()<<__func__;
+    //qDebug()<<__func__;
     if(We_Chat)
     {
         We_Chat->hide();
@@ -82,7 +80,7 @@ void Ckernel::slot_destory()
 
 void Ckernel::slot_destorychat()
 {
-    qDebug()<<__func__;
+    //qDebug()<<__func__;
     if(We_Chat)
     {
         delete We_Chat;
@@ -90,6 +88,81 @@ void Ckernel::slot_destorychat()
     }
 }
 
+
+void Ckernel::slot_closeroom(){
+
+    //回收的时候发送下线请求
+    MYNET_KERNEL * net = MYNET_KERNEL::getinstance();
+    //先更新jwt_token;
+    QTime tim = QTime::currentTime();
+    User_refresh_jwt1_SendInfo sd1;
+    sd1.jwt_token = this->my_jwt_token;
+    sd1.type      = User_refresh_jwt1_SendInfo_TypeId;
+    sd1.sendtime = tim.minute()*60000 + tim.second()*1000+ tim.msec();
+    sd1.refresh_jwt_token = this->my_refresh_jwt_token;
+    string data1 = User_refresh_jwt1_SendInfo::Serialization(sd1);
+    string recv1 = net->NETPOST_BLOCK(User_refresh_jwt1_URL , data1);
+    if(recv1 == ""){
+        cout << "user :" << this->myuid << "wrong out" <<endl;
+        return;
+    }else{
+        User_refresh_jwt1_RecvInfo rcv = User_refresh_jwt1_RecvInfo::Deserialization(recv1);
+        if(rcv.status == User_JWT_NOTOUTTIME){//没过期
+            ;
+        }else if(rcv.status == USER_ACTION_OK){
+            this->my_jwt_token = rcv.jwt_token;
+        }else if(rcv.status == USER_TIMEOUT_JWT){
+            //用户jwt超时
+            //去更新rejwt
+            User_refresh_jwt2_SendInfo sd2;
+            sd2.jwt_token = this->my_jwt_token;
+            sd2.type      = User_refresh_jwt1_SendInfo_TypeId;
+            sd2.sendtime = tim.minute()*60000 + tim.second()*1000+ tim.msec();
+            sd2.refresh_jwt_token = this->my_refresh_jwt_token;
+            string data2 = User_refresh_jwt2_SendInfo::Serialization(sd2);
+            string recv2 = net->NETPOST_BLOCK(User_refresh_jwt2_URL , data2);
+            if(recv2 == ""){
+                cout << "user :" << this->myuid << "wrong out" <<endl;
+                return;
+            }else{
+                User_refresh_jwt2_RecvInfo rcv2 = User_refresh_jwt2_RecvInfo::Deserialization(recv2);
+                if(rcv2.status == USER_ACTION_OK){
+                    this->my_refresh_jwt_token = rcv2.refresh_jwt_token;
+                    this->my_jwt_token = rcv2.jwt_token;
+                }else{
+                    cout << "user :" << this->myuid << "wrong out" <<endl;
+                    return;
+                }
+            }
+        }else{
+            cout << "user :" << this->myuid << "wrong out" <<endl;
+            return;
+        }
+    }
+    Room_Exitroom_SendInfo sd;
+    QTime tm = QTime::currentTime();
+    sd.type = Room_Exitroom_SendInfo_TypeId;
+    sd.sendtime = tm.minute()*60000 + tm.second()*1000+ tm.msec();
+    sd.roomnum = this->roomnum;
+    sd.jwt_token = this->my_jwt_token;
+    string data = Room_Exitroom_SendInfo::Serialization(sd);
+    string recv = net->NETPOST_BLOCK(Room_Exitroom_URL , data);
+    Room_Exitroom_RecvInfo  rcv3 = Room_Exitroom_RecvInfo::Deserialization(recv);
+    if(rcv3.status == USER_ACTION_OK){
+        cout << "user :" << this->myuid << "success out" <<endl;
+    }else{
+        cout << "user :" << this->myuid << "wrong out" <<endl;
+    }
+
+    if(m_room){
+        this->m_room->hide();
+        delete m_room;
+        m_room = nullptr;
+    }
+    this->room_id = INT_DEFAULT;
+    this->roomnum = STR_DEFAULT;
+    this->We_Chat->show();
+}
 
 //发送注册
 void Ckernel::slot_registerCommit(QString tel, QString pass, QString num)
@@ -192,6 +265,23 @@ void Ckernel::slot_joinRoom(std::string s)
     std::string ss = Room_Joinroom_SendInfo::Serialization(sendinfo);
     netptr->NETPOST(Room_Joinroom_URL ,ss , tid  ,  &Ckernel::SIGDEAL_JoinRoom );
 }
+
+//获取辩位信息
+void Ckernel::slot_SendDebatePostoRoom(){
+    Room_GetURrelation_SendInfo sdinfo;
+    sdinfo.type = Room_GetURrelation_SendInfo_TypeId;
+    sdinfo.Aim_Roomnum = roomnum;
+    QTime mytim= QTime::currentTime();
+    sdinfo.sendtime = mytim.minute()*60000+mytim.second()*1000+mytim.msec();
+    sdinfo.jwt_token = my_jwt_token;
+    sdinfo.info = "" ;
+
+    MYNET_KERNEL::Init(this);
+    MYNET_KERNEL * netptr = MYNET_KERNEL::getinstance();//获取单例
+    std::string ss = Room_GetURrelation_SendInfo::Serialization(sdinfo);
+    netptr->NETPOST(Room_GetURrelation_URL ,ss , sdinfo.sendtime  ,  &Ckernel::SIGDEAL_SendDebatePostoRoom );
+}
+
 
 //发送登录
 void Ckernel::slot_loginCommit(QString tel, QString pass)
@@ -330,16 +420,20 @@ void * Ckernel::SIGDEAL_JoinRoom(void * arg){
         return nullptr;
     }
 
-    //加入
-    cout << "Room Join success ! " <<endl;
+
     //获取房间号 myuid;
     map<string , string> mp = JsonstringToMap(recvinfo->info);
     room_id = std::stoi(mp["Roomid"]);
     roomnum = mp["Roomnum"];
     m_room = new Room_main(room_id , roomnum , myuid , stoi(mp["Debate_pos"]) , my_jwt_token , my_refresh_jwt_token);
     connect(We_Chat , SIGNAL(SIG_closechat()),this,SLOT(slot_destorychat()));
+    connect(m_room , SIGNAL(SIG_SendDebatePostoRoom()) , this , SLOT(slot_SendDebatePostoRoom()));
+    connect(m_room , SIGNAL(SIG_closeroom()) , this , SLOT(slot_closeroom()));
+    //加入
+    cout << "Room Join success ! " <<endl;
     We_Chat->hide();
     m_room->show();
+
     return nullptr;
 }
 
@@ -379,13 +473,61 @@ void * Ckernel::SIGDEAL_CreateRoom(void * arg){
     map<string , string> mp = JsonstringToMap(recvinfo->info);
     room_id = std::stoi(mp["Roomid"]);
     roomnum = mp["Roomnum"];
-    cerr << room_id <<endl;
-    cerr << roomnum <<endl;
-    cerr << stoi(mp["Debate_pos"] ) <<endl;
-    cerr << myuid <<endl;
     m_room = new Room_main(room_id , roomnum , myuid , stoi(mp["Debate_pos"]) , my_jwt_token , my_refresh_jwt_token);
     connect(We_Chat , SIGNAL(SIG_closechat()),this,SLOT(slot_destorychat()));
     We_Chat->hide();
     m_room->show();
     return nullptr;
 }
+
+void * Ckernel::SIGDEAL_SendDebatePostoRoom(void * arg){
+    Room_GetURrelation_RecvInfo* recvinfo = (Room_GetURrelation_RecvInfo *) arg;
+    if(recvinfo->status != ROOM_ACTION_OK ){
+        switch(recvinfo->status){
+        case ROOM_ERR_REQINFO://请求体有误
+            QMessageBox::about(m_pLoginDlg,"提示","请求体有误");
+            qDebug()<<__func__ << "请求体有误";
+            break;
+        case ROOM_Create_Havethisnum://num重复
+            //调用提醒函数
+            QMessageBox::about(m_pLoginDlg,"提示","已经有这个num的房间了");
+            qDebug()<<__func__ << "已经有这个num的房间了";
+            return nullptr;
+        case ROOM_DAL_ERR:
+            QMessageBox::about(m_pLoginDlg,"提示","服务器内部错误");
+            qDebug()<<__func__ << "服务器内部错误";
+            return nullptr;
+        case ROOM_JOINROOM_ERRPASSWD:
+            QMessageBox::about(m_pLoginDlg,"提示","错误的密码");
+            qDebug()<<__func__ << "错误的密码";
+            return nullptr;
+        case ROOM_Changepos_Havepeo:
+            QMessageBox::about(m_pLoginDlg,"提示","位置上有人了");
+            qDebug()<<__func__ << "位置上有人了";
+            return nullptr;
+        case ROOM_NoSuchRoomInfo:
+            QMessageBox::about(m_pLoginDlg,"提示","没有这个房间");
+            qDebug()<<__func__ << "没有这个房间";
+            return nullptr;
+        case ROOM_PlayerInotherRoom:
+            QMessageBox::about(m_pLoginDlg,"提示","用户在别的房间了");
+            qDebug()<<__func__ << "服务器内部错误";
+            return nullptr;
+        default:
+            QMessageBox::about(m_pLoginDlg,"提示","未知错误");
+            cout << __func__ << " not find status" << recvinfo->status <<endl;
+            break;
+        }
+        return nullptr;
+    }
+
+    if(recvinfo->info_UR_pos == STR_DEFAULT){
+        qDebug()<<__func__ << "房间更新辩位信息获取为空";
+        return nullptr;
+    }
+
+    qDebug()<<__func__ << "房间更新辩位信息成功";
+    m_room->ToUpdateDebatePos(recvinfo->info_UR_pos);
+    return nullptr;
+}
+

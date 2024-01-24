@@ -67,7 +67,6 @@ public:
 private slots:
     void slot_replyFinished(QNetworkReply*);
 public:
-    QString GET_VIDEODL_URL(struct  Video_Download_SendInfo &);
     //执行事件结果异步的发送给对应的回调函数
     void NETGET(QString url , int tim , KERNEL_CALL_FUN);
     void NETPOST(QString url , std::string &data, int tim, KERNEL_CALL_FUN);

@@ -1,4 +1,4 @@
-#ifndef VIDEODEAL_H
+﻿#ifndef VIDEODEAL_H
 #define VIDEODEAL_H
 
 #include <QObject>
@@ -14,7 +14,7 @@ class VideoDeal : public QObject
 {
     Q_OBJECT
 public:
-    explicit VideoDeal(int , bool , QObject *parent = nullptr);
+    explicit VideoDeal(int , bool , int , QObject *parent = nullptr);
     ~VideoDeal();
 
 signals:
@@ -25,8 +25,9 @@ public slots:
     void slot_RefreshFrame();
     void slot_DownloadFrame();
 
-private:
+public:
     int mypos;
+    int myid;
     bool is_host;
 
     QTimer *m_timer_toRefresh;

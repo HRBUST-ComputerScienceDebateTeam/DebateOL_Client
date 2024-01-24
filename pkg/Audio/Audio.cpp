@@ -1,4 +1,4 @@
-#include "Audio.h"
+﻿#include "Audio.h"
 #include <QAudioSource>
 #include <QAudioInput>
 #include <QAudioFormat>
@@ -67,8 +67,8 @@ void Audio::displayErrorMessage()
 
 void Audio::slot_getAudioFrame()
 {
-    qDebug()<<__func__;
-    qDebug()<<audioRecorder->recorderState();
+    //qDebug()<<__func__;
+    //qDebug()<<audioRecorder->recorderState();
     if (audioRecorder->recorderState() == QMediaRecorder::StoppedState)
     {
         /*captureSession.audioInput()->setDevice(QMediaDevices::defaultAudioInput());
@@ -92,7 +92,7 @@ void Audio::slot_getAudioFrame()
 
 void Audio::slot_openAudio()
 {
-    qDebug()<<__func__;
+    //qDebug()<<__func__;
     this->slot_getAudioFrame();
 }
 
