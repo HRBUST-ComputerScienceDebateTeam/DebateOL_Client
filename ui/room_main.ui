@@ -6,44 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2000</width>
-    <height>2000</height>
+    <width>1100</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="lb_name">
+   <widget class="QLabel" name="lb_roomnum">
     <property name="geometry">
      <rect>
-      <x>219</x>
-      <y>29</y>
-      <width>54</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="second">
-    <property name="geometry">
-     <rect>
-      <x>530</x>
-      <y>49</y>
-      <width>261</width>
-      <height>271</height>
+      <x>100</x>
+      <y>0</y>
+      <width>300</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-    <property name="openExternalLinks">
-     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="closevideo">
@@ -64,13 +45,13 @@
      <string>关闭摄像头</string>
     </property>
    </widget>
-   <widget class="QLabel" name="me">
+   <widget class="QLabel" name="qlabel">
     <property name="geometry">
      <rect>
-      <x>39</x>
-      <y>49</y>
-      <width>261</width>
-      <height>271</height>
+      <x>50</x>
+      <y>50</y>
+      <width>250</width>
+      <height>250</height>
      </rect>
     </property>
     <property name="tabletTracking">
@@ -80,7 +61,7 @@
      <bool>false</bool>
     </property>
     <property name="text">
-     <string/>
+     <string>暂时没有视频源</string>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -169,16 +150,249 @@
      <string>麦克风</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>2000</width>
-     <height>21</height>
-    </rect>
-   </property>
+   <widget class="QLabel" name="qlabel_2">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>50</y>
+      <width>250</width>
+      <height>250</height>
+     </rect>
+    </property>
+    <property name="tabletTracking">
+     <bool>false</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>暂时没有视频源</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="qlabel_3">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>50</y>
+      <width>250</width>
+      <height>250</height>
+     </rect>
+    </property>
+    <property name="tabletTracking">
+     <bool>false</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>暂时没有视频源</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="qlabel_4">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>50</y>
+      <width>250</width>
+      <height>250</height>
+     </rect>
+    </property>
+    <property name="tabletTracking">
+     <bool>false</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>暂时没有视频源</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="qlabel_5">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>450</y>
+      <width>250</width>
+      <height>250</height>
+     </rect>
+    </property>
+    <property name="tabletTracking">
+     <bool>false</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>暂时没有视频源</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="qlabel_6">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>450</y>
+      <width>250</width>
+      <height>250</height>
+     </rect>
+    </property>
+    <property name="tabletTracking">
+     <bool>false</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>暂时没有视频源</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="qlabel_7">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>450</y>
+      <width>250</width>
+      <height>250</height>
+     </rect>
+    </property>
+    <property name="tabletTracking">
+     <bool>false</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>暂时没有视频源</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="qlabel_8">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>450</y>
+      <width>250</width>
+      <height>250</height>
+     </rect>
+    </property>
+    <property name="tabletTracking">
+     <bool>false</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>暂时没有视频源</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pb_setroominfo">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>350</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>设置房间信息</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="te_debatename">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>340</y>
+      <width>611</width>
+      <height>61</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>15</y>
+      <width>70</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string> 房间号码：</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="te_back">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1200</width>
+      <height>800</height>
+     </rect>
+    </property>
+   </widget>
+   <zorder>te_back</zorder>
+   <zorder>lb_roomnum</zorder>
+   <zorder>closevideo</zorder>
+   <zorder>qlabel</zorder>
+   <zorder>openvideo</zorder>
+   <zorder>pb_start</zorder>
+   <zorder>pb_pause</zorder>
+   <zorder>video</zorder>
+   <zorder>audio</zorder>
+   <zorder>qlabel_2</zorder>
+   <zorder>qlabel_3</zorder>
+   <zorder>qlabel_4</zorder>
+   <zorder>qlabel_5</zorder>
+   <zorder>qlabel_6</zorder>
+   <zorder>qlabel_7</zorder>
+   <zorder>qlabel_8</zorder>
+   <zorder>pb_setroominfo</zorder>
+   <zorder>te_debatename</zorder>
+   <zorder>label</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

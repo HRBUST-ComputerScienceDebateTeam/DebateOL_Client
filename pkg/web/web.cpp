@@ -11,13 +11,13 @@ using namespace std;
 
 #define WEB_ROUTING_ROOM(x) \
     case x##_TypeId:{ \
-        cout << #x << " WEBrouting" << endl; \
         x * dlreinfo = new x ( x::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString())); \
         ROOMMAIN_CALL_FUN fp = net_event[dlreinfo->sendtime]; \
         if(!fp){ \
             cout << "err 事件没有注册" <<endl; \
             delete dlreinfo; \
         }else{ \
+                net_event[dlreinfo->sendtime] = 0;\
                 (rp->*fp)((void*)dlreinfo); \
         } \
     } \
@@ -25,13 +25,13 @@ using namespace std;
 
 #define WEB_ROUTING_KERNEL(x) \
     case x##_TypeId:{ \
-        cout << #x << " WEBrouting" << endl; \
         x * dlreinfo = new x ( x::Deserialization(QString::fromLatin1(getinfo).toLatin1().toStdString())); \
         KERNEL_CALL_FUN fp = net_event[dlreinfo->sendtime]; \
         if(!fp){ \
             cout << "err 事件没有注册" <<endl; \
             delete dlreinfo; \
         }else{ \
+            net_event[dlreinfo->sendtime] = 0;\
             (kp->*fp)((void*)dlreinfo); \
         } \
     } \
@@ -65,31 +65,15 @@ void MYNET_ROOM::NETPOST(QString url , std::string& data ,int timid , ROOMMAIN_C
     QByteArray qByteHttpData(data.c_str(),data.length());
 
     //注册事件 委托请求
+    if(net_event[timid] != 0 )return;
     net_event[timid] = fun;
     pmanager_room->post(request , qByteHttpData);
-}
-
-QString MYNET_ROOM::GET_VIDEODL_URL(struct Video_Download_SendInfo & sendinfo){
-    QString ret = VIDEO_DOWNLOAD_GET_URL;
-    ret += "?info=";
-    ret += QString().number(sendinfo.type);
-    ret += "-";
-    ret += QString().number(sendinfo.roomId);
-    ret += "-";
-    ret += QString().number(sendinfo.userId);
-    ret += "-";
-    ret += QString().number(sendinfo.min);
-    ret += "-";
-    ret += QString().number(sendinfo.sec);
-    ret += "-";
-    ret += QString().number(sendinfo.msec);
-    return ret;
 }
 
 
 
 void MYNET_ROOM::slot_replyFinished(QNetworkReply* reply){
-    cout <<"slot_replyFinished" <<endl;
+    //cout <<"slot_replyFinished" <<endl;
     //如果合法
     if (reply->error() != QNetworkReply::NoError){
         qDebug()<<"request protobufHttp handle errors here";
@@ -130,7 +114,7 @@ void MYNET_ROOM::Init(Room_main* _rp){
     }
 }
 MYNET_ROOM::MYNET_ROOM(){
-    cout << "pmanager 初始化" <<endl;
+    //cout << "pmanager 初始化" <<endl;
     pmanager_room = new QNetworkAccessManager;
     //readyRead(QNetworkReply*)
     connect(pmanager_room,  SIGNAL(finished(QNetworkReply*)), this , SLOT(slot_replyFinished(QNetworkReply*)));
@@ -185,26 +169,11 @@ void MYNET_KERNEL::NETPOST(QString url , std::string& data ,int timid , KERNEL_C
     QByteArray qByteHttpData(data.c_str(),data.length());
 
     //注册事件 委托请求
+    if(net_event[timid] != 0 )return;
     net_event[timid] = fun;
     pmanager_kernel->post(request , qByteHttpData);
 }
 
-QString MYNET_KERNEL::GET_VIDEODL_URL(struct Video_Download_SendInfo & sendinfo){
-    QString ret = VIDEO_DOWNLOAD_GET_URL;
-    ret += "?info=";
-    ret += QString().number(sendinfo.type);
-    ret += "-";
-    ret += QString().number(sendinfo.roomId);
-    ret += "-";
-    ret += QString().number(sendinfo.userId);
-    ret += "-";
-    ret += QString().number(sendinfo.min);
-    ret += "-";
-    ret += QString().number(sendinfo.sec);
-    ret += "-";
-    ret += QString().number(sendinfo.msec);
-    return ret;
-}
 
 void MYNET_KERNEL::slot_replyFinished(QNetworkReply* reply){
     cout <<"slot_replyFinished" <<endl;
@@ -224,7 +193,7 @@ void MYNET_KERNEL::slot_replyFinished(QNetworkReply* reply){
     reply->deleteLater();
 
     //调用事件 - TODO ADD 线程池
-
+    if(getinfo.size() == 0) return;
     int etypeid = get_typeid(QString::fromLatin1(getinfo).toLatin1().toStdString());
     switch(etypeid){
         WEB_ROUTING_KERNEL(User_login_RecvInfo);
@@ -303,7 +272,8 @@ std::string MYNET_ROOM::NETPOST_BLOCK(QString url , std::string &data){//对应u
     qnr.setRawHeader("Content-Length" , QByteArray().number(data.length()));
     QByteArray qByteHttpData(data.c_str(),data.length());
 
-    QNetworkReply* reply = pmanager_room->post(qnr ,qByteHttpData); //m_qnam是QNetworkAccessManager对象
+    QNetworkAccessManager q;
+    QNetworkReply* reply = q.post(qnr ,qByteHttpData); //m_qnam是QNetworkAccessManager对象
     QEventLoop eventLoop;
     connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
     eventLoop.exec(QEventLoop::ExcludeUserInputEvents);
@@ -321,9 +291,11 @@ std::string  MYNET_KERNEL::NETPOST_BLOCK(QString url , std::string &data){//对�
     qnr.setHeader(QNetworkRequest::ContentTypeHeader,QVariant("application/json"));
     qnr.setRawHeader("Connection", "keep-alive");
     qnr.setRawHeader("Content-Length" , QByteArray().number(data.length()));
-    QByteArray qByteHttpData(data.c_str(),data.length());
 
-    QNetworkReply* reply = pmanager_kernel->post(qnr ,qByteHttpData); //m_qnam是QNetworkAccessManager对象
+    QNetworkAccessManager q;
+    QByteArray qByteHttpData(data.c_str(),data.length());
+    cerr<<qByteHttpData.toStdString()<<endl;
+    QNetworkReply* reply = q.post(qnr ,qByteHttpData); //m_qnam是QNetworkAccessManager对象
     QEventLoop eventLoop;
     connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
     eventLoop.exec(QEventLoop::ExcludeUserInputEvents);

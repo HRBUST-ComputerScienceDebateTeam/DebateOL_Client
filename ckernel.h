@@ -23,6 +23,7 @@ signals:
 
 public slots:
     void slot_destory();
+    void slot_closeroom();
     void slot_destorychat();
     //发送登录请求
     void slot_loginCommit(QString tel,QString pass);
@@ -31,6 +32,8 @@ public slots:
 
     void slot_createRoom(std::string s);
     void slot_joinRoom(std::string s);
+    void slot_SendDebatePostoRoom();
+
 
 private:
     Room_main * m_room;
@@ -55,6 +58,7 @@ private:
     void* SIGDEAL_reg(void * arg);
     void* SIGDEAL_CreateRoom(void* arg);
     void* SIGDEAL_JoinRoom(void* arg);
+    void* SIGDEAL_SendDebatePostoRoom(void * arg);
 };
 
 #endif // CKERNEL_H
